@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="insertNumber"
+            type="Integer" />
+
+        <variable
+            name="hintText"
+            type="String" />
+
+        <import type="knaufdan.android.simpletimerapp.databinding.Translator" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@{hintText}"
+            android:theme="@style/hintAppearance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/time_setter_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="@={Translator.fromIntToString(insertNumber)}"
+                android:textColor="@android:color/black"
+                tool:hint="hint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </FrameLayout>
+</layout>

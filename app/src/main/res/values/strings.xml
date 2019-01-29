@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SimpleTimerApp</string>
+
+    <!-- button texts -->
+    <string name="start_button_text">Start</string>
+    <string name="pause_button_text">Pause</string>
+    <string name="stop_button_text">Stop</string>
+    <string name="resume_button_text">Resume</string>
+
+    <!-- instruction text -->
+    <string name="timer_instruction">Set minutes until gong.</string>
+
+    <!-- timer input -->
+    <string name="cycle_timer_input_hint_text">cycle time</string>
+</resources>
