@@ -2,7 +2,7 @@ package knaufdan.android.simpletimerapp.ui.navigation
 
 import android.os.Bundle
 import knaufdan.android.simpletimerapp.arch.HasFragmentFlow
-import knaufdan.android.simpletimerapp.util.Constants.TIME_KEY
+import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
 import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,21 +11,21 @@ import javax.inject.Singleton
 class Navigator @Inject constructor(private val contextProvider: ContextProvider) {
 
     fun navigateToInput() {
-        val context = contextProvider.context
-
-        if (context is HasFragmentFlow) {
-            context.flowTo(FragmentPage.INPUT.ordinal, false, null)
+        with(contextProvider.context) {
+            if (this is HasFragmentFlow) {
+                flowTo(FragmentPage.INPUT.ordinal, false, null)
+            }
         }
     }
 
-    fun navigateToTimer(cycleTime: Int) {
-        val context = contextProvider.context
-
+    fun navigateToTimer(endTimeInMinutes: Int) {
         val bundle = Bundle()
-        bundle.putInt(TIME_KEY, cycleTime)
+        bundle.putInt(END_TIME_KEY, endTimeInMinutes)
 
-        if (context is HasFragmentFlow) {
-            context.flowTo(FragmentPage.TIMER.ordinal, true, bundle)
+        with(contextProvider.context) {
+            if (this is HasFragmentFlow) {
+                flowTo(FragmentPage.TIMER.ordinal, true, bundle)
+            }
         }
     }
 }

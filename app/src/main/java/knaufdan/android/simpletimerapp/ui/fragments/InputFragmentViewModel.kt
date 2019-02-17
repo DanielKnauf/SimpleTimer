@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
+import knaufdan.android.simpletimerapp.util.Constants.MINUTE
 import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(private val navigator: Navigator) : BaseViewModel() {
@@ -14,9 +15,7 @@ class InputFragmentViewModel @Inject constructor(private val navigator: Navigato
     val isEnabled: MediatorLiveData<Boolean> = MediatorLiveData()
 
     val continueButtonClick: View.OnClickListener = View.OnClickListener {
-        timePerCycle.value?.let { number ->
-            navigator.navigateToTimer(number)
-        }
+        timePerCycle.value?.let { input -> navigator.navigateToTimer(input.times(MINUTE)) }
     }
 
     init {

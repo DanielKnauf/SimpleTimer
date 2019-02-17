@@ -4,7 +4,11 @@ import androidx.lifecycle.MutableLiveData
 
 interface ProgressBarViewModel {
 
-    fun getProgressMax():MutableLiveData<Int>
+    val progress: MutableLiveData<Int>
 
-    fun getProgress():MutableLiveData<Int>
+    val maximum: MutableLiveData<Int>
+
+    fun increaseProgress(increment: Int)
+
+    fun calculateRemainingProgress(): Long
 }

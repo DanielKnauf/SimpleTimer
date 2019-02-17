@@ -11,5 +11,12 @@
     <string name="timer_instruction">Set minutes until gong.</string>
 
     <!-- timer input -->
-    <string name="cycle_timer_input_hint_text">cycle time</string>
+    <string name="timer_input_hint_text">Minutes</string>
+
+    <!-- notification -->
+    <string name="timer_finished_notification_channel_name">Finished timer alarm</string>
+    <string name="timer_finished_notification_channel_description">Make sound and pop on screen</string>
+    <string name="timer_finished_notification_title">Wohooo&#8230;</string>
+    <string name="timer_finished_notification_content_text">The timer has finished!</string>
+
 </resources>

@@ -2,22 +2,33 @@ package knaufdan.android.simpletimerapp.util.service
 
 import android.app.Service
 import android.content.Intent
-import android.os.Handler
 import android.os.IBinder
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.android.AndroidInjection
+import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
+import knaufdan.android.simpletimerapp.util.Constants.INCREMENT_KEY
+import knaufdan.android.simpletimerapp.util.Constants.MINUTE
+import knaufdan.android.simpletimerapp.util.Constants.SECOND
 import java.util.*
 import javax.inject.Inject
 
-//TODO rework timer for the purpose of this app∆
 class TimerService @Inject constructor() : Service() {
 
-    private val random = Random()
-    private var handler: Handler? = null
-    private var randomTimerRunnable: TimerRunnable? = null
+    private lateinit var manager: LocalBroadcastManager
+    private var timer: Timer? = null
+    private var timerTask: TimerTask? = TimerRunnable(this)
+
+    private var endTime: Int = -1
+    private var currentTime = 0
+
+    //define the period of time for the UI updates here
+    private val increment = SECOND * 1
 
     override fun onCreate() {
         AndroidInjection.inject(this)
         super.onCreate()
+
+        manager = LocalBroadcastManager.getInstance(this.applicationContext)
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -26,35 +37,32 @@ class TimerService @Inject constructor() : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        handler = Handler()
-        startHandlerWithRandomTimer()
+        endTime = intent.getIntExtra(END_TIME_KEY, MINUTE)
+        currentTime = 0
+        startTimerRunnable()
         return Service.START_STICKY
     }
 
-    fun startHandlerWithRandomTimer() {
-        handler?.let {
-            val timeInMillis = generateTimeUntilNextPhotoNotification()
-            randomTimerRunnable = TimerRunnable(this, timeInMillis / 1000)
-            it.postDelayed(randomTimerRunnable, timeInMillis.toLong())
-        }
+    fun sendUpdate() {
+        val intent = Intent()
+            .apply { action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name }
+            .apply { putExtra(INCREMENT_KEY, increment) }
+
+        currentTime += increment
+        manager.sendBroadcast(intent)
     }
 
-    private fun generateTimeUntilNextPhotoNotification(): Int {
-        return (BASE_WAITING_TIME + random.nextInt(MAX_RANGE_OF_ADDED_TIME)) * MODIFIER_FOR_SECONDS
+    private fun startTimerRunnable() {
+        timer = Timer()
+            .apply {
+                schedule(timerTask, increment.toLong(), increment.toLong())
+            }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler?.removeCallbacks(randomTimerRunnable)
-        handler = null
-    }
-
-    companion object {
-
-        //all times are in milliseconds
-        private val BASE_WAITING_TIME = 1
-        private val MAX_RANGE_OF_ADDED_TIME = 10
-        private val MODIFIER_FOR_SECONDS = 1000
+        timer?.cancel()
+        timer = null
     }
 }
 
