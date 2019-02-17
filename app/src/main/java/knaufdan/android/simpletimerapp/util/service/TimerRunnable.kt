@@ -1,15 +1,10 @@
 package knaufdan.android.simpletimerapp.util.service
 
-import android.util.Log
+import java.util.*
 
-internal class TimerRunnable(
-        private val timerService: TimerService,
-        private val displayTime: Int
-) : Runnable {
-
+internal class TimerRunnable(private val timerService: TimerService) : TimerTask() {
     override fun run() {
-        Log.d("Service", "Run service with $displayTime")
-        timerService.startHandlerWithRandomTimer()
+        timerService.sendUpdate()
     }
 }
 

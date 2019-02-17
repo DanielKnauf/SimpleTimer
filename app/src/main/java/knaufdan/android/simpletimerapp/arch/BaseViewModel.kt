@@ -9,6 +9,6 @@ abstract class BaseViewModel : ViewModel() {
     protected var tag: String = this.javaClass.name
 
     open fun init(bundle: Bundle?) {
-        // to be overwritten
+        //can be overwritten
     }
 }

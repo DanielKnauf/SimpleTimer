@@ -12,7 +12,6 @@ import knaufdan.android.simpletimerapp.util.ContextProvider
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-
 abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
     @Inject
@@ -21,40 +20,51 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var viewModel: V
+    protected lateinit var viewModel: V
+
+    protected abstract fun configureView(): ViewConfig
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        val activityParameters = activityParameters()
+        val viewConfig = configureView()
 
         contextProvider.context = this
 
-        setBinding(activityParameters)
+        setBinding(viewConfig, savedInstanceState)
 
-        activityParameters.titleRes?.let { setTitle(it) }
+        viewConfig.titleRes?.let { setTitle(it) }
     }
 
-    private fun setBinding(activityParameters: Config) {
-        if (activityParameters.layoutRes == null) {
-            throw IllegalArgumentException("Activity parameters for " + javaClass.name + " have no layout resource.")
-        } else if (activityParameters.viewModelKey == null) {
-            throw IllegalArgumentException("Activity parameters for " + javaClass.name + " have no viewModel key.")
+    private fun setBinding(
+        viewConfig: ViewConfig,
+        savedInstanceState: Bundle?
+    ) {
+        checkNotNull(viewConfig.layoutRes) {
+            "Activity parameters for " + this::class.simpleName + " have no layout resource."
+        }
+
+        checkNotNull(viewConfig.viewModelKey) {
+            "Activity parameters for " + this::class.simpleName + " have no viewModel key."
         }
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
 
-        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, activityParameters.layoutRes)
+        if (viewModel is BaseViewModel
+            //do only initiate view model on first start
+            && savedInstanceState == null
+        ) {
+            (viewModel as BaseViewModel).init(intent.extras)
+        }
+
+        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes)
         binding.setLifecycleOwner(this)
-        binding.setVariable(activityParameters.viewModelKey, viewModel)
+        binding.setVariable(viewConfig.viewModelKey, viewModel)
     }
 
-    protected abstract fun activityParameters(): Config
-
     @Suppress("UNCHECKED_CAST")
-    private val typeOfViewModel: Class<V>
-        get() = (javaClass
-                .genericSuperclass as ParameterizedType)
-                .actualTypeArguments[0] as Class<V>
+    private val typeOfViewModel: Class<V> =
+        (javaClass.genericSuperclass as ParameterizedType)
+            .actualTypeArguments[0] as Class<V>
 }
