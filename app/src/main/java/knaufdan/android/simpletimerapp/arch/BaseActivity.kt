@@ -74,10 +74,9 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
     ) {
         val initialPage = viewConfig.initialPage
 
-        if (this is HasFragmentFlow && initialPage >= 0) {
-            flowTo(initialPage, false, savedInstanceState)
-        } else if (this !is HasFragmentFlow && initialPage >= 0) {
-            Log.e(
+        if (initialPage >= 0) {
+            if (this is HasFragmentFlow) flowTo(initialPage, false, savedInstanceState)
+            else Log.e(
                 className,
                 "Found an initialPage to display (#$initialPage), but $className does not implement " + HasFragmentFlow::class.simpleName
             )
