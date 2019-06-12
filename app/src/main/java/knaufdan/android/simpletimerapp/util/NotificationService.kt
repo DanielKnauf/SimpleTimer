@@ -11,15 +11,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_ALARM
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.MainActivity
-import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
-import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NotificationService @Inject constructor(
     private val contextProvider: ContextProvider,
-    private val sharedPrefService: SharedPrefService,
     private val textProvider: TextProvider
 ) {
 
@@ -30,8 +27,6 @@ class NotificationService @Inject constructor(
 
     fun sendTimerFinishedNotification() {
         createNotificationChannel()
-
-        sharedPrefService.saveTo(STATE_KEY, TimerState.FINISH_STATE)
 
         val notification = contextProvider.context.buildNotification()
 
