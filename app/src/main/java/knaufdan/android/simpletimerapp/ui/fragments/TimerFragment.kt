@@ -8,17 +8,25 @@ import knaufdan.android.simpletimerapp.arch.ViewConfig
 class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
 
     override fun configureView(): ViewConfig = ViewConfig.Builder()
-            .setLayoutRes(R.layout.timer_fragment)
-            .setViewModelKey(BR.viewModel)
-            .build()
+        .setLayoutRes(R.layout.timer_fragment)
+        .setViewModelKey(BR.viewModel)
+        .build()
 
     override fun onPause() {
         super.onPause()
 
         viewModel.stopReceivingUpdates()
 
-        if (!backPressed) {
-            viewModel.setUpAlarm()
+        if (doNotSetUpAlarm()) {
+            return
         }
+        viewModel.setUpAlarm()
+    }
+
+    private fun doNotSetUpAlarm() = isBackPressed || viewModel.isFinished()
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.restart()
     }
 }

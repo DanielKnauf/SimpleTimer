@@ -11,11 +11,7 @@ class TimerProgressViewModel : ProgressBarViewModel {
         maximum.value = 0
     }
 
-    override fun increaseProgress(increment: Int) {
-        progress.postValue(progress.value?.plus(increment))
-    }
+    override fun increaseProgress(increment: Int) = progress.postValue(progress.value?.plus(increment))
 
-    override fun calculateRemainingProgress(): Long {
-        return progress.value?.let { maximum.value?.minus(it) }?.toLong() ?: 0
-    }
+    override fun calculateRemainingProgress() = progress.value?.let { maximum.value?.minus(it) }?.toLong() ?: 0
 }

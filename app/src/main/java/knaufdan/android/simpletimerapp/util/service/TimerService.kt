@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.android.AndroidInjection
+import knaufdan.android.simpletimerapp.util.Constants.ADJUSTED_PROGRESS_KEY
 import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
 import knaufdan.android.simpletimerapp.util.Constants.INCREMENT_KEY
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE
@@ -15,14 +16,11 @@ import javax.inject.Inject
 class TimerService @Inject constructor() : Service() {
 
     private lateinit var manager: LocalBroadcastManager
+
     private var timer: Timer? = null
-    private var timerTask: TimerTask? = TimerRunnable(this)
 
-    private var endTime: Int = -1
     private var currentTime = 0
-
-    //define the period of time for the UI updates here
-    private val increment = SECOND * 1
+    private var endTime: Int = -1
 
     override fun onCreate() {
         AndroidInjection.inject(this)
@@ -38,24 +36,26 @@ class TimerService @Inject constructor() : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         endTime = intent.getIntExtra(END_TIME_KEY, MINUTE)
-        currentTime = 0
+        currentTime = intent.getIntExtra(ADJUSTED_PROGRESS_KEY, DEFAULT_START_TIME)
         startTimerRunnable()
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     fun sendUpdate() {
         val intent = Intent()
-            .apply { action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name }
-            .apply { putExtra(INCREMENT_KEY, increment) }
+            .apply {
+                action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name
+                putExtra(INCREMENT_KEY, INCREMENT)
+            }
 
-        currentTime += increment
+        currentTime = currentTime.plus(INCREMENT)
         manager.sendBroadcast(intent)
     }
 
     private fun startTimerRunnable() {
         timer = Timer()
             .apply {
-                schedule(timerTask, increment.toLong(), increment.toLong())
+                schedule(TimerRunnable(this@TimerService), INCREMENT.toLong(), INCREMENT.toLong())
             }
     }
 
@@ -63,6 +63,12 @@ class TimerService @Inject constructor() : Service() {
         super.onDestroy()
         timer?.cancel()
         timer = null
+    }
+
+    companion object {
+        //define the period of time for the UI updates here
+        const val INCREMENT = SECOND * 1
+        const val DEFAULT_START_TIME = 0
     }
 }
 

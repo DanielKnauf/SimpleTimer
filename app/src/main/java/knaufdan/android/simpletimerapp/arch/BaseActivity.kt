@@ -1,6 +1,7 @@
 package knaufdan.android.simpletimerapp.arch
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -24,6 +25,8 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
     protected abstract fun configureView(): ViewConfig
 
+    protected var className: String? = this::class.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -34,7 +37,9 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
         setBinding(viewConfig, savedInstanceState)
 
-        viewConfig.titleRes?.let { setTitle(it) }
+        setTitle(viewConfig.titleRes)
+
+        showInitialPage(viewConfig, savedInstanceState)
     }
 
     private fun setBinding(
@@ -42,11 +47,11 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
         savedInstanceState: Bundle?
     ) {
         checkNotNull(viewConfig.layoutRes) {
-            "Activity parameters for " + this::class.simpleName + " have no layout resource."
+            "Activity parameters for $className have no layout resource."
         }
 
         checkNotNull(viewConfig.viewModelKey) {
-            "Activity parameters for " + this::class.simpleName + " have no viewModel key."
+            "Activity parameters for $className have no viewModel key."
         }
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
@@ -59,8 +64,23 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
         }
 
         val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.setVariable(viewConfig.viewModelKey, viewModel)
+    }
+
+    private fun showInitialPage(
+        viewConfig: ViewConfig,
+        savedInstanceState: Bundle?
+    ) {
+        val initialPage = viewConfig.initialPage
+
+        if (initialPage >= 0) {
+            if (this is HasFragmentFlow) flowTo(initialPage, false, savedInstanceState)
+            else Log.e(
+                className,
+                "Found an initialPage to display (#$initialPage), but $className does not implement " + HasFragmentFlow::class.simpleName
+            )
+        }
     }
 
     @Suppress("UNCHECKED_CAST")

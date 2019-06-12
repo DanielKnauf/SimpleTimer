@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected var tag: String = this.javaClass.name
+    protected var className: String? = this::class.simpleName
 
-    open fun init(bundle: Bundle?) {
-        //can be overwritten
-    }
+    open fun init(bundle: Bundle?) {}
 }

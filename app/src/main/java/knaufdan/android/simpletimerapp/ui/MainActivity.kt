@@ -10,13 +10,27 @@ import knaufdan.android.simpletimerapp.arch.ViewConfig
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
 import knaufdan.android.simpletimerapp.ui.fragments.TimerFragment
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
+import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.INPUT
+import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
+import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
+import knaufdan.android.simpletimerapp.util.SharedPrefService
+import knaufdan.android.simpletimerapp.util.service.TimerState
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    @Inject
+    lateinit var sharedPrefService: SharedPrefService
 
-        flowTo(FragmentPage.INPUT.ordinal, false, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+
+        val state = sharedPrefService.retrieveString(STATE_KEY)
+
+        if (TimerState.FINISH_STATE.name == state) {
+            supportFragmentManager.popBackStackImmediate()
+            flowTo(INPUT.ordinal, false, null)
+        }
     }
 
     override fun flowTo(pageNumber: Int, addToBackStack: Boolean, bundle: Bundle?) {
@@ -34,8 +48,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
     private fun determineFragment(page: FragmentPage, bundle: Bundle?) =
         when (page) {
-            FragmentPage.INPUT -> InputFragment()
-            FragmentPage.TIMER -> TimerFragment().apply { arguments = bundle }
+            INPUT -> InputFragment()
+            TIMER -> TimerFragment().apply { arguments = bundle }
         }
 
     override fun onBackPressed() {
@@ -53,6 +67,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
             .setLayoutRes(R.layout.activity_main)
             .setViewModelKey(BR.viewModel)
             .setTitleRes(R.string.app_name)
+            .setInitialPage(INPUT)
             .build()
 }
 

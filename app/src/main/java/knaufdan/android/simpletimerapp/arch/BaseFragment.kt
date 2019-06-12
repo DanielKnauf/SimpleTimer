@@ -24,7 +24,7 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
 
     protected abstract fun configureView(): ViewConfig
 
-    protected var backPressed = false
+    protected var isBackPressed = false
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -52,7 +52,7 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
         }
 
         val binding: ViewDataBinding = DataBindingUtil.inflate(inflater, config.layoutRes, container, false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.setVariable(config.viewModelKey, viewModel)
 
         return binding.root
@@ -60,11 +60,11 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        backPressed = false
+        isBackPressed = false
     }
 
     fun onBackPress() {
-        backPressed = true
+        isBackPressed = true
     }
 
     @Suppress("UNCHECKED_CAST")
