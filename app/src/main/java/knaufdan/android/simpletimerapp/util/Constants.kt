@@ -3,7 +3,7 @@ package knaufdan.android.simpletimerapp.util
 object Constants {
     const val INCREMENT_KEY = "increment"
     const val END_TIME_KEY = "end_time"
-    const val CURRENT_TIME_KEY = "current_time"
+    const val ADJUSTED_PROGRESS_KEY = "current_time"
 
     const val MINUTE = 60000
     const val SECOND = 1000

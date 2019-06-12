@@ -5,7 +5,7 @@ import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
-import knaufdan.android.simpletimerapp.util.Constants.CURRENT_TIME_KEY
+import knaufdan.android.simpletimerapp.util.Constants.ADJUSTED_PROGRESS_KEY
 import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
 import knaufdan.android.simpletimerapp.util.Constants.INCREMENT_KEY
 import knaufdan.android.simpletimerapp.util.Constants.PAUSE_TIME_KEY
@@ -87,14 +87,16 @@ class TimerFragmentViewModel @Inject constructor(
             val max = maximum.value ?: 0
             val current = progress.value ?: 0
 
-            val bundle: Bundle = Bundle().apply {
-                putInt(END_TIME_KEY, max)
-                putInt(CURRENT_TIME_KEY, current.plus(delta))
-            }
+            val bundle: Bundle = createBundle(max, current.plus(delta))
 
             serviceUtil.startService(TimerService::class, bundle)
             broadcastUtil.registerBroadcastReceiver(updateReceiver)
         }
+    }
+
+    private fun createBundle(max: Int, adjustedTime: Int) = Bundle().apply {
+        putInt(END_TIME_KEY, max)
+        putInt(ADJUSTED_PROGRESS_KEY, adjustedTime)
     }
 
     fun isFinished(): Boolean = timerFinished
