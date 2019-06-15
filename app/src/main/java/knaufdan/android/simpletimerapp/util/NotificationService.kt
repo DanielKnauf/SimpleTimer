@@ -34,8 +34,8 @@ class NotificationService @Inject constructor(
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-            && notificationManager.getNotificationChannel(channelId) == null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            notificationManager.getNotificationChannel(channelId) == null
         ) {
             val name = textProvider.getText(R.string.timer_finished_notification_channel_name)
             val description = textProvider.getText(R.string.timer_finished_notification_channel_description)

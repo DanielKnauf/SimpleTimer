@@ -70,4 +70,3 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
             .setInitialPage(INPUT)
             .build()
 }
-

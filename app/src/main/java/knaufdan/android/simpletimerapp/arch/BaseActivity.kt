@@ -57,7 +57,7 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
 
         if (viewModel is BaseViewModel
-            //do only initiate view model on first start
+            // do only initiate view model on first start
             && savedInstanceState == null
         ) {
             (viewModel as BaseViewModel).init(intent.extras)

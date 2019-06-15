@@ -66,10 +66,8 @@ class TimerService @Inject constructor() : Service() {
     }
 
     companion object {
-        //define the period of time for the UI updates here
+        // define the period of time for the UI updates here
         const val INCREMENT = SECOND * 1
         const val DEFAULT_START_TIME = 0
     }
 }
-
-
