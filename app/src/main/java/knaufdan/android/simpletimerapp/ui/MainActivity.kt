@@ -47,10 +47,10 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     }
 
     private fun determineFragment(page: FragmentPage, bundle: Bundle?) =
-        when (page) {
-            INPUT -> InputFragment()
-            TIMER -> TimerFragment().apply { arguments = bundle }
-        }
+            when (page) {
+                INPUT -> InputFragment()
+                TIMER -> TimerFragment().apply { arguments = bundle }
+            }
 
     override fun onBackPressed() {
         supportFragmentManager.fragments[0]?.let {
@@ -63,11 +63,15 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     }
 
     override fun configureView() =
-        ViewConfig.Builder()
-            .setLayoutRes(R.layout.activity_main)
-            .setViewModelKey(BR.viewModel)
-            .setTitleRes(R.string.app_name)
-            .setInitialPage(INPUT)
-            .build()
+            ViewConfig.Builder()
+                    .setLayoutRes(R.layout.activity_main)
+                    .setViewModelKey(BR.viewModel)
+                    .setTitleRes(R.string.app_name)
+                    .setInitialPage(determineInitialPage())
+                    .build()
+
+    private fun determineInitialPage() =
+            if (sharedPrefService.retrieveString(STATE_KEY) == TimerState.RESTARTED_IN_BACKGROUND.name) TIMER
+            else INPUT
 }
 

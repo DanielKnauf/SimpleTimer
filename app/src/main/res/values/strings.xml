@@ -13,10 +13,13 @@
     <!-- timer input -->
     <string name="timer_input_hint_text">Minutes</string>
 
+    <string name="timer_input_repeat_switch_text">isOnRepeat</string>
+
     <!-- notification -->
     <string name="timer_finished_notification_channel_name">Finished timer alarm</string>
     <string name="timer_finished_notification_channel_description">Make sound and pop on screen</string>
     <string name="timer_finished_notification_title">Wohooo&#8230;</string>
     <string name="timer_finished_notification_content_text">The timer has finished!</string>
+    <string name="timer_restart_notification_content_text">The timer has been restarted!</string>
 
 </resources>

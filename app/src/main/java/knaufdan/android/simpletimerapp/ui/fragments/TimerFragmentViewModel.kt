@@ -8,6 +8,7 @@ import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
 import knaufdan.android.simpletimerapp.util.Constants.ADJUSTED_PROGRESS_KEY
 import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
 import knaufdan.android.simpletimerapp.util.Constants.INCREMENT_KEY
+import knaufdan.android.simpletimerapp.util.Constants.IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.PAUSE_TIME_KEY
 import knaufdan.android.simpletimerapp.util.Constants.SECOND
 import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
@@ -23,17 +24,19 @@ import java.util.*
 import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
-    private val alarmService: AlarmService,
-    private val broadcastUtil: BroadcastUtil,
-    private val navigator: Navigator,
-    private val serviceUtil: ServiceUtil,
-    private val sharedPrefService: SharedPrefService
+        private val alarmService: AlarmService,
+        private val broadcastUtil: BroadcastUtil,
+        private val navigator: Navigator,
+        private val serviceUtil: ServiceUtil,
+        private val sharedPrefService: SharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
     var timerFinished = false
 
+    private var isOnRepeat = false
+
     private val updateReceiver =
-        UpdateReceiver(Action.values()) { action: String, extras: Bundle? -> perform(action, extras) }
+            UpdateReceiver(Action.values()) { action: String, extras: Bundle? -> perform(action, extras) }
 
     private fun perform(receivedAction: String, bundle: Bundle?) {
         when (Action.valueOf(receivedAction)) {
@@ -48,18 +51,36 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun finish() {
-        timerFinished = true
         stopReceivingUpdates()
-        navigator.navigateToInput()
+
+        if (isOnRepeat) {
+            progress.value = 0
+            broadcastUtil.registerBroadcastReceiver(updateReceiver)
+            serviceUtil.startService(TimerService::class,
+                    Bundle().apply {
+                        putInt(END_TIME_KEY, maximum.value!!)
+                    }
+            )
+        } else {
+            timerFinished = true
+            navigator.navigateToInput()
+        }
     }
 
     override fun init(bundle: Bundle?) {
         super.init(bundle)
 
+        if (sharedPrefService.retrieveString(STATE_KEY) == TimerState.RESTARTED_IN_BACKGROUND.name) {
+            isOnRepeat = true
+            return
+        }
+
         bundle?.let {
             maximum.value = it.getInt(END_TIME_KEY)
-            serviceUtil.startService(TimerService::class, it)
+            sharedPrefService.saveTo(END_TIME_KEY, maximum.value)
             broadcastUtil.registerBroadcastReceiver(updateReceiver)
+            serviceUtil.startService(TimerService::class, it)
+            isOnRepeat = it.getBoolean(IS_ON_REPEAT, false)
         }
     }
 
@@ -71,14 +92,24 @@ class TimerFragmentViewModel @Inject constructor(
     fun setUpAlarm() {
         sharedPrefService.saveTo(STATE_KEY, TimerState.PAUSE_STATE)
         sharedPrefService.saveTo(PAUSE_TIME_KEY, Date().time)
-        alarmService.setAlarm(calculateRemainingProgress())
+        alarmService.setAlarm(calculateRemainingProgress(),
+                Bundle().apply {
+                    putBoolean(IS_ON_REPEAT, isOnRepeat)
+                    putInt(END_TIME_KEY, maximum.value!!)
+                }
+        )
     }
 
     fun restart() {
         val state = sharedPrefService.retrieveString(STATE_KEY)
 
-        if (TimerState.PAUSE_STATE.name == state) {
+        if (TimerState.PAUSE_STATE.name == state || TimerState.RESTARTED_IN_BACKGROUND.name == state) {
             alarmService.cancelAlarm()
+
+            if (TimerState.RESTARTED_IN_BACKGROUND.name == state) {
+                progress.value = 0
+                maximum.value = sharedPrefService.retrieveInt(END_TIME_KEY)
+            }
 
             val pauseTime = sharedPrefService.retrieveLong(PAUSE_TIME_KEY)
             val delta = (Date().time - pauseTime).toInt()
@@ -89,8 +120,8 @@ class TimerFragmentViewModel @Inject constructor(
 
             val bundle: Bundle = createBundle(max, current.plus(delta))
 
-            serviceUtil.startService(TimerService::class, bundle)
             broadcastUtil.registerBroadcastReceiver(updateReceiver)
+            serviceUtil.startService(TimerService::class, bundle)
         }
     }
 
