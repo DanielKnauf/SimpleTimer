@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.android.AndroidInjection
-import knaufdan.android.simpletimerapp.util.Constants.ADJUSTED_PROGRESS_KEY
-import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
-import knaufdan.android.simpletimerapp.util.Constants.INCREMENT_KEY
+import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_END_TIME
+import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND
 import java.util.*
@@ -35,8 +35,8 @@ class TimerService @Inject constructor() : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        endTime = intent.getIntExtra(END_TIME_KEY, MINUTE)
-        currentTime = intent.getIntExtra(ADJUSTED_PROGRESS_KEY, DEFAULT_START_TIME)
+        endTime = intent.getIntExtra(KEY_CURRENT_END_TIME, MINUTE)
+        currentTime = intent.getIntExtra(KEY_ADJUSTED_PROGRESS, DEFAULT_START_TIME)
         startTimerRunnable()
         return START_STICKY
     }
@@ -45,7 +45,7 @@ class TimerService @Inject constructor() : Service() {
         val intent = Intent()
             .apply {
                 action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name
-                putExtra(INCREMENT_KEY, INCREMENT)
+                putExtra(KEY_LINEAR_INCREMENT, INCREMENT)
             }
 
         currentTime = currentTime.plus(INCREMENT)

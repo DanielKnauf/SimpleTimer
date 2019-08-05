@@ -3,11 +3,10 @@ package knaufdan.android.simpletimerapp.util.alarm
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
-import knaufdan.android.simpletimerapp.util.Constants
-import knaufdan.android.simpletimerapp.util.Constants.END_TIME_KEY
-import knaufdan.android.simpletimerapp.util.Constants.IS_ON_REPEAT
-import knaufdan.android.simpletimerapp.util.Constants.PAUSE_TIME_KEY
-import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_END_TIME
+import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
+import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
+import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.NotificationService
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.service.TimerState
@@ -28,20 +27,20 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
 
-        if (intent.hasExtra(IS_ON_REPEAT)
-            && intent.getBooleanExtra(IS_ON_REPEAT, false)
-            && intent.hasExtra(END_TIME_KEY)
+        if (intent.hasExtra(KEY_IS_ON_REPEAT)
+            && intent.getBooleanExtra(KEY_IS_ON_REPEAT, false)
+            && intent.hasExtra(KEY_CURRENT_END_TIME)
         ) {
-            sharedPrefService.saveTo(PAUSE_TIME_KEY, Date().time)
-            sharedPrefService.saveTo(STATE_KEY, TimerState.RESTARTED_IN_BACKGROUND)
+            sharedPrefService.saveTo(KEY_PAUSE_TIME, Date().time)
+            sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESTARTED_IN_BACKGROUND)
 
-            val endTime = intent.getIntExtra(END_TIME_KEY, 0)
+            val endTime = intent.getIntExtra(KEY_CURRENT_END_TIME, 0)
 
             alarmService.setAlarm(endTime.toLong(), intent.extras)
 
             notificationService.sendTimerRestartNotification()
         } else {
-            sharedPrefService.saveTo(Constants.STATE_KEY, TimerState.FINISH_STATE)
+            sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.FINISH_STATE)
 
             notificationService.sendTimerFinishedNotification()
         }

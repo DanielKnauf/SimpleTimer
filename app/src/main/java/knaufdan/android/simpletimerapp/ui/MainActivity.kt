@@ -12,7 +12,7 @@ import knaufdan.android.simpletimerapp.ui.fragments.TimerFragment
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.INPUT
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
-import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
+import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject
@@ -25,11 +25,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     override fun onResume() {
         super.onResume()
 
-        val state = sharedPrefService.retrieveString(STATE_KEY)
-
-        if (TimerState.FINISH_STATE.name == state) {
-            supportFragmentManager.popBackStackImmediate()
-            flowTo(INPUT.ordinal, false, null)
+        if (hasTimerState(TimerState.FINISH_STATE)) {
+            resetAppToStart()
         }
     }
 
@@ -47,31 +44,40 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     }
 
     private fun determineFragment(page: FragmentPage, bundle: Bundle?) =
-            when (page) {
-                INPUT -> InputFragment()
-                TIMER -> TimerFragment().apply { arguments = bundle }
-            }
+        when (page) {
+            INPUT -> InputFragment()
+            TIMER -> TimerFragment().apply { arguments = bundle }
+        }
 
     override fun onBackPressed() {
-        supportFragmentManager.fragments[0]?.let {
-            if (it is BaseFragment<*>) {
-                it.onBackPress()
+        supportFragmentManager.fragments[0]?.let { fragment ->
+            if (fragment is BaseFragment<*>) {
+                fragment.onBackPress()
             }
         }
 
-        super.onBackPressed()
+        if (supportFragmentManager.backStackEntryCount == 0) resetAppToStart()
+        else super.onBackPressed()
+    }
+
+    private fun resetAppToStart() {
+        supportFragmentManager.popBackStackImmediate()
+        flowTo(INPUT.ordinal, false, null)
     }
 
     override fun configureView() =
-            ViewConfig.Builder()
-                    .setLayoutRes(R.layout.activity_main)
-                    .setViewModelKey(BR.viewModel)
-                    .setTitleRes(R.string.app_name)
-                    .setInitialPage(determineInitialPage())
-                    .build()
+        ViewConfig.Builder()
+            .setLayoutRes(R.layout.activity_main)
+            .setViewModelKey(BR.viewModel)
+            .setTitleRes(R.string.app_name)
+            .setInitialPage(determineInitialPage())
+            .build()
 
     private fun determineInitialPage() =
-            if (sharedPrefService.retrieveString(STATE_KEY) == TimerState.RESTARTED_IN_BACKGROUND.name) TIMER
-            else INPUT
+        if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) TIMER
+        else INPUT
+
+    private fun hasTimerState(expectedState: TimerState) =
+        sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
 }
 
