@@ -56,7 +56,10 @@ class TimerFragmentViewModel @Inject constructor(
 
         val maxValue = maximum.value
 
-        if (isOnRepeat && maxValue != null) {
+        if (isOnRepeat
+            && maxValue != null
+            && maxValue > 0
+        ) {
             progress.value = 0
             broadcastUtil.registerBroadcastReceiver(updateReceiver)
             serviceUtil.startService(TimerService::class, createBundleForTimerService(maxValue))

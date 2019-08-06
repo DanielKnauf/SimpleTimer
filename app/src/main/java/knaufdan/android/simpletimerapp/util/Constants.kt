@@ -2,7 +2,7 @@ package knaufdan.android.simpletimerapp.util
 
 object Constants {
     const val KEY_LINEAR_INCREMENT = "knaufdan.android.simpletimerapp.linearincrement"
-    const val KEY_CURRENT_MAXIMUM = "knaufdan.android.simpletimerapp.currentendtime"
+    const val KEY_CURRENT_MAXIMUM = "knaufdan.android.simpletimerapp.currentmaximum"
     const val KEY_ADJUSTED_PROGRESS = "knaufdan.android.simpletimerapp.adjustedprogress"
     const val KEY_PAUSE_TIME = "knaufdan.android.simpletimerapp.pausetime"
 
