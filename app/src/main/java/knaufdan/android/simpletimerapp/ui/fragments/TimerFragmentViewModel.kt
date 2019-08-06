@@ -6,12 +6,12 @@ import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
-import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_END_TIME
-import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
+import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
-import knaufdan.android.simpletimerapp.util.Constants.SECOND
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
+import knaufdan.android.simpletimerapp.util.Constants.SECOND
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.alarm.AlarmService
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
@@ -73,8 +73,8 @@ class TimerFragmentViewModel @Inject constructor(
             isOnRepeat = true
         } else {
             bundle?.let {
-                maximum.value = it.getInt(KEY_CURRENT_END_TIME)
-                sharedPrefService.saveTo(KEY_CURRENT_END_TIME, maximum.value)
+                maximum.value = it.getInt(KEY_CURRENT_MAXIMUM)
+                sharedPrefService.saveTo(KEY_CURRENT_MAXIMUM, maximum.value)
                 broadcastUtil.registerBroadcastReceiver(updateReceiver)
                 serviceUtil.startService(TimerService::class, it)
                 isOnRepeat = it.getBoolean(KEY_IS_ON_REPEAT, false)
@@ -95,7 +95,7 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun createBundleForAlarmService() = Bundle().apply {
         putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
-        putInt(KEY_CURRENT_END_TIME, maximum.value ?: 0)
+        putInt(KEY_CURRENT_MAXIMUM, maximum.value ?: 0)
     }
 
     fun restart() {
@@ -104,7 +104,7 @@ class TimerFragmentViewModel @Inject constructor(
 
             if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
                 progress.value = 0
-                maximum.value = sharedPrefService.retrieveInt(KEY_CURRENT_END_TIME)
+                maximum.value = sharedPrefService.retrieveInt(KEY_CURRENT_MAXIMUM)
             }
 
             val pauseTime = sharedPrefService.retrieveLong(KEY_PAUSE_TIME)
@@ -120,7 +120,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun createBundleForTimerService(max: Int, adjustedTime: Int = 0) = Bundle().apply {
-        putInt(KEY_CURRENT_END_TIME, max)
+        putInt(KEY_CURRENT_MAXIMUM, max)
         putInt(KEY_ADJUSTED_PROGRESS, adjustedTime)
     }
 

@@ -6,11 +6,11 @@ import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.android.AndroidInjection
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
-import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_END_TIME
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND
-import java.util.*
+import java.util.Timer
 import javax.inject.Inject
 
 class TimerService @Inject constructor() : Service() {
@@ -35,7 +35,7 @@ class TimerService @Inject constructor() : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        endTime = intent.getIntExtra(KEY_CURRENT_END_TIME, MINUTE)
+        endTime = intent.getIntExtra(KEY_CURRENT_MAXIMUM, MINUTE)
         currentTime = intent.getIntExtra(KEY_ADJUSTED_PROGRESS, DEFAULT_START_TIME)
         startTimerRunnable()
         return START_STICKY

@@ -2,7 +2,7 @@ package knaufdan.android.simpletimerapp.ui.navigation
 
 import android.os.Bundle
 import knaufdan.android.simpletimerapp.arch.HasFragmentFlow
-import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_END_TIME
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class Navigator @Inject constructor(private val contextProvider: ContextProvider
                     true,
                     Bundle()
                         .apply {
-                            putInt(KEY_CURRENT_END_TIME, endTimeInMinutes)
+                            putInt(KEY_CURRENT_MAXIMUM, endTimeInMinutes)
                             putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
                         }
                 )
