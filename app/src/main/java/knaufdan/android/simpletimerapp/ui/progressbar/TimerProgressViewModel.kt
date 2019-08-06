@@ -1,15 +1,10 @@
 package knaufdan.android.simpletimerapp.ui.progressbar
 
-import androidx.lifecycle.MutableLiveData
+import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 
 class TimerProgressViewModel : ProgressBarViewModel {
-    override val maximum: MutableLiveData<Int> = MutableLiveData()
-    override val progress: MutableLiveData<Int> = MutableLiveData()
-
-    init {
-        progress.value = 0
-        maximum.value = 0
-    }
+    override val maximum = ExtMutableLiveData(0)
+    override val progress = ExtMutableLiveData(0)
 
     override fun increaseProgress(increment: Int) = progress.postValue(progress.value?.plus(increment))
 

@@ -2,12 +2,13 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.view.View
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
+import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
+import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE
-import knaufdan.android.simpletimerapp.util.Constants.STATE_KEY
 import knaufdan.android.simpletimerapp.util.SharedPrefService
+import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject
 
@@ -16,21 +17,21 @@ class InputFragmentViewModel @Inject constructor(
     sharedPrefService: SharedPrefService
 ) : BaseViewModel() {
 
-    val timePerCycle: MutableLiveData<Int?> = MutableLiveData()
+    val timePerCycle = ExtMutableLiveData<Int?>(1)
 
-    val isEnabled: MediatorLiveData<Boolean> = MediatorLiveData()
+    val isEnabled = MediatorLiveData<Boolean>()
 
-    val continueButtonClick: View.OnClickListener = View.OnClickListener {
-        timePerCycle.value?.let { input -> navigator.navigateToTimer(input.times(MINUTE)) }
+    val isOnRepeat = ExtMutableLiveData(false)
+
+    val continueButtonClick = View.OnClickListener {
+        timePerCycle.value?.let { input -> navigator.navigateToTimer(input.times(MINUTE), safeUnBox(isOnRepeat.value)) }
     }
 
     init {
-        sharedPrefService.saveTo(STATE_KEY, TimerState.RESET_STATE)
+        sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
 
-        timePerCycle.value = 1
-
-        isEnabled.addSource(timePerCycle) {
-            isEnabled.postValue(it != null && it > 0)
+        isEnabled.addSource(timePerCycle) { time ->
+            isEnabled.postValue(time != null && time > 0)
         }
     }
 }

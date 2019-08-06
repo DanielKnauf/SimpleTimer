@@ -8,35 +8,31 @@ class SharedPrefService @Inject constructor(private val contextProvider: Context
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
 
-    fun saveTo(key: String, value: Any) {
+    fun saveTo(key: String, value: Any?) {
         val sharedPref = getSharedPref()
 
         with(sharedPref.edit()) {
-            putValue(value, key)
-
-            apply()
+            value?.let {
+                putValue(it, key)
+                apply()
+            }
         }
     }
 
     private fun SharedPreferences.Editor.putValue(value: Any, key: String) {
         when (value) {
+            is Int -> putInt(key, value)
             is Long -> putLong(key, value)
             is String -> putString(key, value)
             is Enum<*> -> putString(key, value.name)
         }
     }
 
-    fun retrieveString(key: String): String? {
-        val sharedPref = getSharedPref()
+    fun retrieveString(key: String): String? = getSharedPref().getString(key, "")
 
-        return sharedPref.getString(key, "")
-    }
+    fun retrieveLong(key: String) = getSharedPref().getLong(key, 0)
 
-    fun retrieveLong(key: String): Long {
-        val sharedPref = getSharedPref()
-
-        return sharedPref.getLong(key, 0)
-    }
+    fun retrieveInt(key: String)= getSharedPref().getInt(key, 0)
 
     private fun getSharedPref() = contextProvider.context.getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
 }
