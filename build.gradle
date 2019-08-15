@@ -5,7 +5,7 @@ buildscript {
         dagger_version = '2.16'
         mockito_version = '2.8.9'
         kotlin_version = '1.3.31'
-        gradle_version = '3.4.1'
+        gradle_version = '3.4.2'
         appcompat_version = '1.1.0-beta01'
         constraint_layout_version = '2.0.0-beta1'
         test_runner_version = '1.2.0'
