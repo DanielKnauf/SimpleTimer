@@ -46,10 +46,10 @@ class TimerService @Inject constructor() : Service() {
             .apply {
                 action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name
                 putExtra(KEY_LINEAR_INCREMENT, INCREMENT)
-            }.also {
-                currentTime = currentTime.plus(INCREMENT)
-                manager.sendBroadcast(it)
+                manager.sendBroadcast(this)
             }
+
+        currentTime = currentTime.plus(INCREMENT)
     }
 
     private fun startTimerRunnable() {

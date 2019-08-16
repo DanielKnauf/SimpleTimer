@@ -14,8 +14,8 @@ class BroadcastUtil @Inject constructor(private val contextProvider: ContextProv
                 for (action: String in broadcastReceiver.getSupportedActions()) {
                     addAction(action)
                 }
-            }.also {
-                LocalBroadcastManager.getInstance(contextProvider.context).registerReceiver(broadcastReceiver, it)
+
+                LocalBroadcastManager.getInstance(contextProvider.context).registerReceiver(broadcastReceiver, this)
             }
     }
 
