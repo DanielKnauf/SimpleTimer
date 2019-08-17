@@ -15,7 +15,9 @@ import javax.inject.Inject
 
 class TimerService @Inject constructor() : Service() {
 
-    private lateinit var manager: LocalBroadcastManager
+    private val manager: LocalBroadcastManager by lazy {
+        LocalBroadcastManager.getInstance(this@TimerService.applicationContext)
+    }
 
     private var timer: Timer? = null
 
@@ -25,8 +27,6 @@ class TimerService @Inject constructor() : Service() {
     override fun onCreate() {
         AndroidInjection.inject(this)
         super.onCreate()
-
-        manager = LocalBroadcastManager.getInstance(this.applicationContext)
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -42,20 +42,24 @@ class TimerService @Inject constructor() : Service() {
     }
 
     fun sendUpdate() {
-        val intent = Intent()
+        Intent()
             .apply {
                 action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name
                 putExtra(KEY_LINEAR_INCREMENT, INCREMENT)
+                manager.sendBroadcast(this)
             }
 
         currentTime = currentTime.plus(INCREMENT)
-        manager.sendBroadcast(intent)
     }
 
     private fun startTimerRunnable() {
         timer = Timer()
             .apply {
-                schedule(TimerRunnable(this@TimerService), INCREMENT.toLong(), INCREMENT.toLong())
+                schedule(
+                    TimerRunnable(this@TimerService),
+                    INCREMENT.toLong(),
+                    INCREMENT.toLong()
+                )
             }
     }
 
