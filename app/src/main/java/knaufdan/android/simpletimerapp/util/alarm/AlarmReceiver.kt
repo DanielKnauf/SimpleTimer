@@ -10,7 +10,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.NotificationService
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 
 class AlarmReceiver : DaggerBroadcastReceiver() {

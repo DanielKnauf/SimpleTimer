@@ -21,7 +21,7 @@ import knaufdan.android.simpletimerapp.util.service.ServiceUtil
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.*
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(

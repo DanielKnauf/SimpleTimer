@@ -5,11 +5,7 @@ import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
 import androidx.fragment.app.Fragment
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
-import dagger.android.HasServiceInjector
+import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject

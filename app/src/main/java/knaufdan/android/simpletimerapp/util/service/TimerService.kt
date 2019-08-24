@@ -10,7 +10,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND
-import java.util.Timer
+import java.util.*
 import javax.inject.Inject
 
 class TimerService @Inject constructor() : Service() {
