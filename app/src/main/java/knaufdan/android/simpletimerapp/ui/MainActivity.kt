@@ -52,7 +52,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     override fun onBackPressed() {
         supportFragmentManager.fragments[0]?.let { fragment ->
             if (fragment is BaseFragment<*>) {
-                fragment.onBackPress()
+                fragment.isBackPressed = true
             }
         }
 

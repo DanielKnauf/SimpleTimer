@@ -15,6 +15,8 @@
 
     <string name="timer_input_repeat_switch_text">isOnRepeat</string>
 
+    <string name="timer_input_time_unit_spinner_text">time unit</string>
+
     <!-- notification -->
     <string name="timer_finished_notification_channel_name">Finished timer alarm</string>
     <string name="timer_finished_notification_channel_description">Make sound and pop on screen</string>

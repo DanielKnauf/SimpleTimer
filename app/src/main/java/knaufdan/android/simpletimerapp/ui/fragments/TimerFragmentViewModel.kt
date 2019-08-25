@@ -20,7 +20,9 @@ import knaufdan.android.simpletimerapp.util.service.Action
 import knaufdan.android.simpletimerapp.util.service.ServiceUtil
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import knaufdan.android.simpletimerapp.util.service.TimerState.*
+import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
+import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
+import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
 import java.util.Date
 import javax.inject.Inject
 
