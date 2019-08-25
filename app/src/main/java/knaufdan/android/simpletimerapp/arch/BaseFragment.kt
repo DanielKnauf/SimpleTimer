@@ -56,7 +56,12 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
         }
 
         val binding: ViewDataBinding =
-            DataBindingUtil.inflate(inflater, config.layoutRes, container, false)
+            DataBindingUtil.inflate(
+                inflater,
+                config.layoutRes,
+                container,
+                false
+            )
         binding.lifecycleOwner = this
         binding.setVariable(config.viewModelKey, viewModel)
 

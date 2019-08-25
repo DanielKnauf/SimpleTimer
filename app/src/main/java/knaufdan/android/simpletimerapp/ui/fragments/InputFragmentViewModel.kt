@@ -29,7 +29,7 @@ class InputFragmentViewModel @Inject constructor(
 
     val isOnRepeat = ExtMutableLiveData(false)
 
-    fun onStartClicked(view: View) {
+    fun View.onStartClicked() {
         timePerCycle.value?.let { input ->
             navigator.navigateToTimer(
                 input.times(SpinnerOption.values()[selection.value ?: 0].timeUnitAdjustment),
@@ -38,16 +38,16 @@ class InputFragmentViewModel @Inject constructor(
         }
     }
 
-    fun resetState() {
-        sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
-    }
-
     init {
         resetState()
 
         isEnabled.addSource(timePerCycle) { time ->
             isEnabled.postValue(time != null && time > 0)
         }
+    }
+
+    fun resetState() {
+        sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
     }
 
     enum class SpinnerOption constructor(
