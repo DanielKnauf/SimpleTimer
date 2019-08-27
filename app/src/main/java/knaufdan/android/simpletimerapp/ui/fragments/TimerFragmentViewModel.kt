@@ -76,6 +76,7 @@ class TimerFragmentViewModel @Inject constructor(
             serviceUtil.startService(TimerService::class, createBundleForTimerService(maxValue))
         } else {
             timerFinished = true
+            audioService.releaseMediaPlayer()
             navigator.navigateToInput()
         }
     }

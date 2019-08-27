@@ -20,6 +20,7 @@ class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
         if (doNotSetUpAlarm()) {
             return
         }
+
         viewModel.setUpAlarm()
     }
 

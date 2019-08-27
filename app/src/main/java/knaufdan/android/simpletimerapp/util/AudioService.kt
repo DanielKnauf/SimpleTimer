@@ -6,7 +6,7 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
-import android.util.Log
+import android.os.Handler
 import knaufdan.android.simpletimerapp.R
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
         contextProvider.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
 
-    private val playbackAttributes by lazy {
+    private val audioAttributes by lazy {
         AudioAttributes.Builder().run {
             setUsage(AudioAttributes.USAGE_MEDIA)
             setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -26,17 +26,8 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
 
     private val audioFocusChangeListener by lazy {
         AudioManager.OnAudioFocusChangeListener { focusChange ->
-            if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                Log.d(
-                    AudioService::class.simpleName,
-                    "Gain audio focus"
-                )
-            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                Log.d(
-                    AudioService::class.simpleName,
-                    "Loss audio focus"
-                )
-            }
+            // loss of audio focus is indicated by a negative value
+            if (focusChange < 0) mediaPlayer.stop()
         }
     }
 
@@ -45,7 +36,7 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
             contextProvider.context,
             R.raw.gong_sound
         ).apply {
-            setAudioAttributes(playbackAttributes)
+            setAudioAttributes(audioAttributes)
             setOnCompletionListener { releaseAudioFocus() }
         }
     }
@@ -55,7 +46,7 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 audioManager.abandonAudioFocusRequest(
                     AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                        setAudioAttributes(playbackAttributes)
+                        setAudioAttributes(audioAttributes)
                         build()
                     }
                 )
@@ -72,7 +63,8 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         requestAudioFocus(
                             AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                                setAudioAttributes(playbackAttributes)
+                                setAudioAttributes(audioAttributes)
+                                setOnAudioFocusChangeListener(audioFocusChangeListener)
                                 build()
                             }
                         )
@@ -83,12 +75,21 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
                             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
                         )
                     }
+
                 if (res == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mediaPlayer.start()
                 }
             } else {
                 mediaPlayer.start()
             }
+        }
+    }
+
+    fun releaseMediaPlayer() {
+        if (mediaPlayer.isPlaying) {
+            Handler().postDelayed({ releaseMediaPlayer() }, 1000)
+        } else {
+            mediaPlayer.release()
         }
     }
 }

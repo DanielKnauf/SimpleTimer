@@ -3,7 +3,9 @@ package knaufdan.android.simpletimerapp.util
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SharedPrefService @Inject constructor(private val contextProvider: ContextProvider) {
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
