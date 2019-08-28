@@ -5,6 +5,7 @@ import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
+import knaufdan.android.simpletimerapp.util.AudioService
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
@@ -28,6 +29,7 @@ import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,
+    private val audioService: AudioService,
     private val broadcastUtil: BroadcastUtil,
     private val navigator: Navigator,
     private val serviceUtil: ServiceUtil,
@@ -39,7 +41,12 @@ class TimerFragmentViewModel @Inject constructor(
     private var isOnRepeat = false
 
     private val updateReceiver =
-        UpdateReceiver(Action.values()) { action: String, extras: Bundle? -> perform(action, extras) }
+        UpdateReceiver(Action.values()) { action: String, extras: Bundle? ->
+            perform(
+                action,
+                extras
+            )
+        }
 
     private fun perform(receivedAction: String, bundle: Bundle?) {
         when (Action.valueOf(receivedAction)) {
@@ -54,6 +61,8 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun finish() {
+        audioService.playGong()
+
         stopReceivingUpdates()
 
         val maxValue = maximum.value
@@ -67,6 +76,7 @@ class TimerFragmentViewModel @Inject constructor(
             serviceUtil.startService(TimerService::class, createBundleForTimerService(maxValue))
         } else {
             timerFinished = true
+            audioService.releaseMediaPlayer()
             navigator.navigateToInput()
         }
     }
@@ -120,7 +130,10 @@ class TimerFragmentViewModel @Inject constructor(
             val current = progress.value ?: 0
 
             broadcastUtil.registerBroadcastReceiver(updateReceiver)
-            serviceUtil.startService(TimerService::class, createBundleForTimerService(max, current.plus(delta)))
+            serviceUtil.startService(
+                TimerService::class,
+                createBundleForTimerService(max, current.plus(delta))
+            )
         }
     }
 
