@@ -4,12 +4,13 @@ buildscript {
         lifecycle_version = '2.2.0-alpha01'
         dagger_version = '2.16'
         mockito_version = '2.8.9'
-        kotlin_version = '1.3.31'
+        kotlin_version = '1.3.50'
         gradle_version = '3.4.2'
         appcompat_version = '1.1.0-beta01'
         constraint_layout_version = '2.0.0-beta1'
         test_runner_version = '1.2.0'
         junit_version = '4.12'
+        gson_version = '2.8.5'
     }
 
     repositories {

@@ -14,23 +14,27 @@ class Navigator @Inject constructor(private val contextProvider: ContextProvider
     fun navigateToInput() {
         with(contextProvider.context) {
             if (this is HasFragmentFlow) {
-                flowTo(FragmentPage.INPUT.ordinal, false, null)
+                flowTo(
+                    pageNumber = FragmentPage.INPUT.ordinal,
+                    addToBackStack = false,
+                    bundle = null
+                )
             }
         }
     }
 
     fun navigateToTimer(
-        endTimeInMinutes: Int,
+        timerMaximum: Int,
         isOnRepeat: Boolean = false
     ) {
         with(contextProvider.context) {
             if (this is HasFragmentFlow) {
                 flowTo(
-                    FragmentPage.TIMER.ordinal,
-                    true,
-                    Bundle()
+                    pageNumber = FragmentPage.TIMER.ordinal,
+                    addToBackStack = true,
+                    bundle = Bundle()
                         .apply {
-                            putInt(KEY_CURRENT_MAXIMUM, endTimeInMinutes)
+                            putInt(KEY_CURRENT_MAXIMUM, timerMaximum)
                             putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
                         }
                 )

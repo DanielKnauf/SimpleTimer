@@ -2,6 +2,8 @@ package knaufdan.android.simpletimerapp.util
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,10 +12,16 @@ class SharedPrefService @Inject constructor(private val contextProvider: Context
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
 
-    fun saveTo(key: String, value: Any?) {
-        val sharedPref = getSharedPref()
+    private val sharedPrefs by lazy {
+        contextProvider.context.getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
+    }
 
-        with(sharedPref.edit()) {
+    fun saveAsJsonTo(key: String, value: Any?) {
+        saveTo(key, Gson().toJson(value))
+    }
+
+    fun saveTo(key: String, value: Any?) {
+        with(sharedPrefs.edit()) {
             value?.let {
                 putValue(it, key)
                 apply()
@@ -30,11 +38,21 @@ class SharedPrefService @Inject constructor(private val contextProvider: Context
         }
     }
 
-    fun retrieveString(key: String): String? = getSharedPref().getString(key, "")
+    inline fun <reified T> retrieveJson(key: String): T? {
+        val jsonString = retrieveString(key)
 
-    fun retrieveLong(key: String) = getSharedPref().getLong(key, 0)
+        return try {
+            Gson().fromJson(jsonString, T::class.java)
+        } catch (e: JsonSyntaxException) {
+            println(e)
+            null
+        }
+    }
 
-    fun retrieveInt(key: String)= getSharedPref().getInt(key, 0)
+    fun retrieveString(key: String, defValue: String = ""): String =
+        sharedPrefs.getString(key, defValue)
 
-    private fun getSharedPref() = contextProvider.context.getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
+    fun retrieveLong(key: String, defValue: Long = 0) = sharedPrefs.getLong(key, defValue)
+
+    fun retrieveInt(key: String, defValue: Int = 0) = sharedPrefs.getInt(key, defValue)
 }

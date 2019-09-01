@@ -19,8 +19,8 @@ fun TextView.setProgressText(progress: Int?) {
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
-@BindingAdapter(value = ["itemSource"])
-fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>) {
+@BindingAdapter(value = ["itemSource", "currentSelection"], requireAll = false)
+fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>, currentSelection: Int?) {
     ArrayAdapter(
         context,
         R.layout.simple_spinner_item,
@@ -29,9 +29,11 @@ fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>) {
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         this.adapter = adapter
     }
+
+    setCurrentSelection(currentSelection ?: 0)
 }
 
 @BindingAdapter(value = ["currentSelection"])
-fun AppCompatSpinner.setCurrentSelection(currentSelection: Int = 0) =
+fun AppCompatSpinner.setCurrentSelection(currentSelection: Int) =
     this.setSelection(currentSelection)
 
