@@ -9,6 +9,8 @@ object Constants {
     const val KEY_IS_ON_REPEAT = "knaufdan.android.simpletimerapp.isonrepeat"
     const val KEY_TIMER_STATE = "knaufdan.android.simpletimerapp.timerstate"
 
+    const val KEY_TIMER_CONFIGURATION = "knaufdan.android.simpletimerapp.timerconfiguration"
+
     const val MINUTE = 60000
     const val SECOND = 1000
 }

@@ -70,8 +70,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.35"
                 android:gravity="center_vertical"
-                android:selection="@={viewModel.selection}"
-                app:currentSelection="@{viewModel.selection}"
+                android:selectedItemPosition="@={viewModel.timeUnitSelection}"
+                app:currentSelection="@{viewModel.timeUnitSelection}"
                 app:itemSource="@{viewModel.spinnerItems}" />
 
         </LinearLayout>
