@@ -19,7 +19,7 @@ fun TextView.setProgressText(progress: Int?) {
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
-@BindingAdapter(value = ["itemSource", "currentSelection"], requireAll = false)
+@BindingAdapter(value = ["itemSource", "currentSelection"], requireAll = true)
 fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>, currentSelection: Int?) {
     ArrayAdapter(
         context,
@@ -30,10 +30,13 @@ fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>, currentSelection: Int?
         this.adapter = adapter
     }
 
-    setCurrentSelection(currentSelection ?: 0)
+    setCurrentSelection(currentSelection)
 }
 
 @BindingAdapter(value = ["currentSelection"])
-fun AppCompatSpinner.setCurrentSelection(currentSelection: Int) =
-    this.setSelection(currentSelection)
+fun AppCompatSpinner.setCurrentSelection(currentSelection: Int?) {
+    currentSelection?.apply {
+        this@setCurrentSelection.setSelection(this)
+    }
+}
 
