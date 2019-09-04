@@ -6,8 +6,8 @@ enum class TimeUnit(
     val displayName: String,
     val timeInMilliSeconds: Int
 ) {
-    MINUTE("Minute", Constants.MINUTE),
-    SECOND("Second", Constants.SECOND)
+    MINUTE("Minute", Constants.MINUTE_IN_MILLIS),
+    SECOND("Second", Constants.SECOND_IN_MILLIS)
 }
 
 fun String.parseToTimeUnit() = TimeUnit.values().firstOrNull { timeUnit ->

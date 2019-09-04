@@ -12,7 +12,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.Constants.SECOND
+import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.alarm.AlarmService
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
@@ -56,7 +56,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun increase(bundle: Bundle?) {
-        val increment = bundle?.getInt(KEY_LINEAR_INCREMENT, SECOND) ?: SECOND
+        val increment = bundle?.getInt(KEY_LINEAR_INCREMENT, SECOND_IN_MILLIS) ?: SECOND_IN_MILLIS
         increaseProgress(increment)
     }
 

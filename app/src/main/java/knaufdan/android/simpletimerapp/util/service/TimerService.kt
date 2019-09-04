@@ -8,8 +8,8 @@ import dagger.android.AndroidInjection
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
-import knaufdan.android.simpletimerapp.util.Constants.MINUTE
-import knaufdan.android.simpletimerapp.util.Constants.SECOND
+import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
+import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import java.util.Timer
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ class TimerService @Inject constructor() : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        endTime = intent.getIntExtra(KEY_CURRENT_MAXIMUM, MINUTE)
+        endTime = intent.getIntExtra(KEY_CURRENT_MAXIMUM, MINUTE_IN_MILLIS)
         currentTime = intent.getIntExtra(KEY_ADJUSTED_PROGRESS, DEFAULT_START_TIME)
         startTimerRunnable()
         return START_STICKY
@@ -71,7 +71,7 @@ class TimerService @Inject constructor() : Service() {
 
     companion object {
         //define the period of time for the UI updates here
-        const val INCREMENT = SECOND * 1
+        const val INCREMENT = SECOND_IN_MILLIS * 1
         const val DEFAULT_START_TIME = 0
     }
 }
