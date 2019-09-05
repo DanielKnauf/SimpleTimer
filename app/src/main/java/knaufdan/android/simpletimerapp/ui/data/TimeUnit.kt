@@ -3,11 +3,17 @@ package knaufdan.android.simpletimerapp.ui.data
 import knaufdan.android.simpletimerapp.util.Constants
 
 enum class TimeUnit(
-    val displayName: String,
+    val displayText: String,
     val timeInMilliSeconds: Int
 ) {
-    MINUTE("Minute", Constants.MINUTE),
-    SECOND("Second", Constants.SECOND)
+    MINUTE(
+        displayText = "minutes",
+        timeInMilliSeconds = Constants.MINUTE
+    ),
+    SECOND(
+        displayText = "seconds",
+        timeInMilliSeconds = Constants.SECOND
+    )
 }
 
 fun String.parseToTimeUnit() = TimeUnit.values().firstOrNull { timeUnit ->
