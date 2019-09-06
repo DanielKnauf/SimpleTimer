@@ -8,11 +8,11 @@ enum class TimeUnit(
 ) {
     MINUTE(
         displayText = "minutes",
-        timeInMilliSeconds = Constants.MINUTE
+        timeInMilliSeconds = Constants.MINUTE_IN_MILLIS
     ),
     SECOND(
         displayText = "seconds",
-        timeInMilliSeconds = Constants.SECOND
+        timeInMilliSeconds = Constants.SECOND_IN_MILLIS
     )
 }
 
