@@ -27,9 +27,9 @@ class InputFragmentViewModel @Inject constructor(
     val timePerCycle = ExtMutableLiveData<Int?>(1)
     val isEnabled = MediatorLiveData<Boolean>()
     val isOnRepeat = ExtMutableLiveData(false)
-    val timeUnitSelection = ExtMutableLiveData(0)
     val currentSelection = MediatorLiveData<Int>()
-    val spinnerItems by lazy {
+    val timeUnitSelection = ExtMutableLiveData(0)
+    val timeUnitSelectionItems by lazy {
         TimeUnit.values().map { it.displayText }.toList()
     }
 
