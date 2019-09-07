@@ -61,34 +61,17 @@ class InputFragmentViewModel @Inject constructor(
             isEnabled.postValue(time != null && time > 0)
         }
 
-        currentSelection.addSource(timeUnitSelection) { selection ->
-            if (currentSelection.value == selection) {
-                return@addSource
-            }
+        connect(source = timeUnitSelection, target = currentSelection) { s -> s }
 
-            currentSelection.postValue(selection)
-        }
-
-        instructionText.addSource(timeUnitSelection) { selection ->
-            val instruction = textProvider.getText(
+        connect(source = timeUnitSelection, target = instructionText) { s ->
+            textProvider.getText(
                 R.string.timer_instruction,
-                selection.parseToTimeUnit().displayText
+                s.parseToTimeUnit().displayText
             )
-
-            if (instructionText.value == instruction) {
-                return@addSource
-            }
-
-            instructionText.postValue(instruction)
         }
 
-        hintText.addSource(timeUnitSelection) { selection ->
-            val timeUnitText = selection.parseToTimeUnit().displayText
-            if (hintText.value == timeUnitText) {
-                return@addSource
-            }
-
-            hintText.postValue(timeUnitText)
+        connect(source = timeUnitSelection, target = hintText) { s ->
+            s.parseToTimeUnit().displayText
         }
 
         sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)
