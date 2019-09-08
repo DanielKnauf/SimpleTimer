@@ -10,12 +10,15 @@ abstract class BaseViewModel : ViewModel() {
 
     protected var className: String? = this::class.simpleName
 
-    open fun init(bundle: Bundle?) {}
+    open fun init(bundle: Bundle?) {
+        //empty body for inheritance
+    }
 
+    @Suppress("UNCHECKED_CAST")
     fun <S, T> connect(
         source: LiveData<S>,
         target: MediatorLiveData<T>,
-        connector: (sourceValue: S) -> T
+        connector: (sourceValue: S) -> T = { s -> s as T }
     ) {
         target.addSource(source) { sourceValue ->
             val newValue = connector(sourceValue)

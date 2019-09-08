@@ -61,7 +61,7 @@ class InputFragmentViewModel @Inject constructor(
             isEnabled.postValue(time != null && time > 0)
         }
 
-        connect(source = timeUnitSelection, target = currentSelection) { s -> s }
+        connect(source = timeUnitSelection, target = currentSelection)
 
         connect(source = timeUnitSelection, target = instructionText) { s ->
             textProvider.getText(
