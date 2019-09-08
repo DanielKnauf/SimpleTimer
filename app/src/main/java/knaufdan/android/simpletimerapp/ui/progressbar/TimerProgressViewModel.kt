@@ -8,5 +8,5 @@ class TimerProgressViewModel : ProgressBarViewModel {
 
     override fun increaseProgress(increment: Int) = progress.postValue(progress.value?.plus(increment))
 
-    override fun calculateRemainingProgress() = progress.value?.let { maximum.value?.minus(it) }?.toLong() ?: 0
+    override fun calculateRemainingProgress() = progress.value?.apply { maximum.value?.minus(this) }?.toLong() ?: 0
 }
