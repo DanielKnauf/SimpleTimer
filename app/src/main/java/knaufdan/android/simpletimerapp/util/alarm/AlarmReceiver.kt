@@ -24,7 +24,10 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
     lateinit var alarmService: AlarmService
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent
+    ) {
         super.onReceive(context, intent)
 
         val endTime = intent.getIntExtra(KEY_CURRENT_MAXIMUM, 0)

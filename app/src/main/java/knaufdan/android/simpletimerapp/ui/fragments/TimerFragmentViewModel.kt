@@ -87,12 +87,12 @@ class TimerFragmentViewModel @Inject constructor(
         if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
             isOnRepeat = true
         } else {
-            bundle?.let {
-                maximum.value = it.getInt(KEY_CURRENT_MAXIMUM)
+            bundle?.apply {
+                maximum.value = getInt(KEY_CURRENT_MAXIMUM)
                 sharedPrefService.saveTo(KEY_CURRENT_MAXIMUM, maximum.value)
                 broadcastUtil.registerBroadcastReceiver(updateReceiver)
-                serviceUtil.startService(TimerService::class, it)
-                isOnRepeat = it.getBoolean(KEY_IS_ON_REPEAT, false)
+                serviceUtil.startService(TimerService::class, this)
+                isOnRepeat = getBoolean(KEY_IS_ON_REPEAT, false)
             }
         }
     }
