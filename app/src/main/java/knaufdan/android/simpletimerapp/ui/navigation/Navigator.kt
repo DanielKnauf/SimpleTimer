@@ -16,8 +16,7 @@ class Navigator @Inject constructor(private val contextProvider: ContextProvider
             if (this is HasFragmentFlow) {
                 flowTo(
                     pageNumber = FragmentPage.INPUT.ordinal,
-                    addToBackStack = false,
-                    bundle = null
+                    addToBackStack = false
                 )
             }
         }
