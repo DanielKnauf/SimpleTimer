@@ -50,7 +50,7 @@ class SharedPrefService @Inject constructor(private val contextProvider: Context
     }
 
     fun retrieveString(key: String, defValue: String = ""): String =
-        sharedPrefs.getString(key, defValue)
+        sharedPrefs.getString(key, defValue) ?: defValue
 
     fun retrieveLong(key: String, defValue: Long = 0) = sharedPrefs.getLong(key, defValue)
 
