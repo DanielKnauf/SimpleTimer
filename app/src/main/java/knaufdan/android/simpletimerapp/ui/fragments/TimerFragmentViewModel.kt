@@ -1,6 +1,7 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
+import android.view.View
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
@@ -63,22 +64,31 @@ class TimerFragmentViewModel @Inject constructor(
     private fun finish() {
         audioService.playGong()
 
+        stopAndCheckNextAction(resetTimer = isOnRepeat)
+    }
+
+    private fun stopAndCheckNextAction(resetTimer: Boolean = false) {
         stopReceivingUpdates()
 
-        val maxValue = maximum.value
+        val maxValue = maximum.value ?: 0
 
-        if (isOnRepeat
-            && maxValue != null
-            && maxValue > 0
-        ) {
-            progress.value = 0
-            broadcastUtil.registerBroadcastReceiver(updateReceiver)
-            serviceUtil.startService(TimerService::class, createBundleForTimerService(maxValue))
+        if (resetTimer && maxValue > 0) {
+            resetTimer(maxValue)
         } else {
-            timerFinished = true
-            audioService.releaseMediaPlayer()
-            navigator.navigateToInput()
+            finishAndQuit()
         }
+    }
+
+    private fun resetTimer(maxValue: Int) {
+        progress.value = 0
+        broadcastUtil.registerBroadcastReceiver(updateReceiver)
+        serviceUtil.startService(TimerService::class, createBundleForTimerService(maxValue))
+    }
+
+    private fun finishAndQuit() {
+        timerFinished = true
+        audioService.releaseMediaPlayer()
+        navigator.navigateToInput()
     }
 
     override fun init(bundle: Bundle?) {
@@ -95,6 +105,10 @@ class TimerFragmentViewModel @Inject constructor(
                 isOnRepeat = getBoolean(KEY_IS_ON_REPEAT, false)
             }
         }
+    }
+
+    fun View.onResetClicked() {
+        stopAndCheckNextAction(resetTimer = true)
     }
 
     fun stopReceivingUpdates() {

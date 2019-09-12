@@ -31,11 +31,18 @@
     <style name="base_button">
         <item name="android:layout_margin">8dp</item>
         <item name="android:padding">16dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="start_button" parent="base_button">
         <item name="android:text">@string/start_button_text</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="reset_button" parent="base_button">
+        <item name="android:text">@string/timer_fragment_reset_button_text</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@color/pause_button_color</item>
     </style>
 
     <style name="pause_button" parent="base_button">
