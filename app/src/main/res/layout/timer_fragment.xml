@@ -29,5 +29,29 @@
             android:layout_weight="1"
             app:viewModel="@{viewModel}"
             tools:progress="10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                style="@style/stop_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{viewModel::onStopClicked}" />
+
+            <Button
+                style="@style/pause_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{viewModel.isPaused ? @color/start_button_color : @color/pause_button_color }"
+                android:onClick="@{viewModel::onPauseClicked}"
+                android:text="@{viewModel.isPaused ? @string/resume_button_text : @string/pause_button_text}"
+                android:textColor="@{viewModel.isPaused ? @android:color/white : @android:color/black}" />
+        </LinearLayout>
+
     </LinearLayout>
 </layout>
