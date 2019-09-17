@@ -4,6 +4,7 @@ import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseFragment
 import knaufdan.android.simpletimerapp.arch.ViewConfig
+import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 
 class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
 
@@ -24,10 +25,18 @@ class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
         viewModel.setUpAlarm()
     }
 
-    private fun doNotSetUpAlarm() = isBackPressed || viewModel.isFinished()
+    private fun doNotSetUpAlarm() =
+        isBackPressed
+                || viewModel.isFinished()
+                || safeUnBox(viewModel.isPaused.value)
 
     override fun onResume() {
         super.onResume()
+
+        if (safeUnBox(viewModel.isPaused.value)) {
+            return
+        }
+
         viewModel.restart()
     }
 }
