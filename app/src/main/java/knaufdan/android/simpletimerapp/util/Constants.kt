@@ -9,6 +9,7 @@ object Constants {
     const val KEY_TIMER_STATE = "knaufdan.android.simpletimerapp.timerstate"
     const val KEY_TIMER_CONFIGURATION = "knaufdan.android.simpletimerapp.timerconfiguration"
 
-    const val MINUTE_IN_MILLIS = 60000
     const val SECOND_IN_MILLIS = 1000
+    const val MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS
+    const val HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS
 }

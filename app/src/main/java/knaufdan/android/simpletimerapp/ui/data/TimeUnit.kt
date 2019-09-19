@@ -13,6 +13,10 @@ enum class TimeUnit(
     SECOND(
         displayText = "seconds",
         timeInMilliSeconds = Constants.SECOND_IN_MILLIS
+    ),
+    HOUR(
+        displayText = "hours",
+        timeInMilliSeconds = Constants.HOUR_IN_MILLIS
     )
 }
 
