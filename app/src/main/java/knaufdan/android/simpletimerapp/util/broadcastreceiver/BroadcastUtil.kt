@@ -9,15 +9,14 @@ import javax.inject.Inject
 class BroadcastUtil @Inject constructor(private val contextProvider: ContextProvider) {
 
     fun registerBroadcastReceiver(broadcastReceiver: ActionBroadcastReceiver) {
-
-        val intentFilter = IntentFilter()
+        IntentFilter()
             .apply {
                 for (action: String in broadcastReceiver.getSupportedActions()) {
                     addAction(action)
                 }
-            }
 
-        LocalBroadcastManager.getInstance(contextProvider.context).registerReceiver(broadcastReceiver, intentFilter)
+                LocalBroadcastManager.getInstance(contextProvider.context).registerReceiver(broadcastReceiver, this)
+            }
     }
 
     fun unregisterBroadcastReceiver(broadcastReceiver: BroadcastReceiver) {

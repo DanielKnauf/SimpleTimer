@@ -7,9 +7,14 @@ import knaufdan.android.simpletimerapp.arch.ViewConfig
 
 class InputFragment : BaseFragment<InputFragmentViewModel>() {
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.resetState()
+    }
+
     override fun configureView(): ViewConfig =
         ViewConfig.Builder()
-            .setLayoutRes(R.layout.fragment_main)
+            .setLayoutRes(R.layout.input_fragment)
             .setViewModelKey(BR.viewModel)
             .build()
 }

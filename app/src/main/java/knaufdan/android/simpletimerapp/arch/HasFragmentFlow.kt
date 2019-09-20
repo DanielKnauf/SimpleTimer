@@ -4,5 +4,5 @@ import android.os.Bundle
 
 interface HasFragmentFlow {
 
-    fun flowTo(pageNumber: Int, addToBackStack: Boolean, bundle: Bundle?)
+    fun flowTo(pageNumber: Int, addToBackStack: Boolean, bundle: Bundle? = null)
 }
