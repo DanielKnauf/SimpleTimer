@@ -12,7 +12,7 @@
 
     <!-- timer input -->
     <string name="timer_input_repeat_switch_text">isOnRepeat</string>
-    <string name="timer_input_time_unit_spinner_text">time unit</string>
+    <string name="timer_input_time_unit_header">time unit</string>
 
     <!-- timer fragment -->
     <string name="timer_fragment_reset_button_text">reset timer</string>

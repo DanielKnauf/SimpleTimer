@@ -53,26 +53,25 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.65"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/timer_input_time_unit_spinner_text" />
+                android:text="@string/timer_input_time_unit_header" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.35"
-                android:gravity="center_vertical"
-                android:selectedItemPosition="@={viewModel.timeUnitSelection}"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                style="@style/AppTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:currentSelection="@{viewModel.currentSelection}"
-                app:itemSource="@{viewModel.timeUnitSelectionItems}" />
+                app:itemSource="@{viewModel.timeUnitSelectionItems}"
+                app:onSelectedTab="@{viewModel::onTabSelected}" />
 
         </LinearLayout>
 
@@ -116,7 +115,7 @@
             android:layout_marginBottom="8dp"
             android:background="@{viewModel.isEnabled ? @color/start_button_color : @color/stop_button_color}"
             android:enabled="@{viewModel.isEnabled}"
-            android:onClick="@{viewModel::onStartClicked}"
+            android:onClick="@{() -> viewModel.onStartClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

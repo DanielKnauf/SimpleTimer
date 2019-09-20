@@ -1,10 +1,8 @@
 package knaufdan.android.simpletimerapp.databinding
 
-import android.R
-import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
+import com.google.android.material.tabs.TabLayout
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 
@@ -19,24 +17,41 @@ fun TextView.setProgressText(progress: Int?) {
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
-@BindingAdapter(value = ["itemSource", "currentSelection"], requireAll = true)
-fun AppCompatSpinner.setArrayAdapter(itemSource: List<*>, currentSelection: Int?) {
-    ArrayAdapter(
-        context,
-        R.layout.simple_spinner_item,
-        itemSource
-    ).also { adapter ->
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        this.adapter = adapter
+@BindingAdapter(value = ["itemSource", "onSelectedTab"])
+fun TabLayout.populateFromSource(
+    itemSource: List<String>,
+    onSelectedTab: OnSelectedTab
+) {
+    itemSource.forEach { item ->
+        newTab().apply {
+            contentDescription = item
+            text = item
+            addTab(this)
+        }
     }
 
-    setCurrentSelection(currentSelection)
+    addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+            // do nothing here
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+            // do nothing here
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            onSelectedTab.onTabSelected(tab)
+        }
+    })
 }
 
 @BindingAdapter(value = ["currentSelection"])
-fun AppCompatSpinner.setCurrentSelection(currentSelection: Int?) {
+fun TabLayout.setCurrentSelection(currentSelection: Int?) {
     currentSelection?.apply {
-        this@setCurrentSelection.setSelection(this)
+        this@setCurrentSelection.getTabAt(this)?.select()
     }
 }
 
+interface OnSelectedTab {
+    fun onTabSelected(tab: TabLayout.Tab?)
+}

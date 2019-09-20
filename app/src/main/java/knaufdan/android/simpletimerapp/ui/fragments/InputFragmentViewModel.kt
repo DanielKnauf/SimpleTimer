@@ -1,7 +1,7 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
-import android.view.View
 import androidx.lifecycle.MediatorLiveData
+import com.google.android.material.tabs.TabLayout
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
@@ -28,12 +28,18 @@ class InputFragmentViewModel @Inject constructor(
     val isEnabled = MediatorLiveData<Boolean>()
     val isOnRepeat = ExtMutableLiveData(false)
     val currentSelection = MediatorLiveData<Int>()
-    val timeUnitSelection = ExtMutableLiveData(0)
     val timeUnitSelectionItems by lazy {
-        TimeUnit.values().map { it.displayText }.toList()
+        TimeUnit.values().map { timeUnit -> timeUnit.displayText }.toList()
+    }
+    private val timeUnitSelection = ExtMutableLiveData(0)
+
+    fun onTabSelected(tab: TabLayout.Tab?) {
+        tab?.apply {
+            timeUnitSelection.value = this.position
+        }
     }
 
-    fun View.onStartClicked() {
+    fun onStartClicked() {
         timePerCycle.value?.apply {
             val timeUnit = (timeUnitSelection.value ?: 0).parseToTimeUnit()
             val isOnRepeat = safeUnBox(isOnRepeat.value)
