@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/timer_input_time_unit_spinner_text" />
+                android:text="@string/timer_input_time_unit_header" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"

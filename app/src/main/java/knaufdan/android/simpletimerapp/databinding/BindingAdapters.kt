@@ -18,7 +18,7 @@ fun TextView.setProgressText(progress: Int?) {
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
 @BindingAdapter(value = ["itemSource", "onSelectedTab"])
-fun TabLayout.fillTabLayout(
+fun TabLayout.populateFromSource(
     itemSource: List<String>,
     onSelectedTab: OnSelectedTab
 ) {
