@@ -31,7 +31,7 @@ class InputFragmentViewModel @Inject constructor(
     val timeUnitSelectionItems by lazy {
         TimeUnit.values().map { timeUnit -> timeUnit.displayText }.toList()
     }
-    private val timeUnitSelection = ExtMutableLiveData(0)
+    private val timeUnitSelection = ExtMutableLiveData(TimeUnit.MINUTE.ordinal)
 
     fun onTabSelected(tab: TabLayout.Tab?) {
         tab?.apply {

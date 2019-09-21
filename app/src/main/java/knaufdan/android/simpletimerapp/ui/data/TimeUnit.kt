@@ -6,13 +6,13 @@ enum class TimeUnit(
     val displayText: String,
     val timeInMilliSeconds: Int
 ) {
-    MINUTE(
-        displayText = "minutes",
-        timeInMilliSeconds = Constants.MINUTE_IN_MILLIS
-    ),
     SECOND(
         displayText = "seconds",
         timeInMilliSeconds = Constants.SECOND_IN_MILLIS
+    ),
+    MINUTE(
+        displayText = "minutes",
+        timeInMilliSeconds = Constants.MINUTE_IN_MILLIS
     ),
     HOUR(
         displayText = "hours",
