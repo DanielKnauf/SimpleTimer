@@ -63,9 +63,11 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
             (viewModel as BaseViewModel).init(intent.extras)
         }
 
-        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes)
-        binding.lifecycleOwner = this
-        binding.setVariable(viewConfig.viewModelKey, viewModel)
+        DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes).apply {
+            lifecycleOwner = this@BaseActivity
+            setVariable(viewConfig.viewModelKey, viewModel)
+            executePendingBindings()
+        }
     }
 
     private fun showInitialPage(

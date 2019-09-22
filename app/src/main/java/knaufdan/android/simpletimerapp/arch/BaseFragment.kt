@@ -62,10 +62,13 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
                 container,
                 false
             )
-        binding.lifecycleOwner = this
-        binding.setVariable(config.viewModelKey, viewModel)
 
-        return binding.root
+        return binding.run {
+            lifecycleOwner = this@BaseFragment
+            setVariable(config.viewModelKey, viewModel)
+            executePendingBindings()
+            binding.root
+        }
     }
 
     override fun onResume() {

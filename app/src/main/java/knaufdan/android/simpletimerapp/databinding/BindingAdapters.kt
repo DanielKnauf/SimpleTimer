@@ -22,6 +22,8 @@ fun TabLayout.populateFromSource(
     itemSource: List<String>,
     onSelectedTab: OnSelectedTab
 ) {
+    removeAllTabs()
+
     itemSource.forEach { item ->
         newTab().apply {
             contentDescription = item
