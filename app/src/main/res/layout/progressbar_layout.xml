@@ -10,7 +10,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progessbarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="progressBar">
@@ -20,11 +19,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            android:background="@drawable/progressbar_background"
+            android:background="@{viewModel.isPaused ? @drawable/progressbar_background_paused : @drawable/progressbar_background}"
             android:indeterminate="false"
             android:max="@{viewModel.maximum}"
-            android:progress="@{viewModel.progress}"
-            android:progressDrawable="@drawable/progressbar_circle"
+            android:progress="@{viewModel.isPaused ? 0 : viewModel.progress}"
+            android:progressDrawable="@{@drawable/progressbar_circle}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +40,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:progressText="@{viewModel.progress}" />
+            app:progressText="@{viewModel.isPaused ? null : viewModel.progress}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

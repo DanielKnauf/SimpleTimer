@@ -3,9 +3,7 @@
 
     <!-- button texts -->
     <string name="start_button_text">Start</string>
-    <string name="pause_button_text">Pause</string>
     <string name="stop_button_text">Stop</string>
-    <string name="resume_button_text">Resume</string>
 
     <!-- instruction text -->
     <string name="timer_instruction">Set %1$s until gong.</string>

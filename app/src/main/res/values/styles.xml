@@ -46,12 +46,6 @@
         <item name="android:background">@drawable/reset_button_background</item>
     </style>
 
-    <style name="pause_button" parent="base_button">
-        <item name="android:text">@string/pause_button_text</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:background">@color/pause_button_color</item>
-    </style>
-
     <style name="stop_button" parent="base_button">
         <item name="android:text">@string/stop_button_text</item>
         <item name="android:textColor">@android:color/white</item>

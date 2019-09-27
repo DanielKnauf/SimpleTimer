@@ -40,7 +40,6 @@ class TimerFragmentViewModel @Inject constructor(
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
     var timerFinished = false
-    val isPaused = ExtMutableLiveData(false)
 
     private var isOnRepeat = false
 
@@ -79,6 +78,7 @@ class TimerFragmentViewModel @Inject constructor(
         val maxValue = maximum.value ?: 0
 
         if (resetTimer && maxValue > 0) {
+            isPaused.value = false
             resetTimer(maxValue = maxValue)
         } else {
             finishAndQuit()
@@ -118,11 +118,11 @@ class TimerFragmentViewModel @Inject constructor(
         }
     }
 
-    fun View.onResetClicked() {
+    fun onResetClicked() {
         stopAndCheckNextAction(resetTimer = true)
     }
 
-    fun View.onPauseClicked() {
+    fun onPauseClicked() {
         isPaused.value = if (safeUnBox(isPaused.value)) {
             val maxValue = maximum.value ?: 0
             val adjustedTime = progress.value ?: 0
@@ -137,7 +137,7 @@ class TimerFragmentViewModel @Inject constructor(
         }
     }
 
-    fun View.onStopClicked() {
+    fun onStopClicked() {
         stopAndCheckNextAction(resetTimer = false)
     }
 

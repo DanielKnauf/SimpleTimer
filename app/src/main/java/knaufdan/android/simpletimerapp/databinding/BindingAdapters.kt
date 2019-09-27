@@ -12,7 +12,7 @@ fun TextView.setProgressText(progress: Int?) {
         val minutes = (this / MINUTE_IN_MILLIS).addZero()
         val seconds = (this % MINUTE_IN_MILLIS / SECOND_IN_MILLIS).addZero()
         "$minutes:$seconds"
-    } ?: "00:00"
+    } ?: "Paused"
 }
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()

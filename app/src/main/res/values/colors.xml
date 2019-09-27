@@ -11,7 +11,6 @@
 
     <!-- button colors -->
     <color name="start_button_color">#669900</color>
-    <color name="pause_button_color">#ffbb33</color>
     <color name="stop_button_color">#cc0000</color>
 
     <!-- floating hint -->
@@ -20,4 +19,6 @@
     <!-- progress bar-->
     <color name="progressbar_end">#ffcb00</color>
     <color name="progressbar_start">#dd4c22</color>
+    <color name="progressbar_background">#ddd</color>
+    <color name="progressbar_background_paused">@color/colorPrimaryDark</color>
 </resources>

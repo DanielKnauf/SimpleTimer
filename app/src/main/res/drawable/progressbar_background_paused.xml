@@ -5,5 +5,5 @@
     android:thickness="@dimen/progressbar_thickness"
     android:useLevel="false">
 
-    <solid android:color="@color/progressbar_background"/>
+    <solid android:color="@color/colorAccent"/>
 </shape>
