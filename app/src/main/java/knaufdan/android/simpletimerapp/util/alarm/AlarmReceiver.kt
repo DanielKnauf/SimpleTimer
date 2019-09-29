@@ -38,7 +38,11 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
             sharedPrefService.saveTo(KEY_PAUSE_TIME, Date().time)
             sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESTARTED_IN_BACKGROUND)
 
-            alarmService.setAlarm(endTime.toLong(), intent.extras)
+            alarmService.setAlarm(
+                timeToWakeFromNow = endTime.toLong(),
+                extras = intent.extras,
+                broadcastReceiverType = this::class.java
+            )
 
             notificationService.sendTimerRestartNotification()
         } else {
