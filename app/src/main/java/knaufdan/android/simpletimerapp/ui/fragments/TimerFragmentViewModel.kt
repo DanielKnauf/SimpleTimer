@@ -1,7 +1,9 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
+import android.view.View
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
+import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
