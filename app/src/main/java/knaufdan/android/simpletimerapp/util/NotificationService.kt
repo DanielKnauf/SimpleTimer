@@ -20,45 +20,47 @@ class NotificationService @Inject constructor(
     private val contextProvider: ContextProvider,
     private val textProvider: TextProvider
 ) {
-
-    private val channelId = "knaufdan.android.simpletimerapp.alarm"
-
-    private val notificationManager =
+    private val notificationManager by lazy {
         contextProvider.context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
 
     fun sendTimerFinishedNotification() {
         sendNotification(R.string.timer_finished_notification_content_text)
     }
 
-    fun sendTimerRestartNotification(){
+    fun sendTimerRestartNotification() {
         sendNotification(R.string.timer_restart_notification_content_text)
     }
 
-    private fun sendNotification(@StringRes text : Int) {
+    private fun sendNotification(@StringRes text: Int) {
         createNotificationChannel()
-
-        val notification = contextProvider.context.buildNotification(text)
-
-        notificationManager.notify(System.currentTimeMillis().toInt(), notification)
+        contextProvider.context.buildNotification(text).apply {
+            notificationManager.notify(System.currentTimeMillis().toInt(), this)
+        }
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-            && notificationManager.getNotificationChannel(channelId) == null
+            && notificationManager.getNotificationChannel(CHANNEL_ID) == null
         ) {
             val name = textProvider.getText(R.string.timer_finished_notification_channel_name)
-            val description = textProvider.getText(R.string.timer_finished_notification_channel_description)
+            val description =
+                textProvider.getText(R.string.timer_finished_notification_channel_description)
 
-            val channel = NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_HIGH)
-                .apply { this.description = description }
-                .apply { enableVibration(true) }
-
-            notificationManager.createNotificationChannel(channel)
+            NotificationChannel(
+                CHANNEL_ID,
+                name,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                this.description = description
+                enableVibration(true)
+                notificationManager.createNotificationChannel(this)
+            }
         }
     }
 
     private fun Context.buildNotification(@StringRes text: Int): Notification =
-        NotificationCompat.Builder(this, channelId)
+        NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notification_important)
             .setContentTitle(textProvider.getText(R.string.timer_finished_notification_title))
             .setContentText(textProvider.getText(text))
@@ -75,5 +77,9 @@ class NotificationService @Inject constructor(
         val intent = Intent(this, MainActivity::class.java)
             .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
         return PendingIntent.getActivity(this, 0, intent, 0)
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "knaufdan.android.simpletimerapp.alarm"
     }
 }

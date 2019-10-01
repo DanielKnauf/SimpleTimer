@@ -17,6 +17,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
+import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
 import knaufdan.android.simpletimerapp.util.alarm.AlarmService
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.UpdateReceiver
@@ -157,7 +158,8 @@ class TimerFragmentViewModel @Inject constructor(
         )
         alarmService.setAlarm(
             timeToWakeFromNow = calculateRemainingProgress(),
-            extras = createBundleForAlarmService()
+            extras = createBundleForAlarmService(),
+            broadcastReceiverType = AlarmReceiver::class.java
         )
     }
 
@@ -168,7 +170,7 @@ class TimerFragmentViewModel @Inject constructor(
 
     fun restart() {
         if (hasTimerState(PAUSE_STATE) || hasTimerState(RESTARTED_IN_BACKGROUND)) {
-            alarmService.cancelAlarm()
+            alarmService.cancelAlarm(broadcastReceiverType = AlarmReceiver::class.java)
 
             if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
                 progress.value = 0
