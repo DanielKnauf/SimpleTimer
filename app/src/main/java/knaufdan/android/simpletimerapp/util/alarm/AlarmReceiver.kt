@@ -73,16 +73,20 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
         }
 
     companion object {
-        private val timerFinishStyle = NotificationStyle(
-            text = R.string.timer_finished_notification_content_text,
-            title = R.string.timer_notification_title,
-            smallIcon = R.drawable.notification_important
-        )
+        private val timerFinishStyle: NotificationStyle by lazy {
+            NotificationStyle(
+                text = R.string.timer_finished_notification_content_text,
+                title = R.string.timer_notification_title,
+                smallIcon = R.drawable.notification_important
+            )
+        }
 
-        private val timerRestartStyle = NotificationStyle(
-            text = R.string.timer_restart_notification_content_text,
-            title = R.string.timer_notification_title,
-            smallIcon = R.drawable.notification_important
-        )
+        private val timerRestartStyle: NotificationStyle by lazy {
+            NotificationStyle(
+                text = R.string.timer_restart_notification_content_text,
+                title = R.string.timer_notification_title,
+                smallIcon = R.drawable.notification_important
+            )
+        }
     }
 }

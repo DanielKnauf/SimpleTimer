@@ -6,7 +6,7 @@ interface INotificationServiceConfig {
         channelId: String,
         channelName: String = "",
         channelDescription: String = "",
-        channelImportance: Int = 3 //NotificationManager.IMPORTANCE_DEFAULT
+        channelImportance: Int = 3 // == NotificationManager.IMPORTANCE_DEFAULT
     )
 
     fun setVibration(enabled: Boolean)
