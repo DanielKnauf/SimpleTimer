@@ -11,19 +11,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/base_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/instruction_tv"
-            style="@style/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            style="@style/input_fragment_instruction_text_view"
             android:text="@{viewModel.instructionText}"
             app:layout_constraintBottom_toTopOf="@+id/include"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,13 +26,8 @@
 
         <include
             android:id="@+id/include"
+            style="@style/input_fragment_time_input_field"
             layout="@layout/timer_input_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             app:hintText="@{viewModel.hintText}"
             app:insertNumber="@={viewModel.timePerCycle}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,71 +36,42 @@
 
         <LinearLayout
             android:id="@+id/time_unit_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical"
+            style="@style/input_fragment_time_unit_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                style="@style/input_fragment_time_unit_header"
                 android:text="@string/timer_input_time_unit_header" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                style="@style/AppTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/input_fragment_time_unit_selector"
                 app:currentSelection="@{viewModel.currentSelection}"
                 app:itemSource="@{viewModel.timeUnitSelectionItems}"
                 app:onSelectedTab="@{viewModel::onTabSelected}" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/repeat_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="horizontal"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
+            style="@style/input_fragment_repeat_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time_unit_container">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
+                style="@style/input_fragment_repeat_label"
                 android:text="@string/timer_input_repeat_switch_text" />
 
             <Switch
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:checked="@={viewModel.isOnRepeat}"
-                android:gravity="center_vertical" />
-
+                style="@style/input_fragment_repeat_switch"
+                android:checked="@={viewModel.isOnRepeat}" />
         </LinearLayout>
 
         <Button
             android:id="@+id/start_button"
-            style="@style/start_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            style="@style/input_fragment_start_button"
             android:background="@{viewModel.isEnabled ? @color/start_button_color : @color/stop_button_color}"
             android:enabled="@{viewModel.isEnabled}"
             android:onClick="@{() -> viewModel.onStartClicked()}"
