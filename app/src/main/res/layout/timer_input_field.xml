@@ -5,24 +5,23 @@
     <data>
 
         <variable
-            name="insertNumber"
-            type="Integer" />
-
-        <variable
-            name="hintText"
+            name="text"
             type="String" />
 
-        <import type="knaufdan.android.simpletimerapp.databinding.Translator" />
+        <variable
+            name="hint"
+            type="String" />
     </data>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/timer_input_field_text_layout"
-        android:hint="@{hintText}">
+        android:hint="@{hint}"
+        tool:hint="hint">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/timer_input_field_edit_text"
-            android:text="@={Translator.fromIntToString(insertNumber)}"
-            tool:hint="hint" />
+            android:text="@={text}"
+            tool:text="input" />
 
     </com.google.android.material.textfield.TextInputLayout>
 </layout>
