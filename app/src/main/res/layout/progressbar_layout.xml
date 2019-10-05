@@ -17,7 +17,6 @@
             style="@style/progress_bar_circle"
             android:max="@{viewModel.maximum}"
             android:progress="@{viewModel.progress}"
-            android:progressDrawable="@drawable/progressbar_circle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

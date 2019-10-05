@@ -34,13 +34,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="input_fragment_repeat_container">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="input_fragment_repeat_container" parent="linear_layout_horizontal">
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginTop">24dp</item>
         <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:orientation">horizontal</item>
         <item name="android:paddingStart">2dp</item>
         <item name="android:paddingEnd">2dp</item>
     </style>
