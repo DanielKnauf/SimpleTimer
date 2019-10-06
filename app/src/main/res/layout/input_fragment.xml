@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="knaufdan.android.simpletimerapp.databinding.Translator" />
+
         <variable
             name="viewModel"
             type="knaufdan.android.simpletimerapp.ui.fragments.InputFragmentViewModel" />
@@ -28,11 +30,11 @@
             android:id="@+id/include"
             style="@style/input_fragment_time_input_field"
             layout="@layout/timer_input_field"
-            app:hintText="@{viewModel.hintText}"
-            app:insertNumber="@={viewModel.timePerCycle}"
+            app:hint="@{viewModel.hintText}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/instruction_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/instruction_tv"
+            app:text="@={Translator.fromIntToString(viewModel.timePerCycle)}" />
 
         <LinearLayout
             android:id="@+id/time_unit_container"
