@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
+import knaufdan.android.core.ContextProvider
 import knaufdan.android.simpletimerapp.R
 import javax.inject.Inject
 

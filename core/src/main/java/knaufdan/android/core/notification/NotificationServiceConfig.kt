@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util.notification
+package knaufdan.android.core.notification
 
 import android.os.Build
 import android.util.Log

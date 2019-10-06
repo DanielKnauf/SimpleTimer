@@ -1,0 +1,16 @@
+object Versions {
+    const val gradle_version = "3.5.0"
+    const val kotlin_version = "1.3.50"
+    const val androidx_core_version = "1.0.2"
+    const val appcompat_version = "1.1.0"
+    const val design_version = "1.0.0"
+    const val lifecycle_version = "2.2.0-alpha05"
+    const val constraint_layout_version = "2.0.0-beta2"
+    const val broadcast_manager_version = "1.0.0"
+    const val dagger_version = "2.16"
+    const val gson_version = "2.8.5"
+
+    //testing
+    const val jUnit_version = "4.12"
+    const val test_runner_version = "1.2.0"
+}

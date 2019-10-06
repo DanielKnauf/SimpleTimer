@@ -13,7 +13,7 @@ import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.INPUT
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.SharedPrefService
+import knaufdan.android.core.SharedPrefService
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject
 

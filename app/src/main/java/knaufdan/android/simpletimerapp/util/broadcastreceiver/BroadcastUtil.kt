@@ -3,7 +3,7 @@ package knaufdan.android.simpletimerapp.util.broadcastreceiver
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import knaufdan.android.simpletimerapp.util.ContextProvider
+import knaufdan.android.core.ContextProvider
 import javax.inject.Inject
 
 class BroadcastUtil @Inject constructor(private val contextProvider: ContextProvider) {

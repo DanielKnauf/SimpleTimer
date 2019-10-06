@@ -3,15 +3,17 @@ package knaufdan.android.simpletimerapp.util.alarm
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.TextProvider
+import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.notification.NotificationService
+import knaufdan.android.core.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.R
+import knaufdan.android.simpletimerapp.ui.MainActivity
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.SharedPrefService
-import knaufdan.android.simpletimerapp.util.TextProvider
-import knaufdan.android.simpletimerapp.util.notification.NotificationService
-import knaufdan.android.simpletimerapp.util.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import java.util.Date
 import javax.inject.Inject
@@ -48,11 +50,17 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 broadcastReceiverType = this::class.java
             )
 
-            notificationService.sendNotification(timerRestartStyle)
+            notificationService.sendNotification(
+                notificationStyle = timerRestartStyle,
+                targetClass = MainActivity::class
+            )
         } else {
             sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.FINISH_STATE)
 
-            notificationService.sendNotification(timerFinishStyle)
+            notificationService.sendNotification(
+                notificationStyle = timerFinishStyle,
+                targetClass = MainActivity::class
+            )
         }
     }
 

@@ -11,10 +11,11 @@ import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.HasServiceInjector
 import dagger.android.support.HasSupportFragmentInjector
-import knaufdan.android.simpletimerapp.util.ContextProvider
+import knaufdan.android.core.ContextProvider
 import javax.inject.Inject
 
-class SimpleTimerApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector,
+class SimpleTimerApplication : Application(), HasActivityInjector, HasSupportFragmentInjector,
+    HasServiceInjector,
     HasBroadcastReceiverInjector {
 
     @Inject
@@ -47,5 +48,6 @@ class SimpleTimerApplication : Application(), HasActivityInjector, HasSupportFra
 
     override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
 
-    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> = broadcastReceiverInjector
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> =
+        broadcastReceiverInjector
 }

@@ -15,14 +15,14 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.SharedPrefService
+import knaufdan.android.core.SharedPrefService
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
-import knaufdan.android.simpletimerapp.util.alarm.AlarmService
+import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.UpdateReceiver
 import knaufdan.android.simpletimerapp.util.service.Action
-import knaufdan.android.simpletimerapp.util.service.ServiceUtil
+import knaufdan.android.core.service.ServiceUtil
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE

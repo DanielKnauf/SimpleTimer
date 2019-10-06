@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
 import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
-import knaufdan.android.simpletimerapp.util.ContextProvider
+import knaufdan.android.core.ContextProvider
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 

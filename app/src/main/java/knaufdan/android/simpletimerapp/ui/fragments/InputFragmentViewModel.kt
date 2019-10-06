@@ -11,8 +11,8 @@ import knaufdan.android.simpletimerapp.ui.data.parseToTimeUnit
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_CONFIGURATION
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.SharedPrefService
-import knaufdan.android.simpletimerapp.util.TextProvider
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.TextProvider
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject

@@ -1,9 +1,9 @@
-package knaufdan.android.simpletimerapp.util.service
+package knaufdan.android.core.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
-import knaufdan.android.simpletimerapp.util.ContextProvider
+import knaufdan.android.core.ContextProvider
 import javax.inject.Inject
 import kotlin.reflect.KClass
 

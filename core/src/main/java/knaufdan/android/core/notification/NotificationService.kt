@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util.notification
+package knaufdan.android.core.notification
 
 import android.app.Notification
 import android.app.Notification.CATEGORY_ALARM
@@ -10,11 +10,11 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import knaufdan.android.simpletimerapp.ui.MainActivity
-import knaufdan.android.simpletimerapp.util.ContextProvider
-import knaufdan.android.simpletimerapp.util.TextProvider
+import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.TextProvider
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
 @Singleton
 class NotificationService @Inject constructor(
@@ -27,7 +27,10 @@ class NotificationService @Inject constructor(
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)
 
-    override fun sendNotification(notificationStyle: NotificationStyle) {
+    override fun sendNotification(
+        notificationStyle: NotificationStyle,
+        targetClass: KClass<*>
+    ) {
         if (!config.isValid()) {
             Log.e(
                 this::class.simpleName,
@@ -37,7 +40,10 @@ class NotificationService @Inject constructor(
         }
         createNotificationChannel()
 
-        contextProvider.context.buildNotification(notificationStyle).apply {
+        contextProvider.context.buildNotification(
+            notificationStyle = notificationStyle,
+            targetClass = targetClass
+        ).apply {
             notificationManager.notify(
                 System.currentTimeMillis().toInt(),
                 this
@@ -61,7 +67,10 @@ class NotificationService @Inject constructor(
         }
     }
 
-    private fun Context.buildNotification(notificationStyle: NotificationStyle): Notification =
+    private fun Context.buildNotification(
+        notificationStyle: NotificationStyle,
+        targetClass: KClass<*>
+    ): Notification =
         NotificationCompat.Builder(this, config.channelId)
             .setSmallIcon(notificationStyle.smallIcon)
             .setContentTitle(textProvider.getText(notificationStyle.title))
@@ -72,14 +81,14 @@ class NotificationService @Inject constructor(
             .setAutoCancel(config.isAutoCancelEnabled)
             .setCategory(CATEGORY_ALARM)
             .setVibrate(longArrayOf())
-            .setContentIntent(createIntentToStartApp())
+            .setContentIntent(createIntentToStartApp(targetClass = targetClass))
             .build()
 
     companion object {
         private val config: NotificationServiceConfig = NotificationServiceConfig.EMPTY
 
-        private fun Context.createIntentToStartApp(): PendingIntent {
-            val intent = Intent(this, MainActivity::class.java)
+        private fun Context.createIntentToStartApp(targetClass: KClass<*>): PendingIntent {
+            val intent = Intent(this, targetClass.java)
                 .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
             return PendingIntent.getActivity(this, 0, intent, 0)
         }
