@@ -10,7 +10,10 @@ class TimerProgressViewModel : ProgressBarViewModel {
     override val inverseProgress = MediatorLiveData<Int>()
 
     init {
-        inverseProgress.bindTo(progress) { progress ->
+        inverseProgress.bindTo(
+            source = progress,
+            bindSafe = false
+        ) { progress ->
             maximum.value?.minus(progress) ?: 0
         }
     }

@@ -70,15 +70,15 @@ class InputFragmentViewModel @Inject constructor(
 
         currentSelection.bindTo(source = timeUnitSelection)
 
-        instructionText.bindTo(source = timeUnitSelection) { s ->
+        instructionText.bindTo(source = timeUnitSelection) { selection ->
             textProvider.getText(
                 R.string.timer_instruction,
-                s.parseToTimeUnit().displayText
+                selection.parseToTimeUnit().displayText
             )
         }
 
-        hintText.bindTo(source = timeUnitSelection) { s ->
-            s.parseToTimeUnit().displayText
+        hintText.bindTo(source = timeUnitSelection) { selection ->
+            selection.parseToTimeUnit().displayText
         }
 
         sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)
