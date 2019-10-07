@@ -2,6 +2,7 @@ package knaufdan.android.simpletimerapp.ui.progressbar
 
 import androidx.lifecycle.MediatorLiveData
 import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
+import knaufdan.android.simpletimerapp.util.bindTo
 
 class TimerProgressViewModel : ProgressBarViewModel {
     override val maximum = ExtMutableLiveData(0)
@@ -9,8 +10,8 @@ class TimerProgressViewModel : ProgressBarViewModel {
     override val inverseProgress = MediatorLiveData<Int>()
 
     init {
-        inverseProgress.addSource(progress) { progress ->
-            inverseProgress.postValue(maximum.value?.minus(progress) ?: 0)
+        inverseProgress.bindTo(progress) { progress ->
+            maximum.value?.minus(progress) ?: 0
         }
     }
 
