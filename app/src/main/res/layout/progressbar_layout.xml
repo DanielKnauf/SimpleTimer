@@ -16,7 +16,7 @@
         <ProgressBar
             style="@style/progress_bar_circle"
             android:max="@{viewModel.maximum}"
-            android:progress="@{viewModel.progress}"
+            android:progress="@{viewModel.inverseProgress}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +28,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:progressText="@{viewModel.progress}" />
+            app:progressText="@{viewModel.inverseProgress}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
