@@ -14,6 +14,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.TextProvider
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
+import knaufdan.android.simpletimerapp.util.bindTo
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import javax.inject.Inject
 
@@ -67,17 +68,17 @@ class InputFragmentViewModel @Inject constructor(
             isEnabled.postValue(time != null && time > 0)
         }
 
-        connect(source = timeUnitSelection, target = currentSelection)
+        currentSelection.bindTo(source = timeUnitSelection)
 
-        connect(source = timeUnitSelection, target = instructionText) { s ->
+        instructionText.bindTo(source = timeUnitSelection) { selection ->
             textProvider.getText(
                 R.string.timer_instruction,
-                s.parseToTimeUnit().displayText
+                selection.parseToTimeUnit().displayText
             )
         }
 
-        connect(source = timeUnitSelection, target = hintText) { s ->
-            s.parseToTimeUnit().displayText
+        hintText.bindTo(source = timeUnitSelection) { selection ->
+            selection.parseToTimeUnit().displayText
         }
 
         sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)

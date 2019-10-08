@@ -15,10 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            style="@style/timer_fragment_reset_button"
-            android:onClick="@{viewModel::onResetClicked}" />
-
         <include
             android:id="@+id/progessbarInclude"
             style="@style/timer_fragment_progress_bar"

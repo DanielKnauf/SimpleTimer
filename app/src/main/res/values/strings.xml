@@ -14,9 +14,6 @@
     <string name="timer_input_repeat_switch_text">isOnRepeat</string>
     <string name="timer_input_time_unit_header">time unit</string>
 
-    <!-- timer fragment -->
-    <string name="timer_fragment_reset_button_text">reset timer</string>
-
     <!-- notification -->
     <string name="timer_finished_notification_channel_id">"knaufdan.android.simpletimerapp.alarm"</string>
     <string name="timer_finished_notification_channel_name">Finished timer alarm</string>
