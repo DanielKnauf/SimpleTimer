@@ -8,10 +8,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
-import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
-import knaufdan.android.simpletimerapp.util.ContextProvider
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
+import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
+import knaufdan.android.simpletimerapp.util.ContextProvider
 
 abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
@@ -56,16 +56,18 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
 
-        if (viewModel is BaseViewModel
+        if (viewModel is BaseViewModel &&
             // do only initiate view model on first start
-            && savedInstanceState == null
+            savedInstanceState == null
         ) {
             (viewModel as BaseViewModel).init(intent.extras)
         }
 
-        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes)
-        binding.lifecycleOwner = this
-        binding.setVariable(viewConfig.viewModelKey, viewModel)
+        DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes).apply {
+            lifecycleOwner = this@BaseActivity
+            setVariable(viewConfig.viewModelKey, viewModel)
+            executePendingBindings()
+        }
     }
 
     private fun showInitialPage(

@@ -15,38 +15,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            style="@style/reset_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{viewModel::onResetClicked}" />
-
         <include
             android:id="@+id/progessbarInclude"
+            style="@style/timer_fragment_progress_bar"
             layout="@layout/progressbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             app:viewModel="@{viewModel}"
             tools:progress="10" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/timer_fragment_action_button_container">
 
             <Button
-                style="@style/stop_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/timer_fragment_stop_button"
                 android:onClick="@{viewModel::onStopClicked}" />
 
             <Button
-                style="@style/pause_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/timer_fragment_pause_button"
                 android:background="@{viewModel.isPaused ? @color/start_button_color : @color/pause_button_color }"
                 android:onClick="@{viewModel::onPauseClicked}"
                 android:text="@{viewModel.isPaused ? @string/resume_button_text : @string/pause_button_text}"

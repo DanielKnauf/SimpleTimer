@@ -2,6 +2,8 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import java.util.Date
+import javax.inject.Inject
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
@@ -17,6 +19,7 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
+import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
 import knaufdan.android.simpletimerapp.util.alarm.AlarmService
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
 import knaufdan.android.simpletimerapp.util.broadcastreceiver.UpdateReceiver
@@ -27,8 +30,6 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
-import java.util.Date
-import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,
@@ -39,7 +40,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val sharedPrefService: SharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
-    var timerFinished = false
+    private var timerFinished = false
     val isPaused = ExtMutableLiveData(false)
 
     private var isOnRepeat = false
@@ -118,10 +119,6 @@ class TimerFragmentViewModel @Inject constructor(
         }
     }
 
-    fun View.onResetClicked() {
-        stopAndCheckNextAction(resetTimer = true)
-    }
-
     fun View.onPauseClicked() {
         isPaused.value = if (safeUnBox(isPaused.value)) {
             val maxValue = maximum.value ?: 0
@@ -157,7 +154,8 @@ class TimerFragmentViewModel @Inject constructor(
         )
         alarmService.setAlarm(
             timeToWakeFromNow = calculateRemainingProgress(),
-            extras = createBundleForAlarmService()
+            extras = createBundleForAlarmService(),
+            broadcastReceiverType = AlarmReceiver::class.java
         )
     }
 
@@ -168,7 +166,7 @@ class TimerFragmentViewModel @Inject constructor(
 
     fun restart() {
         if (hasTimerState(PAUSE_STATE) || hasTimerState(RESTARTED_IN_BACKGROUND)) {
-            alarmService.cancelAlarm()
+            alarmService.cancelAlarm(broadcastReceiverType = AlarmReceiver::class.java)
 
             if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
                 progress.value = 0

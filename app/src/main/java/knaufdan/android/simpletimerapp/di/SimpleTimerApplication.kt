@@ -11,8 +11,8 @@ import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.HasServiceInjector
 import dagger.android.support.HasSupportFragmentInjector
-import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject
+import knaufdan.android.simpletimerapp.util.ContextProvider
 
 class SimpleTimerApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector,
     HasBroadcastReceiverInjector {

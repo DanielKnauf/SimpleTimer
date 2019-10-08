@@ -1,6 +1,7 @@
 package knaufdan.android.simpletimerapp.ui
 
 import android.os.Bundle
+import javax.inject.Inject
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseActivity
@@ -15,7 +16,6 @@ import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 

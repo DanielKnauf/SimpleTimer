@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
-import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
+import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
 
 abstract class BaseFragment<V : ViewModel> : Fragment() {
 
@@ -48,9 +48,9 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
 
-        if (viewModel is BaseViewModel
+        if (viewModel is BaseViewModel &&
             // do only initiate view model on first start
-            && savedInstanceState == null
+            savedInstanceState == null
         ) {
             (viewModel as BaseViewModel).init(arguments)
         }
@@ -62,10 +62,13 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
                 container,
                 false
             )
-        binding.lifecycleOwner = this
-        binding.setVariable(config.viewModelKey, viewModel)
 
-        return binding.root
+        return binding.run {
+            lifecycleOwner = this@BaseFragment
+            setVariable(config.viewModelKey, viewModel)
+            executePendingBindings()
+            binding.root
+        }
     }
 
     override fun onResume() {
