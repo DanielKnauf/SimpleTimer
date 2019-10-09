@@ -40,7 +40,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val sharedPrefService: SharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
-    var timerFinished = false
+    private var timerFinished = false
     val isPaused = ExtMutableLiveData(false)
 
     private var isOnRepeat = false
@@ -117,10 +117,6 @@ class TimerFragmentViewModel @Inject constructor(
                 isOnRepeat = getBoolean(KEY_IS_ON_REPEAT, false)
             }
         }
-    }
-
-    fun View.onResetClicked() {
-        stopAndCheckNextAction(resetTimer = true)
     }
 
     fun View.onPauseClicked() {
