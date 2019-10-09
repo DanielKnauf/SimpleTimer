@@ -20,18 +20,6 @@ class SimpleTimerApplication : Application(), HasAndroidInjector {
     }
 
     @Inject
-    internal lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-
-    @Inject
-    internal lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
-
-    @Inject
-    internal lateinit var serviceInjector: DispatchingAndroidInjector<Service>
-
-    @Inject
-    internal lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-
-    @Inject
     internal lateinit var contextProvider: ContextProvider
 
     override fun onCreate() {
