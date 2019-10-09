@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
@@ -54,7 +54,7 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
             "Activity parameters for $className have no viewModel key."
         }
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(typeOfViewModel)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
 
         if (viewModel is BaseViewModel &&
             // do only initiate view model on first start
