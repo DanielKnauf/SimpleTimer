@@ -3,8 +3,8 @@ package knaufdan.android.simpletimerapp.util.service
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
-import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject
+import knaufdan.android.simpletimerapp.util.ContextProvider
 import kotlin.reflect.KClass
 
 class ServiceUtil @Inject constructor(private val contextProvider: ContextProvider) {

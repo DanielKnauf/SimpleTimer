@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 
 interface ProgressBarViewModel {
     val progress: MutableLiveData<Int>
-    val inverseProgress : MediatorLiveData<Int>
+    val inverseProgress: MediatorLiveData<Int>
     val maximum: MutableLiveData<Int>
 
     fun increaseProgress(increment: Int)

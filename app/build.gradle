@@ -23,6 +23,8 @@ android {
     dataBinding {
         enabled = true
     }
+
+    apply from: "$rootDir/buildSrc/ktlint.gradle.kts"
 }
 
 dependencies {

@@ -2,6 +2,8 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import java.util.Date
+import javax.inject.Inject
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
@@ -28,8 +30,6 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
-import java.util.Date
-import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,

@@ -2,6 +2,7 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import androidx.lifecycle.MediatorLiveData
 import com.google.android.material.tabs.TabLayout
+import javax.inject.Inject
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
@@ -16,7 +17,6 @@ import knaufdan.android.simpletimerapp.util.TextProvider
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.bindTo
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(
     private val navigator: Navigator,

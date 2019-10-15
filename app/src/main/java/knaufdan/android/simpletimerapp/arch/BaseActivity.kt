@@ -8,10 +8,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
-import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
-import knaufdan.android.simpletimerapp.util.ContextProvider
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
+import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
+import knaufdan.android.simpletimerapp.util.ContextProvider
 
 abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
@@ -56,9 +56,9 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
 
-        if (viewModel is BaseViewModel
-            //do only initiate view model on first start
-            && savedInstanceState == null
+        if (viewModel is BaseViewModel &&
+            // do only initiate view model on first start
+            savedInstanceState == null
         ) {
             (viewModel as BaseViewModel).init(intent.extras)
         }

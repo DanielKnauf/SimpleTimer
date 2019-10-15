@@ -10,11 +10,11 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import javax.inject.Inject
+import javax.inject.Singleton
 import knaufdan.android.simpletimerapp.ui.MainActivity
 import knaufdan.android.simpletimerapp.util.ContextProvider
 import knaufdan.android.simpletimerapp.util.TextProvider
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class NotificationService @Inject constructor(
@@ -46,8 +46,8 @@ class NotificationService @Inject constructor(
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-            && notificationManager.getNotificationChannel(config.channelId) == null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            notificationManager.getNotificationChannel(config.channelId) == null
         ) {
             NotificationChannel(
                 config.channelId,
@@ -85,4 +85,3 @@ class NotificationService @Inject constructor(
         }
     }
 }
-

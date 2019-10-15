@@ -6,9 +6,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import knaufdan.android.simpletimerapp.util.ContextProvider
 import javax.inject.Inject
 import javax.inject.Singleton
+import knaufdan.android.simpletimerapp.util.ContextProvider
 
 @Singleton
 class AlarmService @Inject constructor(private val contextProvider: ContextProvider) :

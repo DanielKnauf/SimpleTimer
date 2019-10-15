@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.util.Log
 
 class UpdateReceiver<E : Enum<E>>(
-        forAction: Array<E>,
-        private val actor: (action: String, extras: Bundle?) -> Unit
+    forAction: Array<E>,
+    private val actor: (action: String, extras: Bundle?) -> Unit
 ) : ActionBroadcastReceiver(forAction.map { it.name }) {
 
     override fun onReceive(context: Context, intent: Intent) {
