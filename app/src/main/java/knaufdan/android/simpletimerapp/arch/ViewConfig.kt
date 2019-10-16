@@ -24,7 +24,7 @@ class ViewConfig(
 
         fun setInitialPage(initialPage: Enum<*>) = setInitialPage(initialPage.ordinal)
 
-        fun setInitialPage(initialPage: Int) = apply { this.initialPage = initialPage }
+        private fun setInitialPage(initialPage: Int) = apply { this.initialPage = initialPage }
 
         fun build() = ViewConfig(layoutRes, viewModelKey, titleRes, initialPage)
     }
