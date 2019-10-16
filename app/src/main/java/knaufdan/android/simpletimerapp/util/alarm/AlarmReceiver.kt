@@ -50,17 +50,10 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 broadcastReceiverType = this::class.java
             )
 
-            notificationService.sendNotification(
-                notificationStyle = timerRestartStyle,
-                targetClass = MainActivity::class
-            )
+            sendNotification(notificationStyle = timerRestartStyle)
         } else {
             sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.FINISH_STATE)
-
-            notificationService.sendNotification(
-                notificationStyle = timerFinishStyle,
-                targetClass = MainActivity::class
-            )
+            sendNotification(notificationStyle = timerFinishStyle)
         }
     }
 
@@ -79,6 +72,13 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 setAutoCancel(enabled = true)
             }
         }
+
+    private fun sendNotification(notificationStyle: NotificationStyle) {
+        notificationService.sendNotification(
+            notificationStyle = notificationStyle,
+            targetClass = MainActivity::class
+        )
+    }
 
     companion object {
         private val timerFinishStyle: NotificationStyle by lazy {

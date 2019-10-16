@@ -30,9 +30,11 @@ dependencies {
     implementation Dependencies.androidX_app_compat
     implementation Dependencies.kotlin_stdlib
     implementation Dependencies.androidX_core_ktx
-    testImplementation Dependencies.jUnit
-    androidTestImplementation Dependencies.androidX_test_runner
     implementation Dependencies.gson
+
+    //testing
+    androidTestImplementation Dependencies.androidX_test_runner
+    testImplementation Dependencies.jUnit
 
     //dagger2
     implementation Dependencies.dagger_core
