@@ -1,11 +1,11 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
-import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.data.TimeUnit
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.ui.data.parseToTimeUnit
@@ -25,14 +25,14 @@ class InputFragmentViewModel @Inject constructor(
 ) : BaseViewModel() {
     val instructionText = MediatorLiveData<String>()
     val hintText = MediatorLiveData<String>()
-    val timePerCycle = ExtMutableLiveData<Int?>(1)
+    val timePerCycle = MutableLiveData<Int?>(1)
     val isEnabled = MediatorLiveData<Boolean>()
-    val isOnRepeat = ExtMutableLiveData(false)
+    val isOnRepeat = MutableLiveData(false)
     val currentSelection = MediatorLiveData<Int>()
     val timeUnitSelectionItems by lazy {
         TimeUnit.values().map { timeUnit -> timeUnit.displayText }.toList()
     }
-    private val timeUnitSelection = ExtMutableLiveData(TimeUnit.MINUTE.ordinal)
+    private val timeUnitSelection = MutableLiveData(TimeUnit.MINUTE.ordinal)
 
     fun onTabSelected(tab: TabLayout.Tab?) {
         tab?.apply {
@@ -81,12 +81,11 @@ class InputFragmentViewModel @Inject constructor(
             selection.parseToTimeUnit().displayText
         }
 
-        sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)
-            ?.apply {
-                this@InputFragmentViewModel.timePerCycle.value = this.timePerCycle
-                this@InputFragmentViewModel.isOnRepeat.value = this.isOnRepeat
-                timeUnitSelection.value = this.timeUnit.ordinal
-            }
+        sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)?.apply {
+            this@InputFragmentViewModel.timePerCycle.value = this.timePerCycle
+            this@InputFragmentViewModel.isOnRepeat.value = this.isOnRepeat
+            timeUnitSelection.value = this.timeUnit.ordinal
+        }
     }
 
     fun resetState() {

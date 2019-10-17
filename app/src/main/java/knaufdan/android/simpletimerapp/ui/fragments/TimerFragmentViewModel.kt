@@ -2,10 +2,10 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import java.util.Date
 import javax.inject.Inject
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
-import knaufdan.android.simpletimerapp.databinding.ExtMutableLiveData
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
@@ -41,7 +41,7 @@ class TimerFragmentViewModel @Inject constructor(
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
     private var timerFinished = false
-    val isPaused = ExtMutableLiveData(false)
+    val isPaused = MutableLiveData(false)
 
     private var isOnRepeat = false
 
