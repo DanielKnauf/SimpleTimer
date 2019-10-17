@@ -3,6 +3,8 @@ package knaufdan.android.simpletimerapp.util.alarm
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
+import java.util.Date
+import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.TextProvider
 import knaufdan.android.core.alarm.AlarmService
@@ -15,8 +17,6 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import java.util.Date
-import javax.inject.Inject
 
 class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
@@ -38,8 +38,8 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
 
         val endTime = intent.getIntExtra(KEY_CURRENT_MAXIMUM, 0)
 
-        if (intent.getBooleanExtra(KEY_IS_ON_REPEAT, false)
-            && endTime > 0
+        if (intent.getBooleanExtra(KEY_IS_ON_REPEAT, false) &&
+            endTime > 0
         ) {
             sharedPrefService.saveTo(KEY_PAUSE_TIME, Date().time)
             sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESTARTED_IN_BACKGROUND)

@@ -9,5 +9,3 @@ data class TimerConfiguration(
     val timeUnit
         get() = this.timeUnitName.parseToTimeUnit()
 }
-
-

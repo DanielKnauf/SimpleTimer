@@ -26,9 +26,9 @@ class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
     }
 
     private fun doNotSetUpAlarm() =
-        isBackPressed
-                || viewModel.isFinished()
-                || safeUnBox(viewModel.isPaused.value)
+        isBackPressed ||
+                viewModel.isFinished() ||
+                safeUnBox(viewModel.isPaused.value)
 
     override fun onResume() {
         super.onResume()

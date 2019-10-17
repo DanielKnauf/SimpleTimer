@@ -10,6 +10,7 @@ import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.lifecycle_version
 import Versions.test_runner_version
+import Versions.dependency_updates_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -39,4 +40,6 @@ object Dependencies {
     val dagger_android_processor = "com.google.dagger:dagger-android-processor:$dagger_version"
 
     val gson = "com.google.code.gson:gson:$gson_version"
+
+    val dependency_updates = "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
 }

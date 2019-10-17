@@ -12,6 +12,5 @@ class TextProvider @Inject constructor(private val contextProvider: ContextProvi
             contextProvider.context.getString(textId, this)
         } ?: getText(textId)
 
-
     private fun getText(@StringRes textId: Int): String = contextProvider.context.getString(textId)
 }

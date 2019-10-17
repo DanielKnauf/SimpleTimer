@@ -7,4 +7,3 @@ internal class TimerRunnable(private val timerService: TimerService) : TimerTask
         timerService.sendUpdate()
     }
 }
-

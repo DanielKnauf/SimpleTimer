@@ -52,8 +52,8 @@ class NotificationService @Inject constructor(
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-            && notificationManager.getNotificationChannel(config.channelId) == null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            notificationManager.getNotificationChannel(config.channelId) == null
         ) {
             NotificationChannel(
                 config.channelId,
@@ -94,4 +94,3 @@ class NotificationService @Inject constructor(
         }
     }
 }
-
