@@ -8,7 +8,7 @@
     <string name="resume_button_text">Resume</string>
 
     <!-- instruction text -->
-    <string name="timer_instruction">Set %1$s until gong.</string>
+    <string name="timer_instruction">Set time until gong.</string>
 
     <!-- timer input -->
     <string name="timer_input_repeat_switch_text">isOnRepeat</string>

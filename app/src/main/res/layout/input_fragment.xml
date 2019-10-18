@@ -19,40 +19,48 @@
         <TextView
             android:id="@+id/instruction_tv"
             style="@style/input_fragment_instruction_text_view"
-            android:text="@{viewModel.instructionText}"
-            app:layout_constraintBottom_toTopOf="@+id/include"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Instruction" />
 
-        <include
-            android:id="@+id/include"
-            style="@style/input_fragment_time_input_field"
-            layout="@layout/timer_input_field"
-            app:hint="@{viewModel.hintText}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/instruction_tv"
-            app:text="@={Translator.fromIntToString(viewModel.timePerCycle)}" />
-
         <LinearLayout
-            android:id="@+id/time_unit_container"
-            style="@style/input_fragment_time_unit_container"
+            android:id="@+id/number_picker_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
+            app:layout_constraintTop_toBottomOf="@+id/instruction_tv">
 
-            <TextView
-                style="@style/input_fragment_time_unit_header"
-                android:text="@string/timer_input_time_unit_header" />
+            <NumberPicker
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:value="@={viewModel.hours}"
+                app:format="@{`hrs`}"
+                app:max="@{24}"
+                app:min="@{0}" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                style="@style/input_fragment_time_unit_selector"
-                app:currentSelection="@{viewModel.currentSelection}"
-                app:itemSource="@{viewModel.timeUnitSelectionItems}"
-                app:onSelectedTab="@{viewModel::onTabSelected}" />
+            <NumberPicker
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:value="@={viewModel.minutes}"
+                app:format="@{`min`}"
+                app:max="@{59}"
+                app:min="@{0}" />
+
+            <NumberPicker
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:value="@={viewModel.seconds}"
+                app:format="@{`sec`}"
+                app:max="@{59}"
+                app:min="@{0}" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,7 +68,7 @@
             style="@style/input_fragment_repeat_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_unit_container">
+            app:layout_constraintTop_toBottomOf="@+id/number_picker_container">
 
             <TextView
                 style="@style/input_fragment_repeat_label"

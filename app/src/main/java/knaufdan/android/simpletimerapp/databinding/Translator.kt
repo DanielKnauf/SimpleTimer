@@ -4,7 +4,6 @@ import androidx.databinding.InverseMethod
 
 object Translator {
 
-    @JvmStatic
     @InverseMethod("fromIntToString")
     fun fromStringToInt(value: String): Int? {
         return try {
@@ -14,7 +13,6 @@ object Translator {
         }
     }
 
-    @JvmStatic
     fun fromIntToString(value: Int?): String {
         return value?.toString() ?: ""
     }

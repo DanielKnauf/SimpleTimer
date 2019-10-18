@@ -1,8 +1,8 @@
 package knaufdan.android.simpletimerapp.databinding
 
+import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.google.android.material.tabs.TabLayout
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
@@ -19,43 +19,20 @@ fun TextView.setProgressText(progress: Int?) {
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
-@BindingAdapter(value = ["itemSource", "onSelectedTab"])
-fun TabLayout.populateFromSource(
-    itemSource: List<String>,
-    onSelectedTab: OnSelectedTab
+// NumberPicker
+@BindingAdapter(value = ["min", "max", "format"], requireAll = false)
+fun NumberPicker.initialize(
+    min: Int = 0,
+    max: Int = 10,
+    format: String?
 ) {
-    removeAllTabs()
+    minValue = min
+    maxValue = max
+    wrapSelectorWheel = true
 
-    itemSource.forEach { item ->
-        newTab().apply {
-            contentDescription = item
-            text = item
-            addTab(this)
+    format?.apply {
+        setFormatter { value ->
+            "$value $format"
         }
     }
-
-    addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) {
-            // do nothing here
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab?) {
-            // do nothing here
-        }
-
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            onSelectedTab.onTabSelected(tab)
-        }
-    })
-}
-
-@BindingAdapter(value = ["currentSelection"])
-fun TabLayout.setCurrentSelection(currentSelection: Int?) {
-    currentSelection?.apply {
-        this@setCurrentSelection.getTabAt(this)?.select()
-    }
-}
-
-interface OnSelectedTab {
-    fun onTabSelected(tab: TabLayout.Tab?)
 }

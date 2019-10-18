@@ -1,37 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="input_fragment_instruction_text_view" parent="title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="input_fragment_time_input_field">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:layout_marginTop">24dp</item>
-        <item name="android:layout_marginRight">4dp</item>
-    </style>
-
-    <style name="input_fragment_time_unit_container">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginTop">24dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="input_fragment_time_unit_header">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="input_fragment_time_unit_selector" parent="AppTabLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/timer_instruction</item>
     </style>
 
     <style name="input_fragment_repeat_container" parent="linear_layout_horizontal">
