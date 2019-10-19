@@ -19,19 +19,17 @@ fun TextView.setProgressText(progress: Int?) {
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
 
-@BindingAdapter(value = ["min", "max", "format"], requireAll = false)
-fun NumberPicker.initialize(
-    min: Int = 0,
-    max: Int = 10,
-    format: String?
+@BindingAdapter(value = ["min", "max", "isWrapped"])
+fun NumberPicker.setup(
+    min: Int,
+    max: Int,
+    isWrapped: Boolean
 ) {
     minValue = min
     maxValue = max
-    wrapSelectorWheel = true
-
-    format?.apply {
-        setFormatter { value ->
-            "$value $format"
-        }
-    }
+    wrapSelectorWheel = isWrapped
 }
+
+
+@BindingAdapter(value = ["suffix"])
+fun NumberPicker.configureFormatter(suffix: String) = setFormatter { value -> "$value $suffix" }

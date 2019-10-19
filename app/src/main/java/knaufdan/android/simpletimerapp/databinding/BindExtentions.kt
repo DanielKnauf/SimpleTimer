@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util
+package knaufdan.android.simpletimerapp.databinding
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -14,11 +14,10 @@ fun <T, S> MediatorLiveData<T>.bindTo(
     addSource(source) { sourceValue ->
         val newValue = mapping(sourceValue)
 
-        if (bindSafe && value == newValue) {
-            return@addSource
-        }
-
-        postValue(newValue)
+        postValue(
+            bindSafe = bindSafe,
+            newValue = newValue
+        )
     }
 }
 
@@ -32,30 +31,38 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     addSource(source1) { sourceValue1 ->
         val newValue = mapping(sourceValue1, source2.value, source3.value)
 
-        if (bindSafe && value == newValue) {
-            return@addSource
-        }
-
-        postValue(newValue)
+        postValue(
+            bindSafe = bindSafe,
+            newValue = newValue
+        )
     }
 
     addSource(source2) { sourceValue2 ->
         val newValue = mapping(source1.value, sourceValue2, source3.value)
 
-        if (bindSafe && value == newValue) {
-            return@addSource
-        }
-
-        postValue(newValue)
+        postValue(
+            bindSafe = bindSafe,
+            newValue = newValue
+        )
     }
 
     addSource(source3) { sourceValue3 ->
         val newValue = mapping(source1.value, source2.value, sourceValue3)
 
-        if (bindSafe && value == newValue) {
-            return@addSource
-        }
-
-        postValue(newValue)
+        postValue(
+            bindSafe = bindSafe,
+            newValue = newValue
+        )
     }
+}
+
+private fun <T> MediatorLiveData<T>.postValue(
+    bindSafe: Boolean,
+    newValue: T
+) {
+    if (bindSafe && value == newValue) {
+        return
+    }
+
+    postValue(newValue)
 }

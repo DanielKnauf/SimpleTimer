@@ -38,9 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:value="@={viewModel.hours}"
-                app:format="@{`hrs`}"
+                app:isWrapped="@{true}"
                 app:max="@{24}"
-                app:min="@{0}" />
+                app:min="@{0}"
+                app:suffix="@{`hrs`}" />
 
             <NumberPicker
                 android:layout_width="0dp"
@@ -49,18 +50,20 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:value="@={viewModel.minutes}"
-                app:format="@{`min`}"
+                app:isWrapped="@{true}"
                 app:max="@{59}"
-                app:min="@{0}" />
+                app:min="@{0}"
+                app:suffix="@{`min`}" />
 
             <NumberPicker
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:value="@={viewModel.seconds}"
-                app:format="@{`sec`}"
+                app:isWrapped="@{true}"
                 app:max="@{59}"
-                app:min="@{0}" />
+                app:min="@{0}"
+                app:suffix="@{`sec`}" />
         </LinearLayout>
 
         <LinearLayout
