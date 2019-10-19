@@ -11,6 +11,7 @@ import Versions.kotlin_version
 import Versions.lifecycle_version
 import Versions.test_runner_version
 import Versions.dependency_updates_version
+import Versions.ktLint_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -42,4 +43,5 @@ object Dependencies {
     val gson = "com.google.code.gson:gson:$gson_version"
 
     val dependency_updates = "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
+    val ktLint = "com.pinterest:ktlint:$ktLint_version"
 }

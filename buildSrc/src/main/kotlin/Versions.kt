@@ -10,9 +10,10 @@ object Versions {
     const val broadcast_manager_version = "1.0.0"
     const val dagger_version = "2.24"
     const val gson_version = "2.8.6"
+
+    const val ktLint_version = "0.34.2"
     const val dependency_updates_version = "0.25.0"
 
-    //testing
     const val jUnit_version = "4.12"
     const val test_runner_version = "1.2.0"
 }
