@@ -9,10 +9,6 @@
 
     <style name="input_fragment_time_selector_container" parent="linear_layout_horizontal" />
 
-    <style name="input_fragment_repeat_container" parent="linear_layout_horizontal">
-        <item name="android:layout_marginTop">24dp</item>
-    </style>
-
     <style name="input_fragment_time_selector">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -22,6 +18,10 @@
     <style name="input_fragment_time_selector_middle" parent="input_fragment_time_selector">
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="input_fragment_repeat_container" parent="linear_layout_horizontal">
+        <item name="android:layout_marginTop">24dp</item>
     </style>
 
     <style name="input_fragment_repeat_label">

@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 
 fun <T, S> MediatorLiveData<T>.bindTo(
     source: LiveData<S>,
-    bindSafe: Boolean = true,
+    postOnlyDifferentValues: Boolean = true,
     mapping: (sourceValue: S) -> T = { s ->
         @Suppress("UNCHECKED_CAST")
         s as T
@@ -15,7 +15,7 @@ fun <T, S> MediatorLiveData<T>.bindTo(
         val newValue = mapping(sourceValue)
 
         postValue(
-            bindSafe = bindSafe,
+            postOnlyDifferentValues = postOnlyDifferentValues,
             newValue = newValue
         )
     }
@@ -25,7 +25,7 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     source1: LiveData<S>,
     source2: LiveData<U>,
     source3: LiveData<V>,
-    bindSafe: Boolean = true,
+    postOnlyDifferentValues: Boolean = true,
     mapping: (sourceValue1: S?, sourceValue2: U?, sourceValue3: V?) -> T
 ) {
     addSource(source1) { sourceValue1 ->
@@ -36,7 +36,7 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
         )
 
         postValue(
-            bindSafe = bindSafe,
+            postOnlyDifferentValues = postOnlyDifferentValues,
             newValue = newValue
         )
     }
@@ -49,7 +49,7 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
         )
 
         postValue(
-            bindSafe = bindSafe,
+            postOnlyDifferentValues = postOnlyDifferentValues,
             newValue = newValue
         )
     }
@@ -62,17 +62,17 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
         )
 
         postValue(
-            bindSafe = bindSafe,
+            postOnlyDifferentValues = postOnlyDifferentValues,
             newValue = newValue
         )
     }
 }
 
 private fun <T> MediatorLiveData<T>.postValue(
-    bindSafe: Boolean,
+    postOnlyDifferentValues: Boolean,
     newValue: T
 ) {
-    if (bindSafe && value == newValue) {
+    if (postOnlyDifferentValues && value == newValue) {
         return
     }
 

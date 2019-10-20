@@ -12,7 +12,7 @@ class TimerProgressViewModel : ProgressBarViewModel {
     init {
         inverseProgress.bindTo(
             source = progress,
-            bindSafe = false
+            postOnlyDifferentValues = false
         ) { progress ->
             maximum.value?.minus(progress) ?: 0
         }

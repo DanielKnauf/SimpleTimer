@@ -56,10 +56,10 @@ class InputFragmentViewModel @Inject constructor(
             source2 = minutes,
             source3 = seconds
         ) { h, m, s ->
-            val safeHours = h.safeValue().times(HOUR_IN_MILLIS)
-            val safeMin = m.safeValue().times(MINUTE_IN_MILLIS)
-            val safeSec = s.safeValue().times(SECOND_IN_MILLIS)
-            safeHours + safeMin + safeSec
+            val hours = h.safeValue().times(HOUR_IN_MILLIS)
+            val minutes = m.safeValue().times(MINUTE_IN_MILLIS)
+            val seconds = s.safeValue().times(SECOND_IN_MILLIS)
+            hours + minutes + seconds
         }
 
         isEnabled.bindTo(source = timePerCycle) { time -> time > 0 }
