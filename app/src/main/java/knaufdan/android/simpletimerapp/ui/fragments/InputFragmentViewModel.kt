@@ -33,18 +33,17 @@ class InputFragmentViewModel @Inject constructor(
         timePerCycle.value?.apply {
             val isOnRepeat = safeUnBox(isOnRepeat.value)
 
-            sharedPrefService.saveAsJsonTo(
-                KEY_TIMER_CONFIGURATION,
-                TimerConfiguration(
-                    timePerCycle = this,
-                    isOnRepeat = isOnRepeat
-                )
-            )
-
-            navigator.navigateToTimer(
-                timerMaximum = this,
+            TimerConfiguration(
+                timePerCycle = this,
                 isOnRepeat = isOnRepeat
-            )
+            ).apply {
+                sharedPrefService.saveAsJsonTo(
+                    key = KEY_TIMER_CONFIGURATION,
+                    value = this
+                )
+
+                navigator.navigateToTimer(timerConfiguration = this)
+            }
         }
     }
 
