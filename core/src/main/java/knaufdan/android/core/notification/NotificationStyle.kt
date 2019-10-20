@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util.notification
+package knaufdan.android.core.notification
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

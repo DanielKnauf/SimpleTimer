@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import javax.inject.Inject
+import knaufdan.android.core.ContextProvider
 import knaufdan.android.simpletimerapp.R
 
 class AudioService @Inject constructor(private val contextProvider: ContextProvider) {

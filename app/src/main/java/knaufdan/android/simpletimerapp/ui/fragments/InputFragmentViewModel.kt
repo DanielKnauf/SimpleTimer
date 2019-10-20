@@ -4,6 +4,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.TextProvider
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.data.TimeUnit
@@ -12,8 +14,6 @@ import knaufdan.android.simpletimerapp.ui.data.parseToTimeUnit
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_CONFIGURATION
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.SharedPrefService
-import knaufdan.android.simpletimerapp.util.TextProvider
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.bindTo
 import knaufdan.android.simpletimerapp.util.service.TimerState

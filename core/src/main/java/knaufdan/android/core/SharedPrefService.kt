@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util
+package knaufdan.android.core
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences

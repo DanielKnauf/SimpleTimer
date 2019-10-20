@@ -5,7 +5,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
-import knaufdan.android.simpletimerapp.util.ContextProvider
+import knaufdan.android.core.ContextProvider
 
 class SimpleTimerApplication : Application(), HasAndroidInjector {
     @Inject

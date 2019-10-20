@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util.alarm
+package knaufdan.android.core.alarm
 
 import android.content.BroadcastReceiver
 import android.os.Bundle

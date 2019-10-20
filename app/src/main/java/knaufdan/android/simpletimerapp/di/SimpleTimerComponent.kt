@@ -4,6 +4,7 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import javax.inject.Singleton
+import knaufdan.android.core.di.NotificationModule
 import knaufdan.android.simpletimerapp.di.modules.ActivityModule
 import knaufdan.android.simpletimerapp.di.modules.BroadcastModule
 import knaufdan.android.simpletimerapp.di.modules.FragmentModule
@@ -18,7 +19,8 @@ import knaufdan.android.simpletimerapp.di.modules.ViewModelModule
         FragmentModule::class,
         ViewModelModule::class,
         ServiceModule::class,
-        BroadcastModule::class
+        BroadcastModule::class,
+        NotificationModule::class
     ]
 )
 interface SimpleTimerComponent : AndroidInjector<SimpleTimerApplication>
