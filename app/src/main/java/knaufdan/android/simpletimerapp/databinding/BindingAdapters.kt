@@ -3,18 +3,14 @@ package knaufdan.android.simpletimerapp.databinding
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
+import knaufdan.android.simpletimerapp.util.determineClockSections
 
 @BindingAdapter(value = ["progressText"])
 fun TextView.setProgressText(progress: Int?) {
-    text = progress?.run {
-        val hours = (this / HOUR_IN_MILLIS).addZero()
-        val minutes = (this % HOUR_IN_MILLIS / MINUTE_IN_MILLIS).addZero()
-        val seconds = (this % MINUTE_IN_MILLIS / SECOND_IN_MILLIS).addZero()
-        "$hours:$minutes:$seconds"
-    } ?: "00:00"
+    text =
+        progress?.run {
+            determineClockSections().run { "${first.addZero()}:${second.addZero()}:${third.addZero()}" }
+        } ?: "00:00"
 }
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
