@@ -5,7 +5,7 @@ package knaufdan.android.simpletimerapp.util
  *
  * @return <hours, minutes, seconds>
  */
-fun Int.determineTimeSections(): Triple<Int, Int, Int> = run {
+fun Int.determineClockSections(): Triple<Int, Int, Int> = run {
     val hours = (this / Constants.HOUR_IN_MILLIS)
     val minutes = (this % Constants.HOUR_IN_MILLIS / Constants.MINUTE_IN_MILLIS)
     val seconds = (this % Constants.MINUTE_IN_MILLIS / Constants.SECOND_IN_MILLIS)
