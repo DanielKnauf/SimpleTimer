@@ -26,17 +26,13 @@
 
         <LinearLayout
             android:id="@+id/number_picker_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            style="@style/input_fragment_time_selector_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/instruction_tv">
 
             <NumberPicker
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/input_fragment_time_selector"
                 android:value="@={viewModel.hours}"
                 app:isWrapped="@{true}"
                 app:max="@{24}"
@@ -44,11 +40,7 @@
                 app:suffix="@{`hrs`}" />
 
             <NumberPicker
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
+                style="@style/input_fragment_time_selector_middle"
                 android:value="@={viewModel.minutes}"
                 app:isWrapped="@{true}"
                 app:max="@{59}"
@@ -56,9 +48,7 @@
                 app:suffix="@{`min`}" />
 
             <NumberPicker
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/input_fragment_time_selector"
                 android:value="@={viewModel.seconds}"
                 app:isWrapped="@{true}"
                 app:max="@{59}"

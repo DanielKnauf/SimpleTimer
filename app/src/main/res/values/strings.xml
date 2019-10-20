@@ -11,7 +11,7 @@
     <string name="timer_instruction">Set time until gong.</string>
 
     <!-- timer input -->
-    <string name="timer_input_repeat_switch_text">isOnRepeat</string>
+    <string name="timer_input_repeat_switch_text">Automatic restart: </string>
     <string name="timer_input_time_unit_header">time unit</string>
 
     <!-- notification -->

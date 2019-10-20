@@ -29,7 +29,11 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     mapping: (sourceValue1: S?, sourceValue2: U?, sourceValue3: V?) -> T
 ) {
     addSource(source1) { sourceValue1 ->
-        val newValue = mapping(sourceValue1, source2.value, source3.value)
+        val newValue = mapping(
+            sourceValue1,
+            source2.value,
+            source3.value
+        )
 
         postValue(
             bindSafe = bindSafe,
@@ -38,7 +42,11 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     }
 
     addSource(source2) { sourceValue2 ->
-        val newValue = mapping(source1.value, sourceValue2, source3.value)
+        val newValue = mapping(
+            source1.value,
+            sourceValue2,
+            source3.value
+        )
 
         postValue(
             bindSafe = bindSafe,
@@ -47,7 +55,11 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     }
 
     addSource(source3) { sourceValue3 ->
-        val newValue = mapping(source1.value, source2.value, sourceValue3)
+        val newValue = mapping(
+            source1.value,
+            source2.value,
+            sourceValue3
+        )
 
         postValue(
             bindSafe = bindSafe,

@@ -26,10 +26,9 @@ fun NumberPicker.setup(
     isWrapped: Boolean
 ) {
     minValue = min
-    maxValue = max
+    maxValue = if (max < min) min else max
     wrapSelectorWheel = isWrapped
 }
-
 
 @BindingAdapter(value = ["suffix"])
 fun NumberPicker.configureFormatter(suffix: String) = setFormatter { value -> "$value $suffix" }

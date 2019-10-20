@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
+import knaufdan.android.simpletimerapp.databinding.bindTo
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
@@ -13,7 +14,7 @@ import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
-import knaufdan.android.simpletimerapp.databinding.bindTo
+import knaufdan.android.simpletimerapp.util.safeValue
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class InputFragmentViewModel @Inject constructor(
@@ -71,6 +72,4 @@ class InputFragmentViewModel @Inject constructor(
     fun resetState() {
         sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
     }
-
-    private fun Int?.safeValue() = this ?: 0
 }
