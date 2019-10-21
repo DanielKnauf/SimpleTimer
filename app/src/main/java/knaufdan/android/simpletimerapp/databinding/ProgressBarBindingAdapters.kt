@@ -13,4 +13,3 @@ fun TextView.setProgressText(progress: Int?) {
 }
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
-
