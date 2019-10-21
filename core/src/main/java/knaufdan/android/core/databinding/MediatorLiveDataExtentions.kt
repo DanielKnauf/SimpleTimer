@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.databinding
+package knaufdan.android.core.databinding
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
