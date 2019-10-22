@@ -52,7 +52,7 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
             // do only initiate view model on first start
             savedInstanceState == null
         ) {
-            (viewModel as BaseViewModel).init(arguments)
+            (viewModel as BaseViewModel).handleBundle(arguments)
         }
 
         val binding: ViewDataBinding =
