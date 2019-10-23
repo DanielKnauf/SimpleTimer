@@ -67,7 +67,7 @@
                 style="@style/input_fragment_repeat_label"
                 android:text="@string/timer_input_repeat_switch_text" />
 
-            <Switch
+            <CheckBox
                 style="@style/input_fragment_repeat_switch"
                 android:checked="@={viewModel.isOnRepeat}" />
         </LinearLayout>
