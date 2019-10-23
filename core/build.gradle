@@ -22,13 +22,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.androidX_app_compat
-    implementation Dependencies.kotlin_stdlib
-    implementation Dependencies.androidX_core_ktx
+    implementation Dependencies.androidX_lifecycle_extensions
+    implementation Dependencies.androidX_lifecycle_viewModel
+    kapt Dependencies.androidX_lifecycle_compiler
     implementation Dependencies.gson
 
     //testing
@@ -41,4 +46,8 @@ dependencies {
     implementation Dependencies.dagger_android_support
     kapt Dependencies.dagger_compiler
     kapt Dependencies.dagger_android_processor
+
+    //kotlin
+    implementation Dependencies.kotlin_reflect
+    implementation Dependencies.kotlin_stdlib
 }

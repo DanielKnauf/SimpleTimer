@@ -2,10 +2,10 @@ package knaufdan.android.simpletimerapp.ui.fragments
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import knaufdan.android.core.SharedPrefService
 import javax.inject.Inject
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.databinding.bindTo
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
-import knaufdan.android.simpletimerapp.databinding.bindTo
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
