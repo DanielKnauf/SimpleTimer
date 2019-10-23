@@ -34,7 +34,13 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
         val page = FragmentPage.values()[pageNumber]
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        fragmentTransaction.replace(R.id.fragment_container, determineFragment(page, bundle))
+        determineFragment(page, bundle).apply {
+            fragmentTransaction.replace(
+                R.id.fragment_container,
+                this,
+                this.fragmentTag
+            )
+        }
 
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null)
@@ -49,14 +55,14 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
             TIMER -> TimerFragment().apply { arguments = bundle }
         }
 
-    override fun onBackPressed() {
-        supportFragmentManager.fragments[0]?.let { fragment ->
+    override fun onBackPressed() = with(supportFragmentManager) {
+        fragments[0]?.let { fragment ->
             if (fragment is BaseFragment<*>) {
                 fragment.isBackPressed = true
             }
         }
 
-        if (supportFragmentManager.backStackEntryCount == 0) resetAppToStart()
+        if (backStackEntryCount == 0 && fragments[0]?.tag != InputFragment::class.simpleName) resetAppToStart()
         else super.onBackPressed()
     }
 

@@ -95,7 +95,7 @@ class TimerFragmentViewModel @Inject constructor(
     private fun finishAndQuit() {
         timerFinished = true
         audioService.releaseMediaPlayer()
-        navigator.navigateToInput()
+        navigator.backPressed()
     }
 
     init {

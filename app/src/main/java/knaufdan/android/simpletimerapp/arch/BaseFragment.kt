@@ -17,14 +17,16 @@ import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
 
 abstract class BaseFragment<V : ViewModel> : Fragment() {
 
+    val fragmentTag = this::class.simpleName
+
+    var isBackPressed = false
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     protected lateinit var viewModel: V
 
     protected abstract fun configureView(): ViewConfig
-
-    var isBackPressed = false
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
