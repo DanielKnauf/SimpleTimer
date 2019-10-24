@@ -70,7 +70,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun finish() {
-        audioService.playSound()
+        audioService.play(R.raw.gong_sound)
 
         stopAndCheckNextAction(resetTimer = isOnRepeat)
     }
@@ -94,12 +94,8 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun finishAndQuit() {
         timerFinished = true
-        audioService.releaseMediaPlayer()
+        releaseResources()
         navigator.backPressed()
-    }
-
-    init {
-        audioService.initMediaPlayer(R.raw.gong_sound)
     }
 
     override fun handleBundle(bundle: Bundle?) {
@@ -218,4 +214,9 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun hasTimerState(expectedState: TimerState) =
         sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
+
+    fun releaseResources() {
+        audioService.release(R.raw.gong_sound)
+        stopReceivingUpdates()
+    }
 }

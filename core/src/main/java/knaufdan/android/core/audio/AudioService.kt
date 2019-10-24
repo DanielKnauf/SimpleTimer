@@ -15,20 +15,30 @@ import javax.inject.Singleton
 class AudioService @Inject constructor(private val contextProvider: ContextProvider) :
     IAudioService {
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private val players = mutableMapOf<Int, MediaPlayer>()
 
-    override fun initMediaPlayer(mediaFile: Int) {
-        mediaPlayer = MediaPlayer.create(
-            contextProvider.context,
-            mediaFile
-        ).apply {
-            setAudioAttributes(audioAttributes)
-            setOnCompletionListener { releaseAudioFocus() }
-        }
+    private val audioManager by lazy {
+        contextProvider.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
 
-    override fun playSound() {
-        audioManager.apply {
+    override fun play(soundFileRes: Int) {
+        val mediaPlayer = players.getOrPut(soundFileRes) {
+            MediaPlayer.create(
+                contextProvider.context,
+                soundFileRes
+            ).apply {
+                setAudioAttributes(audioAttributes)
+                setOnCompletionListener { releaseAudioFocus() }
+            }
+        }
+
+        if (mediaPlayer.isPlaying) {
+            return
+        }
+
+        val audioFocusChangeListener = mediaPlayer.createAudioFocusChangeListener()
+
+        with(audioManager) {
             if (isMusicActive) {
                 val res: Int =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -56,39 +66,39 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
         }
     }
 
-    override fun releaseMediaPlayer() {
-        if (mediaPlayer.isPlaying) {
-            Handler().postDelayed({ releaseMediaPlayer() }, 1000)
-        } else {
-            mediaPlayer.release()
-        }
-    }
-
-    private val audioManager by lazy {
-        contextProvider.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    }
-
-    private val audioFocusChangeListener by lazy {
-        AudioManager.OnAudioFocusChangeListener { focusChange ->
-            // loss of audio focus is indicated by a negative value
-            if (focusChange < 0) mediaPlayer.stop()
+    override fun release(soundFileRes: Int) {
+        players[soundFileRes]?.apply {
+            if (isPlaying) {
+                Handler().postDelayed({ release(soundFileRes) }, 1000)
+            } else {
+                release()
+                players.remove(soundFileRes)
+            }
         }
     }
 
     private fun MediaPlayer.releaseAudioFocus() {
         if (!isPlaying) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                audioManager.abandonAudioFocusRequest(
-                    AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                        setAudioAttributes(audioAttributes)
-                        build()
-                    }
-                )
-            } else {
-                audioManager.abandonAudioFocus(audioFocusChangeListener)
+            with(audioManager) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    abandonAudioFocusRequest(
+                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
+                            setAudioAttributes(audioAttributes)
+                            build()
+                        }
+                    )
+                } else {
+                    abandonAudioFocus(createAudioFocusChangeListener())
+                }
             }
         }
     }
+
+    private fun MediaPlayer.createAudioFocusChangeListener() =
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            // loss of audio focus is indicated by a negative value
+            if (focusChange < 0) this.stop()
+        }
 
     companion object {
         private val audioAttributes by lazy {

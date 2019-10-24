@@ -39,4 +39,9 @@ class TimerFragment : BaseFragment<TimerFragmentViewModel>() {
 
         viewModel.restart()
     }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.releaseResources()
+    }
 }
