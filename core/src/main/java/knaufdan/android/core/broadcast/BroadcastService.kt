@@ -16,7 +16,7 @@ class BroadcastService @Inject constructor(private val contextProvider: ContextP
     override fun registerLocalBroadcastReceiver(actionBroadcastReceiver: ActionBroadcastReceiver) {
         IntentFilter()
             .apply {
-                for (action: String in actionBroadcastReceiver.getSupportedActions()) {
+                for (action: Action in actionBroadcastReceiver.getSupportedActions()) {
                     addAction(action)
                 }
 

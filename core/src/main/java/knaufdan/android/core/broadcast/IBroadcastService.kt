@@ -8,7 +8,7 @@ interface IBroadcastService {
      * Registers the [ActionBroadcastReceiver] at the [LocalBroadcastManager]
      * and adds the [ActionBroadcastReceiver.getSupportedActions] to the [IntentFilter].
      */
-    fun registerLocalBroadcastReceiver(broadcastReceiver: ActionBroadcastReceiver)
+    fun registerLocalBroadcastReceiver(actionBroadcastReceiver: ActionBroadcastReceiver)
 
     fun unregisterLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver)
 }
