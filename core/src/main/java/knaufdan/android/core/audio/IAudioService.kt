@@ -2,16 +2,11 @@ package knaufdan.android.core.audio
 
 import androidx.annotation.RawRes
 
+typealias AudioRes = Int
+
 interface IAudioService {
 
-    /**
-     * Plays the [soundFileRes].
-     * If music is playing, the [AudioFocus] is requested with durationHint [AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK]
-     */
-    fun play(@RawRes soundFileRes: Int)
+    fun play(@RawRes audioRes: AudioRes)
 
-    /**
-     * Releases all resources corresponding to this [soundFileRes].
-     */
-    fun release(@RawRes soundFileRes: Int)
+    fun release(@RawRes audioRes: AudioRes)
 }

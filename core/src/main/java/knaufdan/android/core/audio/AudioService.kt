@@ -15,21 +15,15 @@ import javax.inject.Singleton
 class AudioService @Inject constructor(private val contextProvider: ContextProvider) :
     IAudioService {
 
-    private val players = mutableMapOf<Int, MediaPlayer>()
+    private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
 
     private val audioManager by lazy {
         contextProvider.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
 
-    override fun play(soundFileRes: Int) {
-        val mediaPlayer = players.getOrPut(soundFileRes) {
-            MediaPlayer.create(
-                contextProvider.context,
-                soundFileRes
-            ).apply {
-                setAudioAttributes(audioAttributes)
-                setOnCompletionListener { releaseAudioFocus() }
-            }
+    override fun play(audioRes: AudioRes) {
+        val mediaPlayer = mediaPlayers.getOrPut(audioRes) {
+            audioRes.createMediaPlayer()
         }
 
         if (mediaPlayer.isPlaying) {
@@ -66,13 +60,14 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
         }
     }
 
-    override fun release(soundFileRes: Int) {
-        players[soundFileRes]?.apply {
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    override fun release(audioRes: AudioRes) {
+        mediaPlayers[audioRes]?.run {
             if (isPlaying) {
-                Handler().postDelayed({ release(soundFileRes) }, 1000)
+                Handler().postDelayed({ release(audioRes) }, 1000)
             } else {
                 release()
-                players.remove(soundFileRes)
+                mediaPlayers.remove(audioRes)
             }
         }
     }
@@ -93,6 +88,15 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
             }
         }
     }
+
+    private fun AudioRes.createMediaPlayer() =
+        MediaPlayer.create(
+            contextProvider.context,
+            this
+        ).apply {
+            setAudioAttributes(audioAttributes)
+            setOnCompletionListener { releaseAudioFocus() }
+        }
 
     private fun MediaPlayer.createAudioFocusChangeListener() =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
