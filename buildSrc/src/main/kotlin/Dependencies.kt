@@ -3,15 +3,15 @@ import Versions.appcompat_version
 import Versions.broadcast_manager_version
 import Versions.constraint_layout_version
 import Versions.dagger_version
+import Versions.dependency_updates_version
 import Versions.design_version
 import Versions.gradle_version
 import Versions.gson_version
 import Versions.jUnit_version
 import Versions.kotlin_version
+import Versions.ktLint_version
 import Versions.lifecycle_version
 import Versions.test_runner_version
-import Versions.dependency_updates_version
-import Versions.ktLint_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"

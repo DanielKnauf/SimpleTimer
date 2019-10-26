@@ -1,6 +1,6 @@
 package knaufdan.android.simpletimerapp.util.service
 
-enum class Action {
+enum class TimerAction {
     INCREASE,
     FINISH
 }
