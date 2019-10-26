@@ -33,8 +33,10 @@ dependencies {
     implementation Dependencies.androidX_app_compat
     implementation Dependencies.androidX_lifecycle_extensions
     implementation Dependencies.androidX_lifecycle_viewModel
-    kapt Dependencies.androidX_lifecycle_compiler
+    implementation Dependencies.androidX_localbroadcast_manager
     implementation Dependencies.gson
+    
+    kapt Dependencies.androidX_lifecycle_compiler
 
     //testing
     androidTestImplementation Dependencies.androidX_test_runner

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleTimerApp</string>
+    <string name="app_name">SimpleTimer</string>
 
     <!-- button texts -->
     <string name="start_button_text">Start</string>
