@@ -60,7 +60,7 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
             // do only initiate view model on first start
             savedInstanceState == null
         ) {
-            (viewModel as BaseViewModel).init(intent.extras)
+            (viewModel as BaseViewModel).handleBundle(intent.extras)
         }
 
         DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes).apply {

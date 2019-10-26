@@ -7,7 +7,7 @@ abstract class BaseViewModel : ViewModel() {
 
     protected var className: String? = this::class.simpleName
 
-    open fun init(bundle: Bundle?) {
+    open fun handleBundle(bundle: Bundle?) {
         // empty body for inheritance
     }
 }

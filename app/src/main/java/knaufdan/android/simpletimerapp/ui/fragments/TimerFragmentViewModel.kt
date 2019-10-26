@@ -7,12 +7,13 @@ import java.util.Date
 import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.service.ServiceUtil
+import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
-import knaufdan.android.simpletimerapp.util.AudioService
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
@@ -69,7 +70,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun finish() {
-        audioService.playGong()
+        audioService.play(R.raw.gong_sound)
 
         stopAndCheckNextAction(resetTimer = isOnRepeat)
     }
@@ -93,12 +94,12 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun finishAndQuit() {
         timerFinished = true
-        audioService.releaseMediaPlayer()
+        releaseResources()
         navigator.backPressed()
     }
 
-    override fun init(bundle: Bundle?) {
-        super.init(bundle = bundle)
+    override fun handleBundle(bundle: Bundle?) {
+        super.handleBundle(bundle = bundle)
 
         if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
             isOnRepeat = true
@@ -213,4 +214,9 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun hasTimerState(expectedState: TimerState) =
         sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
+
+    fun releaseResources() {
+        audioService.release(R.raw.gong_sound)
+        stopReceivingUpdates()
+    }
 }
