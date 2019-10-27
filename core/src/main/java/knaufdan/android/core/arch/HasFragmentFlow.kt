@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.arch
+package knaufdan.android.core.arch
 
 import android.os.Bundle
 

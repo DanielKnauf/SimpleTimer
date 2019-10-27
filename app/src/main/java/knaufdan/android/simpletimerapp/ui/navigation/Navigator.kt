@@ -5,7 +5,7 @@ import android.os.Bundle
 import javax.inject.Inject
 import javax.inject.Singleton
 import knaufdan.android.core.ContextProvider
-import knaufdan.android.simpletimerapp.arch.HasFragmentFlow
+import knaufdan.android.core.arch.HasFragmentFlow
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT

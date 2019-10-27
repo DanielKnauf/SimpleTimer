@@ -7,13 +7,13 @@ import java.util.Date
 import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.arch.BaseViewModel
 import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.broadcast.Action
 import knaufdan.android.core.broadcast.ActionDispatcher
 import knaufdan.android.core.broadcast.BroadcastService
 import knaufdan.android.core.service.ServiceUtil
 import knaufdan.android.simpletimerapp.R
-import knaufdan.android.simpletimerapp.arch.BaseViewModel
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel

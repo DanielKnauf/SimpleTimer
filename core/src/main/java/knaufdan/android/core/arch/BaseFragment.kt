@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.arch
+package knaufdan.android.core.arch
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
+import knaufdan.android.core.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
-import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
 
 abstract class BaseFragment<V : ViewModel> : Fragment() {
 

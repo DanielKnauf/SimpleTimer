@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.di.vm
+package knaufdan.android.core.di.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
