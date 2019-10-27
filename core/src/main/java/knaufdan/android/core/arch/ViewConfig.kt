@@ -1,8 +1,7 @@
-package knaufdan.android.simpletimerapp.arch
+package knaufdan.android.core.arch
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import knaufdan.android.simpletimerapp.R
 
 class ViewConfig(
     @LayoutRes val layoutRes: Int?,
@@ -13,7 +12,7 @@ class ViewConfig(
     data class Builder(
         var layoutRes: Int? = null,
         var viewModelKey: Int? = null,
-        var titleRes: Int = R.string.app_name,
+        var titleRes: Int = -1,
         var initialPage: Int = -1
     ) {
         fun setLayoutRes(layoutRes: Int) = apply { this.layoutRes = layoutRes }

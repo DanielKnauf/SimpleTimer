@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.arch
+package knaufdan.android.core.arch
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
+import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
-import knaufdan.android.core.ContextProvider
-import knaufdan.android.simpletimerapp.di.vm.ViewModelFactory
 
 abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
     protected abstract fun configureView(): ViewConfig
 
-    protected var className: String? = this::class.simpleName
+    private var className: String? = this::class.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -35,26 +35,25 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
         contextProvider.context = this
 
-        setBinding(viewConfig, savedInstanceState)
+        viewConfig.setBinding(savedInstanceState)
 
-        setTitle(viewConfig.titleRes)
+        if (viewConfig.titleRes != -1) {
+            setTitle(viewConfig.titleRes)
+        }
 
         showInitialPage(viewConfig, savedInstanceState)
     }
 
-    private fun setBinding(
-        viewConfig: ViewConfig,
-        savedInstanceState: Bundle?
-    ) {
-        checkNotNull(viewConfig.layoutRes) {
+    private fun ViewConfig.setBinding(savedInstanceState: Bundle?) {
+        checkNotNull(layoutRes) {
             "Activity parameters for $className have no layout resource."
         }
 
-        checkNotNull(viewConfig.viewModelKey) {
+        checkNotNull(viewModelKey) {
             "Activity parameters for $className have no viewModel key."
         }
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
+        viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(typeOfViewModel)
 
         if (viewModel is BaseViewModel &&
             // do only initiate view model on first start
@@ -63,9 +62,9 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
             (viewModel as BaseViewModel).handleBundle(intent.extras)
         }
 
-        DataBindingUtil.setContentView<ViewDataBinding>(this, viewConfig.layoutRes).apply {
+        DataBindingUtil.setContentView<ViewDataBinding>(this@BaseActivity, layoutRes).apply {
             lifecycleOwner = this@BaseActivity
-            setVariable(viewConfig.viewModelKey, viewModel)
+            setVariable(viewModelKey, viewModel)
             executePendingBindings()
         }
     }

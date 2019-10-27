@@ -34,6 +34,7 @@ dependencies {
     implementation Dependencies.androidX_lifecycle_extensions
     implementation Dependencies.androidX_lifecycle_viewModel
     implementation Dependencies.androidX_localbroadcast_manager
+    implementation Dependencies.androidX_core_ktx
     implementation Dependencies.gson
     
     kapt Dependencies.androidX_lifecycle_compiler

@@ -2,6 +2,7 @@ package knaufdan.android.core
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import javax.inject.Inject
@@ -21,10 +22,9 @@ class SharedPrefService @Inject constructor(private val contextProvider: Context
     }
 
     fun saveTo(key: String, value: Any?) {
-        with(sharedPrefs.edit()) {
+        sharedPrefs.edit {
             value?.let {
                 putValue(it, key)
-                apply()
             }
         }
     }

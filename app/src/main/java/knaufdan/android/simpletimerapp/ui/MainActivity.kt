@@ -3,12 +3,12 @@ package knaufdan.android.simpletimerapp.ui
 import android.os.Bundle
 import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.arch.BaseActivity
+import knaufdan.android.core.arch.BaseFragment
+import knaufdan.android.core.arch.HasFragmentFlow
+import knaufdan.android.core.arch.ViewConfig
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
-import knaufdan.android.simpletimerapp.arch.BaseActivity
-import knaufdan.android.simpletimerapp.arch.BaseFragment
-import knaufdan.android.simpletimerapp.arch.HasFragmentFlow
-import knaufdan.android.simpletimerapp.arch.ViewConfig
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
 import knaufdan.android.simpletimerapp.ui.fragments.TimerFragment
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
@@ -30,30 +30,32 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
         }
     }
 
-    override fun flowTo(pageNumber: Int, addToBackStack: Boolean, bundle: Bundle?) {
-        val page = FragmentPage.values()[pageNumber]
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
+    override fun flowTo(
+        pageNumber: Int,
+        addToBackStack: Boolean,
+        bundle: Bundle?
+    ) {
+        with(supportFragmentManager.beginTransaction()) {
+            pageNumber.determineFragment(bundle).run {
+                replace(
+                    R.id.fragment_container,
+                    this,
+                    this.fragmentTag
+                )
+            }
 
-        determineFragment(page, bundle).apply {
-            fragmentTransaction.replace(
-                R.id.fragment_container,
-                this,
-                this.fragmentTag
-            )
+            if (addToBackStack) {
+                addToBackStack(null)
+            }
+
+            commitAllowingStateLoss()
         }
-
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(null)
-        }
-
-        fragmentTransaction.commitAllowingStateLoss()
     }
 
-    private fun determineFragment(page: FragmentPage, bundle: Bundle?) =
-        when (page) {
-            INPUT -> InputFragment()
-            TIMER -> TimerFragment().apply { arguments = bundle }
-        }
+    private fun Int.determineFragment(bundle: Bundle?) = when (FragmentPage.values()[this]) {
+        INPUT -> InputFragment()
+        TIMER -> TimerFragment().apply { arguments = bundle }
+    }
 
     override fun onBackPressed() = with(supportFragmentManager) {
         fragments[0]?.let { fragment ->
