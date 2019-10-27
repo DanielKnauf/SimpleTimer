@@ -1,9 +1,9 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
+import knaufdan.android.core.arch.BaseFragment
+import knaufdan.android.core.arch.ViewConfig
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
-import knaufdan.android.simpletimerapp.arch.BaseFragment
-import knaufdan.android.simpletimerapp.arch.ViewConfig
 
 class InputFragment : BaseFragment<InputFragmentViewModel>() {
 

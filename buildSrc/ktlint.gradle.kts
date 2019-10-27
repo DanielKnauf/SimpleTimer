@@ -1,8 +1,7 @@
-val ktLint_version = "0.34.2"
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest:ktlint:$ktLint_version")
+    ktlint(Dependencies.ktLint)
 }
 
 task("ktLintCheck", JavaExec::class) {

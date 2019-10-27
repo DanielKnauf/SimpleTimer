@@ -5,11 +5,18 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import java.util.Date
 import javax.inject.Inject
-import knaufdan.android.simpletimerapp.arch.BaseViewModel
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.arch.BaseViewModel
+import knaufdan.android.core.audio.AudioService
+import knaufdan.android.core.broadcast.Action
+import knaufdan.android.core.broadcast.ActionDispatcher
+import knaufdan.android.core.broadcast.BroadcastService
+import knaufdan.android.core.service.ServiceUtil
+import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
-import knaufdan.android.simpletimerapp.util.AudioService
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
@@ -17,14 +24,9 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.SharedPrefService
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
-import knaufdan.android.simpletimerapp.util.alarm.AlarmService
-import knaufdan.android.simpletimerapp.util.broadcastreceiver.BroadcastUtil
-import knaufdan.android.simpletimerapp.util.broadcastreceiver.UpdateReceiver
-import knaufdan.android.simpletimerapp.util.service.Action
-import knaufdan.android.simpletimerapp.util.service.ServiceUtil
+import knaufdan.android.simpletimerapp.util.service.TimerAction
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
@@ -34,34 +36,30 @@ import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACK
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,
     private val audioService: AudioService,
-    private val broadcastUtil: BroadcastUtil,
+    private val broadcastService: BroadcastService,
     private val navigator: Navigator,
     private val serviceUtil: ServiceUtil,
     private val sharedPrefService: SharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
-    private var timerFinished = false
     val isPaused = MutableLiveData(false)
 
+    private var timerFinished = false
     private var isOnRepeat = false
 
-    private val updateReceiver =
-        UpdateReceiver(Action.values()) { action: String, extras: Bundle? ->
-            perform(
-                action,
+    private val actionDispatcher: ActionDispatcher<TimerAction> by lazy {
+        ActionDispatcher(TimerAction.values()) { action: Action, extras: Bundle? ->
+            action.perform(
                 extras
             )
         }
-
-    private fun perform(
-        receivedAction: String,
-        bundle: Bundle?
-    ) {
-        when (Action.valueOf(receivedAction)) {
-            Action.INCREASE -> increase(bundle = bundle)
-            Action.FINISH -> finish()
-        }
     }
+
+    private fun Action.perform(bundle: Bundle?) =
+        when (TimerAction.valueOf(this)) {
+            TimerAction.INCREASE -> increase(bundle = bundle)
+            TimerAction.FINISH -> finish()
+        }
 
     private fun increase(bundle: Bundle?) {
         val increment = bundle?.getInt(KEY_LINEAR_INCREMENT, SECOND_IN_MILLIS) ?: SECOND_IN_MILLIS
@@ -69,7 +67,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun finish() {
-        audioService.playGong()
+        audioService.play(R.raw.gong_sound)
 
         stopAndCheckNextAction(resetTimer = isOnRepeat)
     }
@@ -93,12 +91,12 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun finishAndQuit() {
         timerFinished = true
-        audioService.releaseMediaPlayer()
+        releaseResources()
         navigator.backPressed()
     }
 
-    override fun init(bundle: Bundle?) {
-        super.init(bundle = bundle)
+    override fun handleBundle(bundle: Bundle?) {
+        super.handleBundle(bundle = bundle)
 
         if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
             isOnRepeat = true
@@ -109,7 +107,7 @@ class TimerFragmentViewModel @Inject constructor(
                     key = KEY_CURRENT_MAXIMUM,
                     value = maximum.value
                 )
-                broadcastUtil.registerBroadcastReceiver(broadcastReceiver = updateReceiver)
+                broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
                 serviceUtil.startService(
                     clazz = TimerService::class,
                     bundle = this
@@ -139,7 +137,7 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     fun stopReceivingUpdates() {
-        broadcastUtil.unregisterBroadcastReceiver(broadcastReceiver = updateReceiver)
+        broadcastService.unregisterLocalBroadcastReceiver(broadcastReceiver = actionDispatcher)
         serviceUtil.stopService(clazz = TimerService::class)
     }
 
@@ -191,7 +189,7 @@ class TimerFragmentViewModel @Inject constructor(
         maxValue: Int,
         adjustedTime: Int = 0
     ) {
-        broadcastUtil.registerBroadcastReceiver(broadcastReceiver = updateReceiver)
+        broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
         serviceUtil.startService(
             TimerService::class,
             createBundleForTimerService(
@@ -213,4 +211,9 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun hasTimerState(expectedState: TimerState) =
         sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
+
+    fun releaseResources() {
+        audioService.release(R.raw.gong_sound)
+        stopReceivingUpdates()
+    }
 }

@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="knaufdan.android.simpletimerapp.databinding.Translator" />
-
         <variable
             name="viewModel"
             type="knaufdan.android.simpletimerapp.ui.fragments.InputFragmentViewModel" />

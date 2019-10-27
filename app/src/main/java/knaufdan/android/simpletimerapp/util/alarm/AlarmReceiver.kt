@@ -5,15 +5,17 @@ import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
 import java.util.Date
 import javax.inject.Inject
+import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.TextProvider
+import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.notification.NotificationService
+import knaufdan.android.core.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.R
+import knaufdan.android.simpletimerapp.ui.MainActivity
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
-import knaufdan.android.simpletimerapp.util.SharedPrefService
-import knaufdan.android.simpletimerapp.util.TextProvider
-import knaufdan.android.simpletimerapp.util.notification.NotificationService
-import knaufdan.android.simpletimerapp.util.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class AlarmReceiver : DaggerBroadcastReceiver() {
@@ -48,11 +50,10 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 broadcastReceiverType = this::class.java
             )
 
-            notificationService.sendNotification(timerRestartStyle)
+            sendNotification(notificationStyle = timerRestartStyle)
         } else {
             sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.FINISH_STATE)
-
-            notificationService.sendNotification(timerFinishStyle)
+            sendNotification(notificationStyle = timerFinishStyle)
         }
     }
 
@@ -71,6 +72,13 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 setAutoCancel(enabled = true)
             }
         }
+
+    private fun sendNotification(notificationStyle: NotificationStyle) {
+        notificationService.sendNotification(
+            notificationStyle = notificationStyle,
+            targetClass = MainActivity::class
+        )
+    }
 
     companion object {
         private val timerFinishStyle: NotificationStyle by lazy {

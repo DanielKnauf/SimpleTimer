@@ -44,7 +44,7 @@ class TimerService @Inject constructor() : Service() {
     fun sendUpdate() {
         Intent()
             .apply {
-                action = if (endTime <= currentTime) Action.FINISH.name else Action.INCREASE.name
+                action = if (endTime <= currentTime) TimerAction.FINISH.name else TimerAction.INCREASE.name
                 putExtra(KEY_LINEAR_INCREMENT, INCREMENT)
                 manager.sendBroadcast(this)
             }
