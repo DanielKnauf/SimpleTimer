@@ -44,9 +44,7 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
         showInitialPage(viewConfig, savedInstanceState)
     }
 
-    private fun ViewConfig.setBinding(
-        savedInstanceState: Bundle?
-    ) {
+    private fun ViewConfig.setBinding(savedInstanceState: Bundle?) {
         checkNotNull(layoutRes) {
             "Activity parameters for $className have no layout resource."
         }
