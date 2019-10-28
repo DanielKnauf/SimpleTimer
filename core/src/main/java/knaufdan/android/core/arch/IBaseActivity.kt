@@ -7,7 +7,7 @@ interface IBaseActivity {
     fun configureView(): ViewConfig
 
     /**
-     * Communicates [onBackPressed] event to all [BaseViewModel] of [BaseFragment].
+     * Communicates an [onBackPressed] event to all [BaseViewModel] of [BaseFragment].
      */
     fun FragmentManager.notifyBackPressed()
 }
