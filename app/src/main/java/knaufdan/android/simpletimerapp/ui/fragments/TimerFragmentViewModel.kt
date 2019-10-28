@@ -1,10 +1,9 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
 import android.os.Bundle
-import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
-import java.util.Date
-import javax.inject.Inject
+import androidx.lifecycle.OnLifecycleEvent
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.arch.BaseViewModel
@@ -32,6 +31,8 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
+import java.util.Date
+import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,
@@ -117,7 +118,42 @@ class TimerFragmentViewModel @Inject constructor(
         }
     }
 
-    fun View.onPauseClicked() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResumed() {
+        if (safeUnBox(isPaused.value)) {
+            return
+        }
+
+        restart()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPaused() {
+        stopReceivingUpdates()
+
+        if (doNotSetUpAlarm()) {
+            return
+        }
+
+        setUpAlarm()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onStopped() {
+        releaseResources()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroyed() {
+        releaseResources()
+    }
+
+    private fun doNotSetUpAlarm() =
+        isBackPressed ||
+                isFinished() ||
+                safeUnBox(isPaused.value)
+
+    fun onPauseClicked() {
         isPaused.value = if (safeUnBox(isPaused.value)) {
             val maxValue = maximum.value ?: 0
             val adjustedTime = progress.value ?: 0
@@ -132,16 +168,16 @@ class TimerFragmentViewModel @Inject constructor(
         }
     }
 
-    fun View.onStopClicked() {
+    fun onStopClicked() {
         stopAndCheckNextAction(resetTimer = false)
     }
 
-    fun stopReceivingUpdates() {
+    private fun stopReceivingUpdates() {
         broadcastService.unregisterLocalBroadcastReceiver(broadcastReceiver = actionDispatcher)
         serviceUtil.stopService(clazz = TimerService::class)
     }
 
-    fun setUpAlarm() {
+    private fun setUpAlarm() {
         sharedPrefService.saveTo(
             key = KEY_TIMER_STATE,
             value = PAUSE_STATE
@@ -162,7 +198,7 @@ class TimerFragmentViewModel @Inject constructor(
         putInt(KEY_CURRENT_MAXIMUM, maximum.value ?: 0)
     }
 
-    fun restart() {
+    private fun restart() {
         if (hasTimerState(PAUSE_STATE) || hasTimerState(RESTARTED_IN_BACKGROUND)) {
             alarmService.cancelAlarm(broadcastReceiverType = AlarmReceiver::class.java)
 
@@ -207,12 +243,12 @@ class TimerFragmentViewModel @Inject constructor(
         putInt(KEY_ADJUSTED_PROGRESS, adjustedTime)
     }
 
-    fun isFinished() = timerFinished || hasTimerState(FINISH_STATE)
+    private fun isFinished() = timerFinished || hasTimerState(FINISH_STATE)
 
     private fun hasTimerState(expectedState: TimerState) =
         sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
 
-    fun releaseResources() {
+    private fun releaseResources() {
         audioService.release(R.raw.gong_sound)
         stopReceivingUpdates()
     }

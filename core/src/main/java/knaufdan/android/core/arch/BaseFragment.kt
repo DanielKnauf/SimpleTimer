@@ -8,29 +8,24 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
 import knaufdan.android.core.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<V : ViewModel> : Fragment() {
+abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
 
     val fragmentTag = this::class.simpleName
-
-    var isBackPressed = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     protected lateinit var viewModel: V
 
-    protected abstract fun configureView(): ViewConfig
-
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
 
     override fun onCreateView(
@@ -50,11 +45,11 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
 
-        if (viewModel is BaseViewModel &&
-            // do only initiate view model on first start
-            savedInstanceState == null
-        ) {
-            (viewModel as BaseViewModel).handleBundle(arguments)
+        lifecycle.addObserver(viewModel)
+
+        if ( // do only initiate view model on first start
+            savedInstanceState == null) {
+            viewModel.handleBundle(arguments)
         }
 
         val binding: ViewDataBinding =
@@ -73,9 +68,13 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        isBackPressed = false
+    override fun onStart() {
+        super.onStart()
+        setBackPressed(isBackPressed = false)
+    }
+
+    override fun setBackPressed(isBackPressed: Boolean) {
+        viewModel.isBackPressed = isBackPressed
     }
 
     @Suppress("UNCHECKED_CAST")

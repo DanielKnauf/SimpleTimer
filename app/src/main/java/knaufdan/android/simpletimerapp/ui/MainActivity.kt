@@ -1,10 +1,8 @@
 package knaufdan.android.simpletimerapp.ui
 
 import android.os.Bundle
-import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.BaseActivity
-import knaufdan.android.core.arch.BaseFragment
 import knaufdan.android.core.arch.HasFragmentFlow
 import knaufdan.android.core.arch.ViewConfig
 import knaufdan.android.simpletimerapp.BR
@@ -16,6 +14,7 @@ import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.INPUT
 import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
@@ -58,12 +57,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
     }
 
     override fun onBackPressed() = with(supportFragmentManager) {
-        fragments[0]?.let { fragment ->
-            if (fragment is BaseFragment<*>) {
-                fragment.isBackPressed = true
-            }
-        }
-
+        notifyBackPressed()
         if (backStackEntryCount == 0 && fragments[0]?.tag != InputFragment::class.simpleName) resetAppToStart()
         else super.onBackPressed()
     }
