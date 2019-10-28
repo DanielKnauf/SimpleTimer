@@ -61,8 +61,8 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), IBaseActiv
 
         lifecycle.addObserver(viewModel)
 
-        if ( // do only initiate view model on first start
-            savedInstanceState == null) {
+        // do only initiate view model on first start
+        if (savedInstanceState == null) {
             viewModel.handleBundle(intent.extras)
         }
 
