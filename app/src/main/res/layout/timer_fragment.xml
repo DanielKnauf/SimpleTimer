@@ -26,12 +26,12 @@
 
             <Button
                 style="@style/timer_fragment_stop_button"
-                android:onClick="@{viewModel::onStopClicked}" />
+                android:onClick="@{()->viewModel.onStopClicked()}" />
 
             <Button
                 style="@style/timer_fragment_pause_button"
                 android:background="@{viewModel.isPaused ? @color/start_button_color : @color/pause_button_color }"
-                android:onClick="@{viewModel::onPauseClicked}"
+                android:onClick="@{()->viewModel.onPauseClicked()}"
                 android:text="@{viewModel.isPaused ? @string/resume_button_text : @string/pause_button_text}"
                 android:textColor="@{viewModel.isPaused ? @android:color/white : @android:color/black}" />
         </LinearLayout>

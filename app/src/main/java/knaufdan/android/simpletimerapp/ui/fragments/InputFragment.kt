@@ -6,15 +6,8 @@ import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 
 class InputFragment : BaseFragment<InputFragmentViewModel>() {
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.resetState()
-    }
-
-    override fun configureView(): ViewConfig =
-        ViewConfig.Builder()
-            .setLayoutRes(R.layout.input_fragment)
-            .setViewModelKey(BR.viewModel)
-            .build()
+    override fun configureView(): ViewConfig = ViewConfig.Builder()
+        .setLayoutRes(R.layout.input_fragment)
+        .setViewModelKey(BR.viewModel)
+        .build()
 }

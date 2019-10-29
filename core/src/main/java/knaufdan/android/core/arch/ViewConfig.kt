@@ -25,6 +25,11 @@ class ViewConfig(
 
         private fun setInitialPage(initialPage: Int) = apply { this.initialPage = initialPage }
 
-        fun build() = ViewConfig(layoutRes, viewModelKey, titleRes, initialPage)
+        fun build() = ViewConfig(
+            layoutRes = layoutRes,
+            viewModelKey = viewModelKey,
+            titleRes = titleRes,
+            initialPage = initialPage
+        )
     }
 }

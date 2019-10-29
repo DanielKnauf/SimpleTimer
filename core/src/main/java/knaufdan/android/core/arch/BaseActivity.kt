@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import knaufdan.android.core.ContextProvider
@@ -13,7 +13,7 @@ import knaufdan.android.core.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
+abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), IBaseActivity {
 
     @Inject
     lateinit var contextProvider: ContextProvider
@@ -23,25 +23,33 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
     protected lateinit var viewModel: V
 
-    protected abstract fun configureView(): ViewConfig
-
     private var className: String? = this::class.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
-        val viewConfig = configureView()
+        AndroidInjection.inject(this)
 
         contextProvider.context = this
+        configureView().run {
+            setBinding(savedInstanceState)
 
-        viewConfig.setBinding(savedInstanceState)
+            if (titleRes != -1) {
+                setTitle(titleRes)
+            }
 
-        if (viewConfig.titleRes != -1) {
-            setTitle(viewConfig.titleRes)
+            showInitialPage(savedInstanceState)
         }
+    }
 
-        showInitialPage(viewConfig, savedInstanceState)
+    override fun onBackPressed() {
+        supportFragmentManager.notifyBackPressed()
+        super.onBackPressed()
+    }
+
+    override fun FragmentManager.notifyBackPressed() = fragments.forEach { fragment ->
+        if (fragment is BaseFragment<*>) {
+            fragment.setBackPressed(isBackPressed = true)
+        }
     }
 
     private fun ViewConfig.setBinding(savedInstanceState: Bundle?) {
@@ -55,11 +63,11 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(typeOfViewModel)
 
-        if (viewModel is BaseViewModel &&
-            // do only initiate view model on first start
-            savedInstanceState == null
-        ) {
-            (viewModel as BaseViewModel).handleBundle(intent.extras)
+        lifecycle.addObserver(viewModel)
+
+        // do only initiate view model on first start
+        if (savedInstanceState == null) {
+            viewModel.handleBundle(intent.extras)
         }
 
         DataBindingUtil.setContentView<ViewDataBinding>(this@BaseActivity, layoutRes).apply {
@@ -69,20 +77,20 @@ abstract class BaseActivity<V : ViewModel> : AppCompatActivity() {
         }
     }
 
-    private fun showInitialPage(
-        viewConfig: ViewConfig,
-        savedInstanceState: Bundle?
-    ) {
-        val initialPage = viewConfig.initialPage
-
-        if (initialPage >= 0) {
-            if (this is HasFragmentFlow) flowTo(initialPage, false, savedInstanceState)
-            else Log.e(
-                className,
-                "Found an initialPage to display (#$initialPage), but $className does not implement " + HasFragmentFlow::class.simpleName
-            )
+    private fun ViewConfig.showInitialPage(savedInstanceState: Bundle?) =
+        with(initialPage) {
+            if (this >= 0) {
+                if (this@BaseActivity is HasFragmentFlow) flowTo(
+                    pageNumber = this,
+                    addToBackStack = false,
+                    bundle = savedInstanceState
+                )
+                else Log.e(
+                    className,
+                    "Found an initialPage to display (#$this), but $className does not implement " + HasFragmentFlow::class.simpleName
+                )
+            }
         }
-    }
 
     @Suppress("UNCHECKED_CAST")
     private val typeOfViewModel: Class<V> =

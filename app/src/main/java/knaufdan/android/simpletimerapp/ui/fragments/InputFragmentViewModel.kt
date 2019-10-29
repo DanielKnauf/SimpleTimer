@@ -1,7 +1,9 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.BaseViewModel
@@ -74,7 +76,10 @@ class InputFragmentViewModel @Inject constructor(
         }
     }
 
-    fun resetState() {
-        sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResumed() {
+        resetState()
     }
+
+    private fun resetState() = sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
 }
