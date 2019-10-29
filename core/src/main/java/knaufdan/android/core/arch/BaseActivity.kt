@@ -29,17 +29,21 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), IBaseActiv
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        val viewConfig = configureView()
-
         contextProvider.context = this
+        configureView().run {
+            setBinding(savedInstanceState)
 
-        viewConfig.setBinding(savedInstanceState)
+            if (titleRes != -1) {
+                setTitle(titleRes)
+            }
 
-        if (viewConfig.titleRes != -1) {
-            setTitle(viewConfig.titleRes)
+            showInitialPage(savedInstanceState)
         }
+    }
 
-        showInitialPage(viewConfig, savedInstanceState)
+    override fun onBackPressed() {
+        supportFragmentManager.notifyBackPressed()
+        super.onBackPressed()
     }
 
     override fun FragmentManager.notifyBackPressed() = fragments.forEach { fragment ->
@@ -73,24 +77,20 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), IBaseActiv
         }
     }
 
-    private fun showInitialPage(
-        viewConfig: ViewConfig,
-        savedInstanceState: Bundle?
-    ) {
-        val initialPage = viewConfig.initialPage
-
-        if (initialPage >= 0) {
-            if (this is HasFragmentFlow) flowTo(
-                pageNumber = initialPage,
-                addToBackStack = false,
-                bundle = savedInstanceState
-            )
-            else Log.e(
-                className,
-                "Found an initialPage to display (#$initialPage), but $className does not implement " + HasFragmentFlow::class.simpleName
-            )
+    private fun ViewConfig.showInitialPage(savedInstanceState: Bundle?) =
+        with(initialPage) {
+            if (this >= 0) {
+                if (this@BaseActivity is HasFragmentFlow) flowTo(
+                    pageNumber = this,
+                    addToBackStack = false,
+                    bundle = savedInstanceState
+                )
+                else Log.e(
+                    className,
+                    "Found an initialPage to display (#$this), but $className does not implement " + HasFragmentFlow::class.simpleName
+                )
+            }
         }
-    }
 
     @Suppress("UNCHECKED_CAST")
     private val typeOfViewModel: Class<V> =

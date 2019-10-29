@@ -26,26 +26,26 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
+
+        lifecycle.addObserver(viewModel)
+
+        setBackPressed(isBackPressed = false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val config = configureView()
-
-        checkNotNull(config.layoutRes) {
+    ): View? = configureView().run {
+        checkNotNull(layoutRes) {
             "Activity parameters for " + javaClass.name + " have no layout resource."
         }
 
-        checkNotNull(config.viewModelKey) {
+        checkNotNull(viewModelKey) {
             "Activity parameters for " + javaClass.name + " have no viewModel key."
         }
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(typeOfViewModel)
-
-        lifecycle.addObserver(viewModel)
 
         if ( // do only initiate view model on first start
             savedInstanceState == null) {
@@ -55,22 +55,17 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
         val binding: ViewDataBinding =
             DataBindingUtil.inflate(
                 inflater,
-                config.layoutRes,
+                layoutRes,
                 container,
                 false
             )
 
         return binding.run {
             lifecycleOwner = this@BaseFragment
-            setVariable(config.viewModelKey, viewModel)
+            setVariable(viewModelKey, viewModel)
             executePendingBindings()
             binding.root
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        setBackPressed(isBackPressed = false)
     }
 
     override fun setBackPressed(isBackPressed: Boolean) {
