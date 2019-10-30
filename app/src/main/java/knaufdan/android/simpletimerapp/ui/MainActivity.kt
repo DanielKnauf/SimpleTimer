@@ -2,9 +2,8 @@ package knaufdan.android.simpletimerapp.ui
 
 import android.os.Bundle
 import knaufdan.android.core.SharedPrefService
-import knaufdan.android.core.arch.BaseActivity
 import knaufdan.android.core.arch.HasFragmentFlow
-import knaufdan.android.core.arch.ViewConfig
+import knaufdan.android.core.arch.implementation.BaseActivity
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
@@ -20,6 +19,14 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
     @Inject
     lateinit var sharedPrefService: SharedPrefService
+
+    override fun getLayoutRes() = R.layout.activity_main
+
+    override fun getBindingKey() = BR.viewModel
+
+    override fun getInitialPage() = determineInitialPage().ordinal
+
+    override fun getTitleRes() = R.string.app_name
 
     override fun onResume() {
         super.onResume()
@@ -66,14 +73,6 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
         supportFragmentManager.popBackStackImmediate()
         flowTo(INPUT.ordinal, false, null)
     }
-
-    override fun configureView() =
-        ViewConfig.Builder()
-            .setLayoutRes(R.layout.activity_main)
-            .setViewModelKey(BR.viewModel)
-            .setTitleRes(R.string.app_name)
-            .setInitialPage(determineInitialPage())
-            .build()
 
     private fun determineInitialPage() =
         if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) TIMER
