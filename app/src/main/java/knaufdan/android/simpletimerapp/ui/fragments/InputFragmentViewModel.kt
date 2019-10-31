@@ -1,16 +1,19 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
+import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
-import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
+import knaufdan.android.core.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
-import knaufdan.android.simpletimerapp.ui.navigation.Navigator
+import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
+import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
+import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_CONFIGURATION
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
@@ -19,6 +22,7 @@ import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
 import knaufdan.android.simpletimerapp.util.safeValue
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -44,7 +48,14 @@ class InputFragmentViewModel @Inject constructor(
                     value = this
                 )
 
-                navigator.navigateToTimer(timerConfiguration = this)
+                navigator.navigateTo(
+                    pageNumber = FragmentPage.TIMER.ordinal,
+                    addToBackStack = true,
+                    bundle = Bundle().apply {
+                        putInt(KEY_CURRENT_MAXIMUM, timePerCycle)
+                        putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
+                    }
+                )
             }
         }
     }

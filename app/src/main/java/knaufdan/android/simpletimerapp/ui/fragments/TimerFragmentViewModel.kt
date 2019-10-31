@@ -13,7 +13,7 @@ import knaufdan.android.core.broadcast.ActionDispatcher
 import knaufdan.android.core.broadcast.BroadcastService
 import knaufdan.android.core.service.ServiceUtil
 import knaufdan.android.simpletimerapp.R
-import knaufdan.android.simpletimerapp.ui.navigation.Navigator
+import knaufdan.android.core.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
