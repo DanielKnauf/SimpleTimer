@@ -44,6 +44,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
         AndroidInjection.inject(this)
 
         contextProvider.context = this
+
         config.run {
             setBinding(savedInstanceState)
 

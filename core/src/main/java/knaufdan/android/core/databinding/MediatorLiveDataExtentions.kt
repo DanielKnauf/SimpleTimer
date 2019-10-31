@@ -6,9 +6,9 @@ import androidx.lifecycle.MediatorLiveData
 fun <Target, Source> MediatorLiveData<Target>.bindTo(
     source: LiveData<Source>,
     postOnlyDifferentValues: Boolean = true,
-    mapping: (sourceValue: Source) -> Target = { s ->
+    mapping: (sourceValue: Source) -> Target = { value ->
         @Suppress("UNCHECKED_CAST")
-        s as Target
+        value as Target
     }
 ) {
     addSource(source) { sourceValue ->
