@@ -1,4 +1,4 @@
-package knaufdan.android.core.arch
+package knaufdan.android.core.arch.implementation
 
 import android.content.Context
 import android.os.Bundle
@@ -10,18 +10,30 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
+import knaufdan.android.core.arch.IBaseFragment
 import knaufdan.android.core.di.vm.ViewModelFactory
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
+abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(),
+    IBaseFragment<ViewModel> {
 
     val fragmentTag = this::class.simpleName
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    protected lateinit var viewModel: V
+    private lateinit var viewModel: ViewModel
+
+    override fun getDataSource(): ViewModel = viewModel
+
+    private val config: Config.FragmentConfig by lazy {
+        Config.FragmentConfig(
+            layoutRes = getLayoutRes(),
+            viewModelKey = getBindingKey(),
+            titleRes = getTitleRes()
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,15 +50,7 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = configureView().run {
-        checkNotNull(layoutRes) {
-            "Activity parameters for " + javaClass.name + " have no layout resource."
-        }
-
-        checkNotNull(viewModelKey) {
-            "Activity parameters for " + javaClass.name + " have no viewModel key."
-        }
-
+    ): View? = config.run {
         if ( // do only initiate view model on first start
             savedInstanceState == null) {
             viewModel.handleBundle(arguments)
@@ -73,8 +77,8 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), IBaseFragment {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private val typeOfViewModel: Class<V>
+    private val typeOfViewModel: Class<ViewModel>
         get() = (javaClass
             .genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<V>
+            .actualTypeArguments[0] as Class<ViewModel>
 }

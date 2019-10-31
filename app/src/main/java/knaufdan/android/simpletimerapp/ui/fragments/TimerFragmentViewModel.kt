@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
-import knaufdan.android.core.arch.BaseViewModel
+import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.broadcast.Action
 import knaufdan.android.core.broadcast.ActionDispatcher

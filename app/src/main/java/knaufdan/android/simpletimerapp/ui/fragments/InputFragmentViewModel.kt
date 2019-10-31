@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import knaufdan.android.core.SharedPrefService
-import knaufdan.android.core.arch.BaseViewModel
+import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
 import knaufdan.android.core.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
