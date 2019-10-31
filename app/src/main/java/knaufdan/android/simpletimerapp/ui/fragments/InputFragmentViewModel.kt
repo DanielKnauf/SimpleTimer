@@ -20,7 +20,7 @@ import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
-import knaufdan.android.simpletimerapp.util.safeValue
+import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class InputFragmentViewModel @Inject constructor(
