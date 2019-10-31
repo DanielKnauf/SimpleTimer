@@ -3,12 +3,12 @@ package knaufdan.android.core.databinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-fun <T, S> MediatorLiveData<T>.bindTo(
-    source: LiveData<S>,
+fun <Target, Source> MediatorLiveData<Target>.bindTo(
+    source: LiveData<Source>,
     postOnlyDifferentValues: Boolean = true,
-    mapping: (sourceValue: S) -> T = { s ->
+    mapping: (sourceValue: Source) -> Target = { value ->
         @Suppress("UNCHECKED_CAST")
-        s as T
+        value as Target
     }
 ) {
     addSource(source) { sourceValue ->
@@ -21,12 +21,12 @@ fun <T, S> MediatorLiveData<T>.bindTo(
     }
 }
 
-fun <T, S, U, V> MediatorLiveData<T>.bindTo(
-    source1: LiveData<S>,
-    source2: LiveData<U>,
-    source3: LiveData<V>,
+fun <Target, Source1, Source2, Source3> MediatorLiveData<Target>.bindTo(
+    source1: LiveData<Source1>,
+    source2: LiveData<Source2>,
+    source3: LiveData<Source3>,
     postOnlyDifferentValues: Boolean = true,
-    mapping: (sourceValue1: S?, sourceValue2: U?, sourceValue3: V?) -> T
+    mapping: (sourceValue1: Source1?, sourceValue2: Source2?, sourceValue3: Source3?) -> Target
 ) {
     addSource(source1) { sourceValue1 ->
         val newValue = mapping(
@@ -68,9 +68,9 @@ fun <T, S, U, V> MediatorLiveData<T>.bindTo(
     }
 }
 
-private fun <T> MediatorLiveData<T>.postValue(
+private fun <Target> MediatorLiveData<Target>.postValue(
     postOnlyDifferentValues: Boolean,
-    newValue: T
+    newValue: Target
 ) {
     if (postOnlyDifferentValues && value == newValue) {
         return

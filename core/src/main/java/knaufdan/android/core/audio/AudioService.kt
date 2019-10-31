@@ -64,7 +64,7 @@ class AudioService @Inject constructor(private val contextProvider: ContextProvi
     override fun release(audioRes: AudioRes) {
         mediaPlayers[audioRes]?.run {
             if (isPlaying) {
-                Handler().postDelayed({ release(audioRes) }, 1000)
+                Handler().postDelayed({ release(audioRes) }, 500)
             } else {
                 release()
                 mediaPlayers.remove(audioRes)
