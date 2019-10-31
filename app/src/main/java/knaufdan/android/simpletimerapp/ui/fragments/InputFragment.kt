@@ -7,5 +7,5 @@ import knaufdan.android.simpletimerapp.R
 class InputFragment : BaseFragment<InputFragmentViewModel>() {
     override fun getLayoutRes() = R.layout.input_fragment
 
-    override fun getBindingKey()= BR.viewModel
+    override fun getBindingKey() = BR.viewModel
 }

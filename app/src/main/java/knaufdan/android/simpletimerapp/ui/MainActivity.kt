@@ -1,21 +1,16 @@
 package knaufdan.android.simpletimerapp.ui
 
-import android.os.Bundle
+import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
-import knaufdan.android.core.arch.HasFragmentFlow
 import knaufdan.android.core.arch.implementation.BaseActivity
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
 import knaufdan.android.simpletimerapp.ui.fragments.TimerFragment
-import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
-import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.INPUT
-import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage.TIMER
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import javax.inject.Inject
 
-class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
+class MainActivity : BaseActivity<MainActivityViewModel>() {
 
     @Inject
     lateinit var sharedPrefService: SharedPrefService
@@ -24,7 +19,9 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
     override fun getBindingKey() = BR.viewModel
 
-    override fun getInitialPage() = determineInitialPage().ordinal
+    override fun getInitialFragment() = determineInitialFragment()
+
+    override fun getInitialFragmentContainer() = R.id.fragment_container
 
     override fun getTitleRes() = R.string.app_name
 
@@ -36,33 +33,6 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
         }
     }
 
-    override fun flowTo(
-        pageNumber: Int,
-        addToBackStack: Boolean,
-        bundle: Bundle?
-    ) {
-        with(supportFragmentManager.beginTransaction()) {
-            pageNumber.determineFragment(bundle).run {
-                replace(
-                    R.id.fragment_container,
-                    this,
-                    this.fragmentTag
-                )
-            }
-
-            if (addToBackStack) {
-                addToBackStack(null)
-            }
-
-            commitAllowingStateLoss()
-        }
-    }
-
-    private fun Int.determineFragment(bundle: Bundle?) = when (FragmentPage.values()[this]) {
-        INPUT -> InputFragment()
-        TIMER -> TimerFragment().apply { arguments = bundle }
-    }
-
     override fun onBackPressed() = with(supportFragmentManager) {
         notifyBackPressed()
         if (backStackEntryCount == 0 && fragments[0]?.tag != InputFragment::class.simpleName) resetAppToStart()
@@ -71,12 +41,15 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), HasFragmentFlow {
 
     private fun resetAppToStart() {
         supportFragmentManager.popBackStackImmediate()
-        flowTo(INPUT.ordinal, false, null)
+        navigator.goTo(
+            fragment = InputFragment(),
+            addToBackStack = false
+        )
     }
 
-    private fun determineInitialPage() =
-        if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) TIMER
-        else INPUT
+    private fun determineInitialFragment() =
+        if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) TimerFragment()
+        else InputFragment()
 
     private fun hasTimerState(expectedState: TimerState) =
         sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name

@@ -12,7 +12,8 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val initialPage: Int
+        val initialFragment: BaseFragment<*>? = null,
+        val initialFragmentContainer: Int? = null
     ) : Config(
         layoutRes,
         viewModelKey,

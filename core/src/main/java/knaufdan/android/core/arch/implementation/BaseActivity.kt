@@ -1,7 +1,6 @@
 package knaufdan.android.core.arch.implementation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -9,17 +8,19 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import knaufdan.android.core.ContextProvider
-import knaufdan.android.core.arch.HasFragmentFlow
 import knaufdan.android.core.arch.IBaseActivity
 import knaufdan.android.core.di.vm.ViewModelFactory
+import knaufdan.android.core.navigation.Navigator
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
-    IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(), IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: ContextProvider
+
+    @Inject
+    lateinit var navigator: Navigator
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -33,7 +34,8 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
             titleRes = getTitleRes(),
-            initialPage = getInitialPage()
+            initialFragment = getInitialFragment(),
+            initialFragmentContainer = getInitialFragmentContainer()
         )
     }
 
@@ -52,7 +54,11 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
                 setTitle(titleRes)
             }
 
-            showInitialPage(savedInstanceState)
+            initialFragmentContainer?.apply {
+                navigator.configure(fragmentContainer = this)
+
+                showInitialFragment(savedInstanceState = savedInstanceState)
+            }
         }
     }
 
@@ -84,20 +90,15 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
         }
     }
 
-    private fun Config.ActivityConfig.showInitialPage(savedInstanceState: Bundle?) =
-        with(initialPage) {
-            if (this >= 0) {
-                if (this@BaseActivity is HasFragmentFlow) flowTo(
-                    pageNumber = this,
-                    addToBackStack = false,
-                    bundle = savedInstanceState
-                )
-                else Log.e(
-                    className,
-                    "Found an initialPage to display (#$this), but $className does not implement " + HasFragmentFlow::class.simpleName
-                )
-            }
-        }
+    private fun Config.ActivityConfig.showInitialFragment(savedInstanceState: Bundle?) =
+        initialFragment?.run {
+            arguments = savedInstanceState
+
+            navigator.goTo(
+                this,
+                false
+            )
+        } ?: Unit
 
     @Suppress("UNCHECKED_CAST")
     private val typeOfViewModel: Class<ViewModel> =

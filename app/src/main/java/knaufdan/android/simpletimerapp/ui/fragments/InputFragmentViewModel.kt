@@ -5,12 +5,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
 import knaufdan.android.core.navigation.Navigator
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
-import knaufdan.android.simpletimerapp.ui.navigation.FragmentPage
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
@@ -22,7 +22,6 @@ import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
 import knaufdan.android.simpletimerapp.util.safeValue
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -48,13 +47,14 @@ class InputFragmentViewModel @Inject constructor(
                     value = this
                 )
 
-                navigator.navigateTo(
-                    pageNumber = FragmentPage.TIMER.ordinal,
-                    addToBackStack = true,
-                    bundle = Bundle().apply {
-                        putInt(KEY_CURRENT_MAXIMUM, timePerCycle)
-                        putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
-                    }
+                navigator.goTo(
+                    fragment = TimerFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt(KEY_CURRENT_MAXIMUM, timePerCycle)
+                            putBoolean(KEY_IS_ON_REPEAT, isOnRepeat)
+                        }
+                    },
+                    addToBackStack = true
                 )
             }
         }

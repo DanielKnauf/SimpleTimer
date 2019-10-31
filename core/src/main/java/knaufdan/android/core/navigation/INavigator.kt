@@ -1,13 +1,17 @@
 package knaufdan.android.core.navigation
 
-import android.os.Bundle
+import androidx.annotation.LayoutRes
+import knaufdan.android.core.arch.implementation.BaseFragment
 
 interface INavigator {
+    var fragmentContainer : Int
 
-    fun navigateTo(
-        pageNumber: Int,
+    fun configure(@LayoutRes fragmentContainer: Int)
+
+    fun goTo(
+        fragment: BaseFragment<*>,
         addToBackStack: Boolean,
-        bundle: Bundle
+        container: Int = fragmentContainer
     )
 
     fun backPressed()
