@@ -14,7 +14,8 @@ import knaufdan.android.core.navigation.Navigator
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(), IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
+    IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: ContextProvider
@@ -34,8 +35,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(), IB
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
             titleRes = getTitleRes(),
-            initialFragment = getInitialFragment(),
-            initialFragmentContainer = getInitialFragmentContainer()
+            setup = getFragmentSetup()
         )
     }
 
@@ -54,10 +54,13 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(), IB
                 setTitle(titleRes)
             }
 
-            initialFragmentContainer?.apply {
-                navigator.configure(fragmentContainer = this)
+            setup?.apply {
+                navigator.fragmentContainer = first
 
-                showInitialFragment(savedInstanceState = savedInstanceState)
+                showInitialFragment(
+                    savedInstanceState = savedInstanceState,
+                    initialFragment = second
+                )
             }
         }
     }
@@ -90,15 +93,17 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(), IB
         }
     }
 
-    private fun Config.ActivityConfig.showInitialFragment(savedInstanceState: Bundle?) =
-        initialFragment?.run {
-            arguments = savedInstanceState
+    private fun showInitialFragment(
+        initialFragment: BaseFragment<*>?,
+        savedInstanceState: Bundle?
+    ) = initialFragment?.run {
+        arguments = savedInstanceState
 
-            navigator.goTo(
-                this,
-                false
-            )
-        } ?: Unit
+        navigator.goTo(
+            this,
+            false
+        )
+    } ?: Unit
 
     @Suppress("UNCHECKED_CAST")
     private val typeOfViewModel: Class<ViewModel> =

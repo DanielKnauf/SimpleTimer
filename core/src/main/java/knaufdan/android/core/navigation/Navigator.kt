@@ -9,19 +9,15 @@ import javax.inject.Singleton
 
 @Singleton
 class Navigator @Inject constructor(private val contextProvider: ContextProvider) : INavigator {
-    override var fragmentContainer: Int = -1
-
-    override fun configure(fragmentContainer: Int) {
-        this.fragmentContainer = fragmentContainer
-    }
+    override var fragmentContainer = -1
 
     override fun goTo(
         fragment: BaseFragment<*>,
         addToBackStack: Boolean,
-        container: Int
+        container: FragmentContainer
     ) = with(contextProvider.context) {
 
-        check(container != -1) { "" }
+        check(container != -1) { "Could not replace ${fragment.fragmentTag} because no fragmentContainer is defined. Current container value = $container" }
 
         if (this is AppCompatActivity) {
             supportFragmentManager.beginTransaction().apply {

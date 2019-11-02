@@ -4,13 +4,19 @@ import androidx.fragment.app.FragmentManager
 import knaufdan.android.core.arch.implementation.BaseFragment
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.BindableElement
+import knaufdan.android.core.navigation.FragmentContainer
+import knaufdan.android.core.navigation.INavigator
 
-interface IBaseActivity<ViewModel : BaseViewModel> : BindableElement<ViewModel> {
-    fun getInitialFragment(): BaseFragment<*>? = null
+typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<*>>
 
-    fun getInitialFragmentContainer(): Int? = null
-
-    fun getTitleRes(): Int = -1
+interface IBaseActivity<ViewModel : BaseViewModel> : BindableElement<ViewModel>, IAndroidComponent {
+    /**
+     * [FragmentContainer] will be set as [INavigator.fragmentContainer].
+     * [BaseFragment] will be placed into the [FragmentContainer].
+     *
+     * @return a [Pair] of [FragmentContainer] and [BaseFragment].
+     */
+    fun getFragmentSetup(): FragmentSetup? = null
 
     /**
      * Communicates an [onBackPressed] event to all [BaseViewModel] of [BaseFragment].

@@ -2,6 +2,8 @@ package knaufdan.android.core.arch.implementation
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import knaufdan.android.core.arch.FragmentContainer
+import knaufdan.android.core.arch.InitialFragment
 
 internal sealed class Config(
     @LayoutRes val layoutRes: Int,
@@ -12,8 +14,7 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val initialFragment: BaseFragment<*>? = null,
-        val initialFragmentContainer: Int? = null
+        val setup: Pair<FragmentContainer, InitialFragment?>?
     ) : Config(
         layoutRes,
         viewModelKey,

@@ -10,6 +10,7 @@ import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
 import knaufdan.android.core.navigation.Navigator
+import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
@@ -20,7 +21,6 @@ import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
-import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class InputFragmentViewModel @Inject constructor(

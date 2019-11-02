@@ -19,9 +19,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
 
     override fun getBindingKey() = BR.viewModel
 
-    override fun getInitialFragment() = determineInitialFragment()
-
-    override fun getInitialFragmentContainer() = R.id.fragment_container
+    override fun getFragmentSetup() = R.id.fragment_container to determineInitialFragment()
 
     override fun getTitleRes() = R.string.app_name
 

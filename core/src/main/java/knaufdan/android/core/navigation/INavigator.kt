@@ -1,17 +1,16 @@
 package knaufdan.android.core.navigation
 
-import androidx.annotation.LayoutRes
 import knaufdan.android.core.arch.implementation.BaseFragment
 
-interface INavigator {
-    var fragmentContainer : Int
+typealias FragmentContainer = Int
 
-    fun configure(@LayoutRes fragmentContainer: Int)
+interface INavigator {
+    var fragmentContainer : FragmentContainer
 
     fun goTo(
         fragment: BaseFragment<*>,
         addToBackStack: Boolean,
-        container: Int = fragmentContainer
+        container: FragmentContainer = fragmentContainer
     )
 
     fun backPressed()
