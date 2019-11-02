@@ -14,7 +14,7 @@ interface IBaseActivity<ViewModel : BaseViewModel> : BindableElement<ViewModel>,
      * [FragmentContainer] will be set as [INavigator.fragmentContainer].
      * [BaseFragment] will be placed into the [FragmentContainer].
      *
-     * @return a [Pair] of [FragmentContainer] and [BaseFragment].
+     * @return [Pair] of [FragmentContainer] and [BaseFragment].
      */
     fun getFragmentSetup(): FragmentSetup? = null
 
