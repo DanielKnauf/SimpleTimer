@@ -35,7 +35,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
             titleRes = getTitleRes(),
-            setup = getFragmentSetup()
+            fragmentSetup = getFragmentSetup()
         )
     }
 
@@ -54,7 +54,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
                 setTitle(titleRes)
             }
 
-            setup?.apply {
+            fragmentSetup?.apply {
                 navigator.fragmentContainer = first
 
                 showInitialFragment(
