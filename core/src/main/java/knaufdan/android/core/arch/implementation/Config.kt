@@ -2,6 +2,7 @@ package knaufdan.android.core.arch.implementation
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import knaufdan.android.core.navigation.FragmentContainer
 
 internal sealed class Config(
     @LayoutRes val layoutRes: Int,
@@ -12,7 +13,7 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val initialPage: Int
+        val fragmentSetup: Pair<FragmentContainer, BaseFragment<*>?>?
     ) : Config(
         layoutRes,
         viewModelKey,
