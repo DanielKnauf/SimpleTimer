@@ -1,16 +1,13 @@
-import Versions.androidx_core_version
+import Versions.archServices_version
 import Versions.appcompat_version
-import Versions.broadcast_manager_version
 import Versions.constraint_layout_version
 import Versions.dagger_version
 import Versions.dependency_updates_version
 import Versions.design_version
 import Versions.gradle_version
-import Versions.gson_version
 import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.ktLint_version
-import Versions.lifecycle_version
 import Versions.test_runner_version
 
 object Dependencies {
@@ -21,15 +18,10 @@ object Dependencies {
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    val androidX_core_ktx = "androidx.core:core-ktx:$androidx_core_version"
     val androidX_app_compat = "androidx.appcompat:appcompat:$appcompat_version"
     val android_material_design = "com.google.android.material:material:$design_version"
-    val androidX_constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    val androidX_localbroadcast_manager ="androidx.localbroadcastmanager:localbroadcastmanager:$broadcast_manager_version"
-
-    val androidX_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    val androidX_lifecycle_viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    val androidX_lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    val androidX_constraint_layout =
+        "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
     val jUnit = "junit:junit:$jUnit_version"
     val androidX_test_runner = "androidx.test:runner:$test_runner_version"
@@ -40,8 +32,10 @@ object Dependencies {
     val dagger_compiler = "com.google.dagger:dagger-compiler:$dagger_version"
     val dagger_android_processor = "com.google.dagger:dagger-android-processor:$dagger_version"
 
-    val gson = "com.google.code.gson:gson:$gson_version"
-
-    val dependency_updates = "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
+    val dependency_updates =
+        "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"
+
+    val archServices = "com.github.DanielKnauf:archservices:$archServices_version"
+    val jitPackUrl = "https://jitpack.io"
 }

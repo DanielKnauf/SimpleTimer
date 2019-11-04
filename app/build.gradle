@@ -28,8 +28,6 @@ android {
 }
 
 dependencies {
-    implementation project(':core')
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.androidX_app_compat
     implementation Dependencies.android_material_design
@@ -49,4 +47,7 @@ dependencies {
     //kotlin
     implementation Dependencies.kotlin_reflect
     implementation Dependencies.kotlin_stdlib
+
+    //archServices
+    implementation Dependencies.archServices
 }
