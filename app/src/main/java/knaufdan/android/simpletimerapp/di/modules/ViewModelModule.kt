@@ -22,7 +22,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(InputFragmentViewModel::class)
-    internal abstract fun bindInputFragmentViewModel(mainFragmentViewModel: InputFragmentViewModel): ViewModel
+    internal abstract fun bindInputFragmentViewModel(inputFragmentViewModel: InputFragmentViewModel): ViewModel
 
     @Binds
     @IntoMap
