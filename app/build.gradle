@@ -48,6 +48,6 @@ dependencies {
     implementation Dependencies.kotlin_reflect
     implementation Dependencies.kotlin_stdlib
 
-    //appKit
-    implementation Dependencies.appKit
+    //archServices
+    implementation Dependencies.archServices
 }

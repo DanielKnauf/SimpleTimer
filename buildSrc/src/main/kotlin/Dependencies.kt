@@ -1,4 +1,4 @@
-import Versions.appKit_version
+import Versions.archServices_version
 import Versions.appcompat_version
 import Versions.constraint_layout_version
 import Versions.dagger_version
@@ -36,6 +36,6 @@ object Dependencies {
         "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"
 
-    val appKit = "com.github.DanielKnauf:AppKit:$appKit_version"
+    val archServices = "com.github.DanielKnauf:archservices:$archServices_version"
     val jitPackUrl = "https://jitpack.io"
 }
