@@ -1,6 +1,6 @@
 # SimpleTimerApp
 
-This repo started as a request from my new roommate in Hamburg, if I could build her an app for her yoga sessions. At this time I just graduated from university and was fresh in an Android project, with having taken only one minor course...so I thought it is a good oportunity to try out all the project stuff in a smaller setting. The functionality stayed mostly the same over the years, but the structure changed. 
+## Description
 
 I tried to follow one *principle*:
 > if possible move all functionality into the `ViewModel` or extract it into a `Service`.
