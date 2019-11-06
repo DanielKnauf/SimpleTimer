@@ -2,6 +2,8 @@
 
 ## Description
 
+//TODO
+
 I tried to follow one *principle*:
 > if possible move all functionality into the `ViewModel` or extract it into a `Service`.
 
