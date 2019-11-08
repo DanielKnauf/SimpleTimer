@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
-import java.util.Date
-import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.arch.implementation.BaseViewModel
@@ -13,7 +11,7 @@ import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.broadcast.Action
 import knaufdan.android.core.broadcast.ActionDispatcher
 import knaufdan.android.core.broadcast.BroadcastService
-import knaufdan.android.core.navigation.Navigator
+import knaufdan.android.core.navigation.NavigationService
 import knaufdan.android.core.service.ServiceUtil
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
@@ -33,12 +31,14 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
+import java.util.Date
+import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: AlarmService,
     private val audioService: AudioService,
     private val broadcastService: BroadcastService,
-    private val navigator: Navigator,
+    private val navigationService: NavigationService,
     private val serviceUtil: ServiceUtil,
     private val sharedPrefService: SharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
@@ -93,7 +93,7 @@ class TimerFragmentViewModel @Inject constructor(
     private fun finishAndQuit() {
         timerFinished = true
         releaseResources()
-        navigator.backPressed()
+        navigationService.onBackPressed()
     }
 
     override fun handleBundle(bundle: Bundle?) {
