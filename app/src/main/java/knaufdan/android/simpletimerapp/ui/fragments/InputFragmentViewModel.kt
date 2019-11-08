@@ -5,10 +5,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import javax.inject.Inject
 import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
-import knaufdan.android.core.navigation.NavigationService
+import knaufdan.android.core.navigation.INavigationService
 import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
@@ -21,10 +22,9 @@ import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(
-    private val navigationService: NavigationService,
+    private val navigationService: INavigationService,
     private val sharedPrefService: SharedPrefService
 ) : BaseViewModel() {
     val isEnabled = MediatorLiveData<Boolean>()
