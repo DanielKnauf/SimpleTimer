@@ -33,6 +33,11 @@ dependencies {
     implementation Dependencies.android_material_design
     implementation Dependencies.androidX_constraint_layout
 
+    //lifecycle
+    implementation Dependencies.androidX_lifecycle_viewModel
+    implementation Dependencies.androidX_lifecycle_extensions
+    kapt Dependencies.androidX_lifecycle_compiler
+
     //testing
     testImplementation Dependencies.jUnit
     androidTestImplementation Dependencies.androidX_test_runner

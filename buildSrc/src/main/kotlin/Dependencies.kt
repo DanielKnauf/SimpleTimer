@@ -8,6 +8,7 @@ import Versions.gradle_version
 import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.ktLint_version
+import Versions.lifecycle_version
 import Versions.test_runner_version
 
 object Dependencies {
@@ -22,6 +23,10 @@ object Dependencies {
     val android_material_design = "com.google.android.material:material:$design_version"
     val androidX_constraint_layout =
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+    val androidX_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    val androidX_lifecycle_viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    val androidX_lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     val jUnit = "junit:junit:$jUnit_version"
     val androidX_test_runner = "androidx.test:runner:$test_runner_version"

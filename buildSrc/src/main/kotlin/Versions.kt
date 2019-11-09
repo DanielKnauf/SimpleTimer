@@ -5,6 +5,7 @@ object Versions {
     const val appcompat_version = "1.1.0"
     const val design_version = "1.0.0"
     const val constraint_layout_version = "2.0.0-beta2"
+    const val lifecycle_version = "2.2.0-alpha05"
     const val dagger_version = "2.24"
 
     const val ktLint_version = "0.34.2"
