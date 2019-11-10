@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
-import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.arch.implementation.ActivityViewModel
 import knaufdan.android.core.navigation.INavigationService
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
@@ -12,7 +12,7 @@ import knaufdan.android.simpletimerapp.util.Constants
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class MainActivityViewModel @Inject constructor(
-    private val sharedPrefService: SharedPrefService,
+    private val sharedPrefService: ISharedPrefService,
     private val navigationService: INavigationService
 ) : ActivityViewModel() {
 

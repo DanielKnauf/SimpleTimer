@@ -5,8 +5,8 @@ import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
 import java.util.Date
 import javax.inject.Inject
-import knaufdan.android.core.SharedPrefService
-import knaufdan.android.core.TextProvider
+import knaufdan.android.core.ISharedPrefService
+import knaufdan.android.core.ITextProvider
 import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.notification.NotificationService
 import knaufdan.android.core.notification.NotificationStyle
@@ -24,9 +24,9 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
     lateinit var notificationService: NotificationService
     @Inject
-    lateinit var sharedPrefService: SharedPrefService
+    lateinit var sharedPrefService: ISharedPrefService
     @Inject
-    lateinit var textProvider: TextProvider
+    lateinit var textProvider: ITextProvider
 
     override fun onReceive(
         context: Context,

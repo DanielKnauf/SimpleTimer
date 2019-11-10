@@ -1,7 +1,7 @@
 package knaufdan.android.simpletimerapp.ui
 
 import javax.inject.Inject
-import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.arch.implementation.BaseActivity
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
@@ -13,7 +13,7 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 class MainActivity : BaseActivity<MainActivityViewModel>() {
 
     @Inject
-    lateinit var sharedPrefService: SharedPrefService
+    lateinit var sharedPrefService: ISharedPrefService
 
     override fun getLayoutRes() = R.layout.activity_main
 
