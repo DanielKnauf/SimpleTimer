@@ -8,7 +8,7 @@ import javax.inject.Inject
 import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.ITextProvider
 import knaufdan.android.core.alarm.AlarmService
-import knaufdan.android.core.notification.NotificationService
+import knaufdan.android.core.notification.INotificationService
 import knaufdan.android.core.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.MainActivity
@@ -22,7 +22,7 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
     lateinit var alarmService: AlarmService
     @Inject
-    lateinit var notificationService: NotificationService
+    lateinit var notificationService: INotificationService
     @Inject
     lateinit var sharedPrefService: ISharedPrefService
     @Inject
@@ -57,7 +57,7 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
         }
     }
 
-    private fun NotificationService.configureService() =
+    private fun INotificationService.configureService() =
         with(textProvider) {
             this@configureService.configure {
                 setNotificationChannel(
