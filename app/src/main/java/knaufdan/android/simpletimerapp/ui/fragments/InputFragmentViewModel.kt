@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
-import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.bindTo
 import knaufdan.android.core.navigation.INavigationService
@@ -25,7 +25,7 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class InputFragmentViewModel @Inject constructor(
     private val navigationService: INavigationService,
-    private val sharedPrefService: SharedPrefService
+    private val sharedPrefService: ISharedPrefService
 ) : BaseViewModel() {
     val isEnabled = MediatorLiveData<Boolean>()
     val isOnRepeat = MutableLiveData(false)
@@ -76,7 +76,10 @@ class InputFragmentViewModel @Inject constructor(
 
         isEnabled.bindTo(source = timePerCycle) { time -> time > 0 }
 
-        sharedPrefService.retrieveJson<TimerConfiguration>(KEY_TIMER_CONFIGURATION)?.apply {
+        sharedPrefService.retrieveJson(
+            KEY_TIMER_CONFIGURATION,
+            TimerConfiguration::class
+        )?.apply {
             this@InputFragmentViewModel.timePerCycle.value = this.timePerCycle
             timePerCycle.determineClockSections().apply {
                 hours.value = first

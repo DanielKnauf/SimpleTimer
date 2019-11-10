@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import java.util.Date
 import javax.inject.Inject
-import knaufdan.android.core.SharedPrefService
+import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.audio.IAudioService
@@ -40,7 +40,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val broadcastService: IBroadcastService,
     private val navigationService: INavigationService,
     private val serviceUtil: ServiceUtil,
-    private val sharedPrefService: SharedPrefService
+    private val sharedPrefService: ISharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
     val isPaused = MutableLiveData(false)
