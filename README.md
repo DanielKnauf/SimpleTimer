@@ -11,18 +11,6 @@ I tried to follow one *principle*:
 
 The underlying `core` module was extracted and can be fount here: [ArchServices](https://github.com/DanielKnauf/ArchServices) 
 
-Here it is received from [jitpack.io](https://jitpack.io) and included as a dependency: 
-```
-allprojects {
-   repositories {
-      maven { url 'https://jitpack.io' }
-   }
-}
-
-dependencies {
-   implementation 'com.github.DanielKnauf:archservices:master-SNAPSHOT'
-}
-```
 
 ## License
 ```
