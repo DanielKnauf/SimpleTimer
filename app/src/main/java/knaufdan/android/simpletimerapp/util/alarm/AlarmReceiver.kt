@@ -7,7 +7,7 @@ import java.util.Date
 import javax.inject.Inject
 import knaufdan.android.core.ISharedPrefService
 import knaufdan.android.core.ITextProvider
-import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.notification.INotificationService
 import knaufdan.android.core.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.R
@@ -20,7 +20,7 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
-    lateinit var alarmService: AlarmService
+    lateinit var alarmService: IAlarmService
     @Inject
     lateinit var notificationService: INotificationService
     @Inject
