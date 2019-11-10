@@ -1,13 +1,13 @@
 # SimpleTimerApp
 
 This project started to try out patterns and functionalities of my first project after university in a smaller setting.
-It's functionality is quite simple, you can set a time and two modes (once or onRepeat). After starting the timer it wil count down and make a sound (if the app is in the foreground) or show a notification (if the app is in the backgrond). 
+It's functionality is quite simple, you can set a time and two modes (once or onRepeat). After starting the timer it will count down and make a sound (if the app is in the foreground) or show a notification (if the app is in the backgrond). 
 
-Over time the implementation changed a lot, e.g. from a _classic_ android architecure approach to _mvvm_ or from _java_ to _kotlin_. While working on this project, one underlying _principle_ emerge: do not do any logic inside `Activity` or `Fragment`, place all functionality into the `ViewModel` or extract it into a `Service`.
+Over time the implementation changed a lot, e.g. from a _classic_ android architecure approach to _mvvm_ or from _java_ to _kotlin_. While working on this project, one underlying _principle_ emerged: do not do any logic inside `Activity` or `Fragment`, place all functionality into the `ViewModel` or extract it into a `Service`.
 
 ## Core Module
 
-The underlying `core` module was extracted and can be fount here: [ArchServices](https://github.com/DanielKnauf/ArchServices) 
+The underlying `core` module was extracted and can be found here: [ArchServices](https://github.com/DanielKnauf/ArchServices) 
 
 
 ## License
