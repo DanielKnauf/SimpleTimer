@@ -5,7 +5,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
-import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.IContextProvider
 
 class SimpleTimerApplication : Application(), HasAndroidInjector {
     @Inject
@@ -16,7 +16,7 @@ class SimpleTimerApplication : Application(), HasAndroidInjector {
     }
 
     @Inject
-    internal lateinit var contextProvider: ContextProvider
+    internal lateinit var contextProvider: IContextProvider
 
     override fun onCreate() {
         super.onCreate()
@@ -24,6 +24,6 @@ class SimpleTimerApplication : Application(), HasAndroidInjector {
             .create()
             .inject(this)
 
-        contextProvider.context = applicationContext
+        contextProvider.setContext(applicationContext)
     }
 }
