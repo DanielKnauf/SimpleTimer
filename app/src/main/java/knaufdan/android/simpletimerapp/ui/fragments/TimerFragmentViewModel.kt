@@ -6,15 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import java.util.Date
 import javax.inject.Inject
-import knaufdan.android.core.ISharedPrefService
+import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.alarm.IAlarmService
-import knaufdan.android.core.arch.implementation.BaseViewModel
-import knaufdan.android.core.audio.IAudioService
-import knaufdan.android.core.broadcast.Action
-import knaufdan.android.core.broadcast.ActionDispatcher
-import knaufdan.android.core.broadcast.IBroadcastService
-import knaufdan.android.core.navigation.INavigationService
-import knaufdan.android.core.service.ServiceUtil
+import knaufdan.android.core.preferences.ISharedPrefService
+import knaufdan.android.services.service.IServiceDispatcher
+import knaufdan.android.services.service.broadcast.Action
+import knaufdan.android.services.service.broadcast.ActionDispatcher
+import knaufdan.android.services.service.broadcast.IBroadcastService
+import knaufdan.android.services.userinteraction.audio.IAudioService
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
 import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
@@ -39,7 +39,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val audioService: IAudioService,
     private val broadcastService: IBroadcastService,
     private val navigationService: INavigationService,
-    private val serviceUtil: ServiceUtil,
+    private val serviceDispatcher: IServiceDispatcher,
     private val sharedPrefService: ISharedPrefService
 ) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
 
@@ -109,8 +109,8 @@ class TimerFragmentViewModel @Inject constructor(
                     value = maximum.value
                 )
                 broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
-                serviceUtil.startService(
-                    clazz = TimerService::class,
+                serviceDispatcher.startService(
+                    serviceClass = TimerService::class,
                     bundle = this
                 )
                 isOnRepeat = getBoolean(KEY_IS_ON_REPEAT, false)
@@ -174,7 +174,7 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun stopReceivingUpdates() {
         broadcastService.unregisterLocalBroadcastReceiver(broadcastReceiver = actionDispatcher)
-        serviceUtil.stopService(clazz = TimerService::class)
+        serviceDispatcher.stopService(serviceClass = TimerService::class)
     }
 
     private fun setUpAlarm() {
@@ -226,7 +226,7 @@ class TimerFragmentViewModel @Inject constructor(
         adjustedTime: Int = 0
     ) {
         broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
-        serviceUtil.startService(
+        serviceDispatcher.startService(
             TimerService::class,
             createBundleForTimerService(
                 max = maxValue,

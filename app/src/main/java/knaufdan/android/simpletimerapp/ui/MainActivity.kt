@@ -1,8 +1,8 @@
 package knaufdan.android.simpletimerapp.ui
 
 import javax.inject.Inject
-import knaufdan.android.core.ISharedPrefService
-import knaufdan.android.core.arch.implementation.BaseActivity
+import knaufdan.android.arch.mvvm.implementation.BaseActivity
+import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragment

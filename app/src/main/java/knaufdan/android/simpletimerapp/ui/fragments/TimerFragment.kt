@@ -1,6 +1,6 @@
 package knaufdan.android.simpletimerapp.ui.fragments
 
-import knaufdan.android.core.arch.implementation.BaseFragment
+import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.simpletimerapp.BR
 import knaufdan.android.simpletimerapp.R
 
