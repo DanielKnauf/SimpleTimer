@@ -6,10 +6,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
-import knaufdan.android.core.ISharedPrefService
-import knaufdan.android.core.arch.implementation.BaseViewModel
-import knaufdan.android.core.databinding.bindTo
-import knaufdan.android.core.navigation.INavigationService
+import knaufdan.android.arch.databinding.bindTo
+import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.navigation.INavigationService
+import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS

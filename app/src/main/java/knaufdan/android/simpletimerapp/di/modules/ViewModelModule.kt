@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import knaufdan.android.core.di.vm.ViewModelFactory
-import knaufdan.android.core.di.vm.ViewModelKey
+import knaufdan.android.arch.dagger.vm.ViewModelFactory
+import knaufdan.android.arch.dagger.vm.ViewModelKey
 import knaufdan.android.simpletimerapp.ui.MainActivityViewModel
 import knaufdan.android.simpletimerapp.ui.fragments.InputFragmentViewModel
 import knaufdan.android.simpletimerapp.ui.fragments.TimerFragmentViewModel

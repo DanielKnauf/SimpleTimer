@@ -5,7 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import knaufdan.android.simpletimerapp.util.service.TimerService
 
 @Module
-abstract class ServiceModule {
+abstract class AppServiceModule {
 
     @ContributesAndroidInjector
     internal abstract fun contributeTimerService(): TimerService
