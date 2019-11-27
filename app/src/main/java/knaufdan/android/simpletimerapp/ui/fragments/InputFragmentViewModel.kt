@@ -64,9 +64,9 @@ class InputFragmentViewModel @Inject constructor(
         resetState()
 
         timePerCycle.bindTo(
-            source1 = hours,
-            source2 = minutes,
-            source3 = seconds
+            firstSource = hours,
+            secondSource = minutes,
+            thirdSource = seconds
         ) { h, m, s ->
             val hours = h.safeValue().times(HOUR_IN_MILLIS)
             val minutes = m.safeValue().times(MINUTE_IN_MILLIS)
