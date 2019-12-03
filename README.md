@@ -5,9 +5,9 @@ It's functionality is quite simple, you can set a time and two modes (once or on
 
 Over time the implementation changed a lot, e.g. from a _classic_ android architecure approach to _mvvm_ or from _java_ to _kotlin_. While working on this project, one underlying _principle_ emerged: do not do any logic inside `Activity` or `Fragment`, place all functionality into the `ViewModel` or extract it into a `Service`.
 
-## Core Module
+## Architecture concept
 
-The underlying `core` module was extracted and can be found here: [ArchServices](https://github.com/DanielKnauf/ArchServices) 
+The underlying architecture concept was extracted and can be found here: [ArchServices](https://github.com/DanielKnauf/ArchServices) 
 
 
 ## License
