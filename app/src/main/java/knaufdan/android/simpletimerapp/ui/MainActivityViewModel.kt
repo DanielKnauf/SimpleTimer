@@ -34,6 +34,10 @@ class MainActivityViewModel @Inject constructor(
         }
 
     private fun resetAppToStart() {
-        navigationService.cleanGoTo(fragment = InputFragment())
+        navigationService.goToFragment(
+            fragment = InputFragment(),
+            addToBackStack = false,
+            clearBackStack = true
+        )
     }
 }

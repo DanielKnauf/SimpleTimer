@@ -47,7 +47,7 @@ class InputFragmentViewModel @Inject constructor(
                     value = this
                 )
 
-                navigationService.goTo(
+                navigationService.goToFragment(
                     fragment = TimerFragment().apply {
                         arguments = Bundle().apply {
                             putInt(KEY_CURRENT_MAXIMUM, timePerCycle)
