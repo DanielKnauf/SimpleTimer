@@ -10,6 +10,7 @@ import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.preferences.ISharedPrefService
+import knaufdan.android.core.util.UnBoxUtil.safeUnBox
 import knaufdan.android.services.service.IServiceDispatcher
 import knaufdan.android.services.service.broadcast.Action
 import knaufdan.android.services.service.broadcast.ActionDispatcher
@@ -25,7 +26,6 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
 import knaufdan.android.simpletimerapp.util.service.TimerAction
 import knaufdan.android.simpletimerapp.util.service.TimerService

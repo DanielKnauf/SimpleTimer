@@ -10,6 +10,7 @@ import knaufdan.android.arch.databinding.bindTo
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.preferences.ISharedPrefService
+import knaufdan.android.core.util.UnBoxUtil.safeUnBox
 import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
 import knaufdan.android.simpletimerapp.util.Constants.HOUR_IN_MILLIS
@@ -19,7 +20,6 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_CONFIGURATION
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
-import knaufdan.android.simpletimerapp.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.util.determineClockSections
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
