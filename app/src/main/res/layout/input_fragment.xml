@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.simpletimerapp.ui.fragments.InputFragmentViewModel" />
+            type="knaufdan.android.simpletimerapp.ui.fragments.input.InputFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,44 +22,20 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Instruction" />
 
-        <LinearLayout
-            android:id="@+id/number_picker_container"
+        <FrameLayout
+            android:id="@+id/time_selector_container"
             style="@style/input_fragment_time_selector_container"
+            app:component="@{viewModel.timeSelector}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/instruction_tv">
-
-            <NumberPicker
-                style="@style/input_fragment_time_selector"
-                android:value="@={viewModel.hours}"
-                app:isWrapped="@{true}"
-                app:max="@{24}"
-                app:min="@{0}"
-                app:suffix="@{`hrs`}" />
-
-            <NumberPicker
-                style="@style/input_fragment_time_selector_middle"
-                android:value="@={viewModel.minutes}"
-                app:isWrapped="@{true}"
-                app:max="@{59}"
-                app:min="@{0}"
-                app:suffix="@{`min`}" />
-
-            <NumberPicker
-                style="@style/input_fragment_time_selector"
-                android:value="@={viewModel.seconds}"
-                app:isWrapped="@{true}"
-                app:max="@{59}"
-                app:min="@{0}"
-                app:suffix="@{`sec`}" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/instruction_tv" />
 
         <LinearLayout
             android:id="@+id/repeat_container"
             style="@style/input_fragment_repeat_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_picker_container">
+            app:layout_constraintTop_toBottomOf="@+id/time_selector_container">
 
             <TextView
                 style="@style/input_fragment_repeat_label"

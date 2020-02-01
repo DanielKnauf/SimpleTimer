@@ -8,8 +8,8 @@ import dagger.multibindings.IntoMap
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.dagger.vm.ViewModelKey
 import knaufdan.android.simpletimerapp.ui.MainActivityViewModel
-import knaufdan.android.simpletimerapp.ui.fragments.InputFragmentViewModel
-import knaufdan.android.simpletimerapp.ui.fragments.TimerFragmentViewModel
+import knaufdan.android.simpletimerapp.ui.fragments.input.InputFragmentViewModel
+import knaufdan.android.simpletimerapp.ui.fragments.timer.TimerFragmentViewModel
 
 @Module
 abstract class ViewModelModule {

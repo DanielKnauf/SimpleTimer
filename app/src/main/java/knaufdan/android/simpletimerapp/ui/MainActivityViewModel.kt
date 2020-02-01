@@ -7,7 +7,7 @@ import javax.inject.Inject
 import knaufdan.android.arch.mvvm.implementation.ActivityViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.preferences.ISharedPrefService
-import knaufdan.android.simpletimerapp.ui.fragments.InputFragment
+import knaufdan.android.simpletimerapp.ui.fragments.input.InputFragment
 import knaufdan.android.simpletimerapp.util.Constants
 import knaufdan.android.simpletimerapp.util.service.TimerState
 

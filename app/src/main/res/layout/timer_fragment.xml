@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.simpletimerapp.ui.fragments.TimerFragmentViewModel" />
+            type="knaufdan.android.simpletimerapp.ui.fragments.timer.TimerFragmentViewModel" />
     </data>
 
     <LinearLayout
