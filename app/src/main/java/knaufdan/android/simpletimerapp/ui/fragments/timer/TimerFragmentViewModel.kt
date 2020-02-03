@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.ui.fragments
+package knaufdan.android.simpletimerapp.ui.fragments.timer
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle

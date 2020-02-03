@@ -2,7 +2,7 @@ package knaufdan.android.simpletimerapp.ui.progressbar
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import knaufdan.android.arch.databinding.bindTo
+import knaufdan.android.arch.databinding.livedata.bindTo
 
 class TimerProgressViewModel : ProgressBarViewModel {
     override val maximum = MutableLiveData(0)

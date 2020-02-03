@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.ITimeSelectorViewModel" />
+    </data>
+
+    <LinearLayout
+        style="@style/time_selector_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:setFocus="@{true}">
+
+        <NumberPicker
+            style="@style/number_picker"
+            android:value="@={viewModel.hours}"
+            app:isWrapped="@{true}"
+            app:max="@{24}"
+            app:min="@{0}"
+            app:suffix="@{`hrs`}" />
+
+        <NumberPicker
+            style="@style/number_picker_middle"
+            android:value="@={viewModel.minutes}"
+            app:isWrapped="@{true}"
+            app:max="@{59}"
+            app:min="@{0}"
+            app:suffix="@{`min`}" />
+
+        <NumberPicker
+            style="@style/number_picker"
+            android:value="@={viewModel.seconds}"
+            app:isWrapped="@{true}"
+            app:max="@{59}"
+            app:min="@{0}"
+            app:suffix="@{`sec`}" />
+    </LinearLayout>
+</layout>
