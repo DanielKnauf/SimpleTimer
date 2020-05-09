@@ -103,17 +103,14 @@ class TimerFragmentViewModel @Inject constructor(
             isOnRepeat = true
         } else {
             bundle?.apply {
-                maximum.value = getInt(KEY_CURRENT_MAXIMUM)
+                val newMax = getInt(KEY_CURRENT_MAXIMUM)
+                maximum.value = newMax
                 sharedPrefService.saveTo(
                     key = KEY_CURRENT_MAXIMUM,
-                    value = maximum.value
-                )
-                broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
-                serviceDispatcher.startService(
-                    serviceClass = TimerService::class,
-                    bundle = this
+                    value = newMax
                 )
                 isOnRepeat = getBoolean(KEY_IS_ON_REPEAT, false)
+                resetTimer(newMax)
             }
         }
     }
@@ -227,8 +224,8 @@ class TimerFragmentViewModel @Inject constructor(
     ) {
         broadcastService.registerLocalBroadcastReceiver(actionBroadcastReceiver = actionDispatcher)
         serviceDispatcher.startService(
-            TimerService::class,
-            createBundleForTimerService(
+            serviceClass = TimerService::class,
+            bundle = createBundleForTimerService(
                 max = maxValue,
                 adjustedTime = adjustedTime
             )
