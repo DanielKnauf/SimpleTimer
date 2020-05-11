@@ -13,8 +13,8 @@ class TimeSelector(
 ) : IComponent<ITimeSelectorViewModel> {
     private val viewModel: ITimeSelectorViewModel by lazy {
         TimeSelectorViewModel(
-            selectedTime,
-            config
+            selectedValue = selectedTime,
+            config = config
         )
     }
 
