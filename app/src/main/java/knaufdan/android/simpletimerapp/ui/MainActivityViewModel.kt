@@ -15,10 +15,9 @@ class MainActivityViewModel @Inject constructor(
     private val sharedPrefService: ISharedPrefService,
     private val navigationService: INavigationService
 ) : ActivityViewModel() {
-
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResumed() {
-        if (sharedPrefService.retrieveString(Constants.KEY_TIMER_STATE) == TimerState.FINISH_STATE.name) {
+        if (sharedPrefService.getString(Constants.KEY_TIMER_STATE) == TimerState.FINISH_STATE.name) {
             resetAppToStart()
         }
     }

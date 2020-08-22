@@ -14,13 +14,11 @@ import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
 
 class TimerService @Inject constructor() : Service() {
-
     private val manager: LocalBroadcastManager by lazy {
         LocalBroadcastManager.getInstance(this@TimerService.applicationContext)
     }
 
     private var timer: Timer? = null
-
     private var currentTime = 0
     private var endTime: Int = -1
 

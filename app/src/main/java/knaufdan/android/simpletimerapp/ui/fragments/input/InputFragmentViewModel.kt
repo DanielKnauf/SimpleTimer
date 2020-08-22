@@ -6,8 +6,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import javax.inject.Inject
+import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.databinding.livedata.bindTo
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.util.UnBoxUtil.safeUnBox
@@ -25,11 +26,11 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 class InputFragmentViewModel @Inject constructor(
     private val navigationService: INavigationService,
     private val sharedPrefService: ISharedPrefService
-) : BaseViewModel() {
+) : AndroidBaseViewModel() {
     private val timePerCycle = MediatorLiveData<Int>()
     val isEnabled = MediatorLiveData<Boolean>()
     val isOnRepeat = MutableLiveData(false)
-    val timeSelector: TimeSelector
+    val timeSelector: List<IComponent<*>>
 
     fun onStartClicked() {
         timePerCycle.value?.apply {
@@ -39,7 +40,7 @@ class InputFragmentViewModel @Inject constructor(
                 timePerCycle = this,
                 isOnRepeat = isOnRepeat
             ).apply {
-                sharedPrefService.saveAsJsonTo(
+                sharedPrefService.putJson(
                     key = KEY_TIMER_CONFIGURATION,
                     value = this
                 )
@@ -63,7 +64,7 @@ class InputFragmentViewModel @Inject constructor(
         isEnabled.bindTo(source = timePerCycle) { time -> time > 0 }
 
         val timeSelectorConfig =
-            sharedPrefService.retrieveJson(
+            sharedPrefService.getJson(
                 KEY_TIMER_CONFIGURATION,
                 TimerConfiguration::class
             )?.run {
@@ -71,9 +72,11 @@ class InputFragmentViewModel @Inject constructor(
                 extractTimeSelectorConfig()
             } ?: TimeSelectorConfig.DEFAULT
 
-        timeSelector = TimeSelector(
-            selectedTime = timePerCycle,
-            config = timeSelectorConfig
+        timeSelector = listOf(
+            TimeSelector(
+                selectedTime = timePerCycle,
+                config = timeSelectorConfig
+            )
         )
     }
 
@@ -91,5 +94,5 @@ class InputFragmentViewModel @Inject constructor(
             )
         }
 
-    private fun resetState() = sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESET_STATE)
+    private fun resetState() = sharedPrefService.put(KEY_TIMER_STATE, TimerState.RESET_STATE)
 }

@@ -2,17 +2,34 @@ package knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.databinding.livedata.bindTo
+import knaufdan.android.arch.databinding.views.Suffixes
 import knaufdan.android.core.util.safeValue
+import knaufdan.android.simpletimerapp.R
 import knaufdan.android.simpletimerapp.util.Constants
 
 class TimeSelectorViewModel(
     selectedValue: MediatorLiveData<Int>,
     config: TimeSelectorConfig
-) : ITimeSelectorViewModel {
-    override val hours: MutableLiveData<Int> = MutableLiveData(config.hours)
-    override val minutes: MutableLiveData<Int> = MutableLiveData(config.minutes)
-    override val seconds: MutableLiveData<Int> = MutableLiveData(config.seconds)
+) : IComponentViewModel {
+    val hours: MutableLiveData<Int> = MutableLiveData(config.hours)
+    val hourSuffixes = Suffixes(
+        singular = R.string.time_selector_hour_suffix_singular,
+        plural = R.string.time_selector_hour_suffix_plural
+    )
+
+    val minutes: MutableLiveData<Int> = MutableLiveData(config.minutes)
+    val minuteSuffixes = Suffixes(
+        singular = R.string.time_selector_minute_suffix_singular,
+        plural = R.string.time_selector_minute_suffix_plural
+    )
+
+    val seconds: MutableLiveData<Int> = MutableLiveData(config.seconds)
+    val secondSuffixes = Suffixes(
+        singular = R.string.time_selector_second_suffix_singular,
+        plural = R.string.time_selector_second_suffix_plural
+    )
 
     init {
         selectedValue.bindTo(
