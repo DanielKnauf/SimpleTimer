@@ -5,7 +5,6 @@ data class TimeSelectorConfig(
     val minutes: Int,
     val seconds: Int
 ) {
-
     companion object {
         val DEFAULT: TimeSelectorConfig by lazy {
             TimeSelectorConfig(

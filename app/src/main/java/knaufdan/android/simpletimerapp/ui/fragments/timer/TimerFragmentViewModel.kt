@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import java.util.Date
 import javax.inject.Inject
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.preferences.ISharedPrefService
@@ -30,9 +30,6 @@ import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
 import knaufdan.android.simpletimerapp.util.service.TimerAction
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
-import knaufdan.android.simpletimerapp.util.service.TimerState.FINISH_STATE
-import knaufdan.android.simpletimerapp.util.service.TimerState.PAUSE_STATE
-import knaufdan.android.simpletimerapp.util.service.TimerState.RESTARTED_IN_BACKGROUND
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: IAlarmService,
@@ -41,8 +38,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val navigationService: INavigationService,
     private val serviceDispatcher: IServiceDispatcher,
     private val sharedPrefService: ISharedPrefService
-) : BaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
-
+) : AndroidBaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
     val isPaused = MutableLiveData(false)
 
     private var timerFinished = false
@@ -96,16 +92,16 @@ class TimerFragmentViewModel @Inject constructor(
         navigationService.onBackPressed()
     }
 
-    override fun handleBundle(bundle: Bundle?) {
-        super.handleBundle(bundle = bundle)
+    override fun onFirstStart(bundle: Bundle?) {
+        super.onFirstStart(bundle)
 
-        if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
+        if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) {
             isOnRepeat = true
         } else {
             bundle?.apply {
                 val newMax = getInt(KEY_CURRENT_MAXIMUM)
                 maximum.value = newMax
-                sharedPrefService.saveTo(
+                sharedPrefService.put(
                     key = KEY_CURRENT_MAXIMUM,
                     value = newMax
                 )
@@ -166,20 +162,20 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     fun onStopClicked() {
-        stopAndCheckNextAction(resetTimer = false)
+        stopAndCheckNextAction(false)
     }
 
     private fun stopReceivingUpdates() {
-        broadcastService.unregisterLocalBroadcastReceiver(broadcastReceiver = actionDispatcher)
-        serviceDispatcher.stopService(serviceClass = TimerService::class)
+        broadcastService.unregisterLocalBroadcastReceiver(actionDispatcher)
+        serviceDispatcher.stopService(TimerService::class)
     }
 
     private fun setUpAlarm() {
-        sharedPrefService.saveTo(
+        sharedPrefService.put(
             key = KEY_TIMER_STATE,
-            value = PAUSE_STATE
+            value = TimerState.PAUSE_STATE
         )
-        sharedPrefService.saveTo(
+        sharedPrefService.put(
             key = KEY_PAUSE_TIME,
             value = Date().time
         )
@@ -196,15 +192,15 @@ class TimerFragmentViewModel @Inject constructor(
     }
 
     private fun restart() {
-        if (hasTimerState(PAUSE_STATE) || hasTimerState(RESTARTED_IN_BACKGROUND)) {
-            alarmService.cancelAlarm(broadcastReceiverType = AlarmReceiver::class.java)
+        if (hasTimerState(TimerState.PAUSE_STATE) || hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) {
+            alarmService.cancelAlarm(AlarmReceiver::class.java)
 
-            if (hasTimerState(RESTARTED_IN_BACKGROUND)) {
+            if (hasTimerState(TimerState.RESTARTED_IN_BACKGROUND)) {
                 progress.value = 0
-                maximum.value = sharedPrefService.retrieveInt(key = KEY_CURRENT_MAXIMUM)
+                maximum.value = sharedPrefService.getInt(KEY_CURRENT_MAXIMUM)
             }
 
-            val pauseTime = sharedPrefService.retrieveLong(key = KEY_PAUSE_TIME)
+            val pauseTime = sharedPrefService.getLong(KEY_PAUSE_TIME)
             val delta = (Date().time - pauseTime).toInt()
             increaseProgress(delta)
 
@@ -240,10 +236,10 @@ class TimerFragmentViewModel @Inject constructor(
         putInt(KEY_ADJUSTED_PROGRESS, adjustedTime)
     }
 
-    private fun isFinished() = timerFinished || hasTimerState(FINISH_STATE)
+    private fun isFinished() = timerFinished || hasTimerState(TimerState.FINISH_STATE)
 
     private fun hasTimerState(expectedState: TimerState) =
-        sharedPrefService.retrieveString(KEY_TIMER_STATE) == expectedState.name
+        sharedPrefService.getString(KEY_TIMER_STATE) == expectedState.name
 
     private fun releaseResources() {
         audioService.release(R.raw.gong_sound)

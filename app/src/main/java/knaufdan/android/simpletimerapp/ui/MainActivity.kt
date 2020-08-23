@@ -11,7 +11,6 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
 
 class MainActivity : BaseActivity<MainActivityViewModel>() {
-
     @Inject
     lateinit var sharedPrefService: ISharedPrefService
 
@@ -21,9 +20,9 @@ class MainActivity : BaseActivity<MainActivityViewModel>() {
 
     override fun getFragmentSetup() = R.id.fragment_container to determineInitialFragment()
 
-    override fun getTitleRes() = R.string.app_name
+    override fun getActivityTitleRes() = R.string.app_name
 
     private fun determineInitialFragment() =
-        if (sharedPrefService.retrieveString(KEY_TIMER_STATE) == TimerState.RESTARTED_IN_BACKGROUND.name) TimerFragment()
+        if (sharedPrefService.getString(KEY_TIMER_STATE) == TimerState.RESTARTED_IN_BACKGROUND.name) TimerFragment()
         else InputFragment()
 }

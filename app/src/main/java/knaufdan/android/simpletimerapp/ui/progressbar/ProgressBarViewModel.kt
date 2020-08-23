@@ -9,5 +9,6 @@ interface ProgressBarViewModel {
     val maximum: MutableLiveData<Int>
 
     fun increaseProgress(increment: Int)
+
     fun calculateRemainingProgress(): Long
 }

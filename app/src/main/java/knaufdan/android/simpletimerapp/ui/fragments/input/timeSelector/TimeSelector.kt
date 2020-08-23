@@ -10,8 +10,8 @@ import knaufdan.android.simpletimerapp.R
 class TimeSelector(
     private val selectedTime: MediatorLiveData<Int>,
     private val config: TimeSelectorConfig
-) : IComponent<ITimeSelectorViewModel> {
-    private val viewModel: ITimeSelectorViewModel by lazy {
+) : IComponent<TimeSelectorViewModel> {
+    private val viewModel: TimeSelectorViewModel by lazy {
         TimeSelectorViewModel(
             selectedValue = selectedTime,
             config = config
@@ -20,7 +20,7 @@ class TimeSelector(
 
     override fun getBindingKey(): BindingKey = BR.viewModel
 
-    override fun getDataSource(): ITimeSelectorViewModel = viewModel
+    override fun getDataSource(): TimeSelectorViewModel = viewModel
 
     override fun getLayoutRes(): LayoutRes = R.layout.time_selector
 }

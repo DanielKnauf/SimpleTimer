@@ -4,7 +4,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import knaufdan.android.simpletimerapp.util.determineClockSections
 
-@BindingAdapter(value = ["progressText"])
+@BindingAdapter("progressText")
 fun TextView.setProgressText(progress: Int?) {
     text =
         progress?.run {

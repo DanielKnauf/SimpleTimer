@@ -22,10 +22,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Instruction" />
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/time_selector_container"
             style="@style/input_fragment_time_selector_container"
-            app:component="@{viewModel.timeSelector}"
+            app:components="@{viewModel.timeSelector}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/instruction_tv" />

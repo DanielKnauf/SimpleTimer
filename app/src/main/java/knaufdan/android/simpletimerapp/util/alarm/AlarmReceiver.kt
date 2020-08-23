@@ -7,7 +7,7 @@ import java.util.Date
 import javax.inject.Inject
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.preferences.ISharedPrefService
-import knaufdan.android.core.resources.ITextProvider
+import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.NotificationStyle
 import knaufdan.android.simpletimerapp.R
@@ -21,12 +21,15 @@ import knaufdan.android.simpletimerapp.util.service.TimerState
 class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject
     lateinit var alarmService: IAlarmService
+
     @Inject
     lateinit var notificationService: INotificationService
+
     @Inject
     lateinit var sharedPrefService: ISharedPrefService
+
     @Inject
-    lateinit var textProvider: ITextProvider
+    lateinit var resourceProvider: IResourceProvider
 
     override fun onReceive(
         context: Context,
@@ -41,8 +44,8 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
         if (intent.getBooleanExtra(KEY_IS_ON_REPEAT, false) &&
             endTime > 0
         ) {
-            sharedPrefService.saveTo(KEY_PAUSE_TIME, Date().time)
-            sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.RESTARTED_IN_BACKGROUND)
+            sharedPrefService.put(KEY_PAUSE_TIME, Date().time)
+            sharedPrefService.put(KEY_TIMER_STATE, TimerState.RESTARTED_IN_BACKGROUND)
 
             alarmService.setAlarm(
                 timeToWakeFromNow = endTime.toLong(),
@@ -50,26 +53,26 @@ class AlarmReceiver : DaggerBroadcastReceiver() {
                 broadcastReceiverType = this::class.java
             )
 
-            sendNotification(notificationStyle = timerRestartStyle)
+            sendNotification(timerRestartStyle)
         } else {
-            sharedPrefService.saveTo(KEY_TIMER_STATE, TimerState.FINISH_STATE)
-            sendNotification(notificationStyle = timerFinishStyle)
+            sharedPrefService.put(KEY_TIMER_STATE, TimerState.FINISH_STATE)
+            sendNotification(timerFinishStyle)
         }
     }
 
     private fun INotificationService.configureService() =
-        with(textProvider) {
+        with(resourceProvider) {
             this@configureService.configure {
                 setNotificationChannel(
-                    channelId = getText(R.string.timer_finished_notification_channel_id),
-                    channelName = getText(R.string.timer_finished_notification_channel_name),
-                    channelDescription = getText(R.string.timer_finished_notification_channel_description),
+                    channelId = getString(R.string.timer_finished_notification_channel_id),
+                    channelName = getString(R.string.timer_finished_notification_channel_name),
+                    channelDescription = getString(R.string.timer_finished_notification_channel_description),
                     channelImportance = 4
                 )
 
-                setVibration(enabled = true)
+                setVibration(true)
 
-                setAutoCancel(enabled = true)
+                setAutoCancel(true)
             }
         }
 
