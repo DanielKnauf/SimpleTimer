@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.ui.progressbar
+package knaufdan.android.simpletimerapp.ui.fragments.timer.progress
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

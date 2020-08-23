@@ -49,7 +49,7 @@
         <Button
             android:id="@+id/start_button"
             style="@style/input_fragment_start_button"
-            android:background="@{viewModel.isEnabled ? @color/start_button_color : @color/stop_button_color}"
+            android:background="@{viewModel.isEnabled ? @drawable/start_button_enabled : @drawable/start_button_disabled}"
             android:enabled="@{viewModel.isEnabled}"
             android:onClick="@{() -> viewModel.onStartClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,4 +57,5 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

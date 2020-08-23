@@ -9,15 +9,13 @@
 
     <style name="timer_fragment_action_button_container" parent="linear_layout_horizontal" />
 
-    <style name="timer_fragment_stop_button" parent="stop_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+    <style name="timer_fragment_stop_button">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 
-    <style name="timer_fragment_pause_button" parent="pause_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+    <style name="timer_fragment_pause_button">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 </resources>
