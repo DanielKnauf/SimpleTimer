@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/start_button_color_disabled" />
+
+            <corners android:radius="@dimen/button_radius" />
+
+            <size
+                android:width="@dimen/button_width"
+                android:height="@dimen/button_height" />
+        </shape>
+    </item>
+
+    <item
+        android:gravity="center"
+        android:right="10dp">
+        <rotate
+            android:fromDegrees="45"
+            android:toDegrees="45">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/highWhite" />
+
+                <size
+                    android:width="20dp"
+                    android:height="20dp" />
+
+                <corners android:radius="0.5dp" />
+            </shape>
+        </rotate>
+    </item>
+
+    <item
+        android:gravity="center"
+        android:right="24dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#666" />
+
+            <size
+                android:width="14.2dp"
+                android:height="29dp" />
+        </shape>
+    </item>
+
+</layer-list>

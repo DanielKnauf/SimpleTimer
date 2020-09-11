@@ -1,10 +1,11 @@
-package knaufdan.android.simpletimerapp.ui.progressbar
+package knaufdan.android.simpletimerapp.ui.fragments.timer.progress.implementation
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.databinding.livedata.bindTo
+import knaufdan.android.simpletimerapp.ui.fragments.timer.progress.IProgressViewModel
 
-class TimerProgressViewModel : ProgressBarViewModel {
+class TimerProgressViewModel : IProgressViewModel {
     override val maximum = MutableLiveData(0)
     override val progress = MutableLiveData(0)
     override val inverseProgress = MediatorLiveData<Int>()

@@ -17,8 +17,8 @@ import knaufdan.android.services.service.broadcast.ActionDispatcher
 import knaufdan.android.services.service.broadcast.IBroadcastService
 import knaufdan.android.services.userinteraction.audio.IAudioService
 import knaufdan.android.simpletimerapp.R
-import knaufdan.android.simpletimerapp.ui.progressbar.ProgressBarViewModel
-import knaufdan.android.simpletimerapp.ui.progressbar.TimerProgressViewModel
+import knaufdan.android.simpletimerapp.ui.fragments.timer.progress.IProgressViewModel
+import knaufdan.android.simpletimerapp.ui.fragments.timer.progress.implementation.TimerProgressViewModel
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
@@ -38,7 +38,7 @@ class TimerFragmentViewModel @Inject constructor(
     private val navigationService: INavigationService,
     private val serviceDispatcher: IServiceDispatcher,
     private val sharedPrefService: ISharedPrefService
-) : AndroidBaseViewModel(), ProgressBarViewModel by TimerProgressViewModel() {
+) : AndroidBaseViewModel(), IProgressViewModel by TimerProgressViewModel() {
     val isPaused = MutableLiveData(false)
 
     private var timerFinished = false

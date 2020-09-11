@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- dimensions -->
+    <dimen name="timer_fragment_button_margin">16dp</dimen>
+    <dimen name="timer_fragment_button_size">48dp</dimen>
 
+    <!-- styles -->
     <style name="timer_fragment_progress_bar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="timer_fragment_action_button_container" parent="linear_layout_horizontal" />
-
-    <style name="timer_fragment_stop_button" parent="stop_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+    <style name="timer_fragment_stop_button">
+        <item name="android:layout_width">@dimen/timer_fragment_button_size</item>
+        <item name="android:layout_height">@dimen/timer_fragment_button_size</item>
+        <item name="android:layout_margin">@dimen/timer_fragment_button_margin</item>
+        <item name="android:background">@drawable/stop_button</item>
     </style>
 
-    <style name="timer_fragment_pause_button" parent="pause_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+    <style name="timer_fragment_pause_button">
+        <item name="android:layout_width">@dimen/timer_fragment_button_size</item>
+        <item name="android:layout_height">@dimen/timer_fragment_button_size</item>
+        <item name="android:layout_margin">@dimen/timer_fragment_button_margin</item>
     </style>
+
 </resources>

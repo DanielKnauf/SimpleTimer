@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/pause_button_color" />
+
+            <corners android:radius="@dimen/button_radius" />
+
+            <size
+                android:width="@dimen/button_width"
+                android:height="@dimen/button_height" />
+        </shape>
+    </item>
+
+    <item
+        android:gravity="center"
+        android:left="10dp">
+        <shape android:shape="rectangle">
+            <size
+                android:width="6dp"
+                android:height="20dp" />
+
+            <solid android:color="@color/black" />
+
+            <corners android:radius="1dp" />
+        </shape>
+    </item>
+
+    <item
+        android:gravity="center"
+        android:right="10dp">
+        <shape android:shape="rectangle">
+            <size
+                android:width="6dp"
+                android:height="20dp" />
+
+            <solid android:color="@color/black" />
+
+            <corners android:radius="1dp" />
+        </shape>
+    </item>
+
+</layer-list>
