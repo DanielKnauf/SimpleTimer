@@ -5,11 +5,11 @@
         <shape android:shape="oval">
             <solid android:color="@color/pause_button_color" />
 
-            <corners android:radius="48dp" />
+            <corners android:radius="@dimen/button_radius" />
 
             <size
-                android:width="48dp"
-                android:height="48dp" />
+                android:width="@dimen/button_width"
+                android:height="@dimen/button_height" />
         </shape>
     </item>
 

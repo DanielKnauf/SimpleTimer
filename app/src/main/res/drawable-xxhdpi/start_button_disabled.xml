@@ -3,13 +3,13 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="#666" />
+            <solid android:color="@color/start_button_color_disabled" />
 
-            <corners android:radius="48dp" />
+            <corners android:radius="@dimen/button_radius" />
 
             <size
-                android:width="48dp"
-                android:height="48dp" />
+                android:width="@dimen/button_width"
+                android:height="@dimen/button_height" />
         </shape>
     </item>
 
@@ -34,8 +34,7 @@
     <item
         android:gravity="center"
         android:right="24dp">
-        <shape
-            android:shape="rectangle">
+        <shape android:shape="rectangle">
             <solid android:color="#666" />
 
             <size

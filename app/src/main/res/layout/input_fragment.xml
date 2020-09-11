@@ -44,6 +44,7 @@
             <CheckBox
                 style="@style/input_fragment_repeat_switch"
                 android:checked="@={viewModel.isOnRepeat}" />
+            
         </LinearLayout>
 
         <Button
