@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- dimensions -->
+    <dimen name="button_width">48dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_radius">48dp</dimen>
+
+    <!-- colors -->
+    <color name="start_button_color_enabled">#669900</color>
+    <color name="start_button_color_disabled">#666666</color>
+    <color name="pause_button_color">#ffbb33</color>
+    <color name="stop_button_color">#cc0000</color>
+
+</resources>
