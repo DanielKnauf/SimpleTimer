@@ -38,7 +38,6 @@ android {
     }
 
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
-
 }
 
 dependencies {
