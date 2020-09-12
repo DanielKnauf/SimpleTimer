@@ -10,6 +10,7 @@ import Versions.kotlin_version
 import Versions.ktLint_version
 import Versions.lifecycle_version
 import Versions.test_runner_version
+import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -43,4 +44,33 @@ object Dependencies {
 
     val archServices = "com.github.DanielKnauf:archservices:$archServices_version"
     val jitPackUrl = "https://jitpack.io"
+}
+
+fun DependencyHandlerScope.implementDependencies(){
+    "implementation"(Dependencies.androidX_app_compat)
+    "implementation"(Dependencies.android_material_design)
+    "implementation"(Dependencies.androidX_constraint_layout)
+
+    //lifecycle
+    "implementation"(Dependencies.androidX_lifecycle_viewModel)
+    "implementation"(Dependencies.androidX_lifecycle_extensions)
+    "kapt"(Dependencies.androidX_lifecycle_compiler)
+
+    //testing
+    "testImplementation"(Dependencies.jUnit)
+    "androidTestImplementation"(Dependencies.androidX_test_runner)
+
+    //dagger2
+    "implementation"(Dependencies.dagger_core)
+    "implementation"(Dependencies.dagger_android)
+    "implementation"(Dependencies.dagger_android_support)
+    "kapt"(Dependencies.dagger_compiler)
+    "kapt"(Dependencies.dagger_android_processor)
+
+    //kotlin
+    "implementation"(Dependencies.kotlin_reflect)
+    "implementation"(Dependencies.kotlin_stdlib)
+
+    //archServices
+    "implementation"(Dependencies.archServices)
 }
