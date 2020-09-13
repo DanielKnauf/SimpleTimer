@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector
+package knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.implementation
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import knaufdan.android.arch.databinding.livedata.bindTo
 import knaufdan.android.arch.databinding.views.Suffixes
 import knaufdan.android.core.util.safeValue
 import knaufdan.android.simpletimerapp.R
+import knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.TimeSelectorConfig
 import knaufdan.android.simpletimerapp.util.Constants
 
 class TimeSelectorViewModel(

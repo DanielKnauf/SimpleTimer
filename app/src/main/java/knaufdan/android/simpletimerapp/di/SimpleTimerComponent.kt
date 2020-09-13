@@ -9,6 +9,7 @@ import knaufdan.android.services.dagger.ServiceModule
 import knaufdan.android.simpletimerapp.di.modules.ActivityModule
 import knaufdan.android.simpletimerapp.di.modules.AppServiceModule
 import knaufdan.android.simpletimerapp.di.modules.BroadcastModule
+import knaufdan.android.simpletimerapp.di.modules.ComponentFactoryModule
 import knaufdan.android.simpletimerapp.di.modules.FragmentModule
 import knaufdan.android.simpletimerapp.di.modules.ViewModelModule
 
@@ -22,7 +23,8 @@ import knaufdan.android.simpletimerapp.di.modules.ViewModelModule
         AppServiceModule::class,
         BroadcastModule::class,
         ArchModule::class,
-        ServiceModule::class
+        ServiceModule::class,
+        ComponentFactoryModule::class
     ]
 )
 interface SimpleTimerComponent : AndroidInjector<SimpleTimerApplication>
