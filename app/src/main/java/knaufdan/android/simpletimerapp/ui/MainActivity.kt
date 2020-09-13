@@ -1,6 +1,5 @@
 package knaufdan.android.simpletimerapp.ui
 
-import javax.inject.Inject
 import knaufdan.android.arch.mvvm.implementation.BaseActivity
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.simpletimerapp.BR
@@ -9,6 +8,7 @@ import knaufdan.android.simpletimerapp.ui.fragments.input.InputFragment
 import knaufdan.android.simpletimerapp.ui.fragments.timer.TimerFragment
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainActivityViewModel>() {
     @Inject

@@ -8,8 +8,8 @@ import knaufdan.android.simpletimerapp.util.determineClockSections
 fun TextView.setProgressText(progress: Int?) {
     text =
         progress?.run {
-            determineClockSections().run { "${first.addZero()}:${second.addZero()}:${third.addZero()}" }
-        } ?: "00:00"
+        determineClockSections().run { "${first.addZero()}:${second.addZero()}:${third.addZero()}" }
+    } ?: "00:00"
 }
 
 private fun Int.addZero() = if (this < 10) "0$this" else this.toString()
