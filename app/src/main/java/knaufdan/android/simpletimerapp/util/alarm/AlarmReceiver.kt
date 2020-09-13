@@ -3,8 +3,6 @@ package knaufdan.android.simpletimerapp.util.alarm
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
-import java.util.Date
-import javax.inject.Inject
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.resources.IResourceProvider
@@ -17,6 +15,8 @@ import knaufdan.android.simpletimerapp.util.Constants.KEY_IS_ON_REPEAT
 import knaufdan.android.simpletimerapp.util.Constants.KEY_PAUSE_TIME
 import knaufdan.android.simpletimerapp.util.Constants.KEY_TIMER_STATE
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import java.util.Date
+import javax.inject.Inject
 
 class AlarmReceiver : DaggerBroadcastReceiver() {
     @Inject

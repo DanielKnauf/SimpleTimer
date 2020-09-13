@@ -3,13 +3,13 @@ package knaufdan.android.simpletimerapp.ui
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
-import javax.inject.Inject
 import knaufdan.android.arch.mvvm.implementation.ActivityViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.simpletimerapp.ui.fragments.input.InputFragment
 import knaufdan.android.simpletimerapp.util.Constants
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(
     private val sharedPrefService: ISharedPrefService,
