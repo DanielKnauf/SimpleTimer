@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.android.AndroidInjection
-import java.util.Timer
-import javax.inject.Inject
 import knaufdan.android.simpletimerapp.util.Constants.KEY_ADJUSTED_PROGRESS
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
 import knaufdan.android.simpletimerapp.util.Constants.KEY_LINEAR_INCREMENT
 import knaufdan.android.simpletimerapp.util.Constants.MINUTE_IN_MILLIS
 import knaufdan.android.simpletimerapp.util.Constants.SECOND_IN_MILLIS
+import java.util.Timer
+import javax.inject.Inject
 
 class TimerService @Inject constructor() : Service() {
     private val manager: LocalBroadcastManager by lazy {

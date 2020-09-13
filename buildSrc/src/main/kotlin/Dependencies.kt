@@ -8,8 +8,10 @@ import Versions.gradle_version
 import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.ktLint_version
+import Versions.lifecycle_extensions_version
 import Versions.lifecycle_version
 import Versions.test_runner_version
+import Versions.localBroadcastManager_version
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 object Dependencies {
@@ -25,9 +27,10 @@ object Dependencies {
     val androidX_constraint_layout =
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
-    val androidX_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    val androidX_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
     val androidX_lifecycle_viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     val androidX_lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    val androidX_localBroadcastManager = "androidx.localbroadcastmanager:localbroadcastmanager:$localBroadcastManager_version"
 
     val jUnit = "junit:junit:$jUnit_version"
     val androidX_test_runner = "androidx.test:runner:$test_runner_version"
@@ -50,8 +53,8 @@ fun DependencyHandlerScope.implementDependencies(){
     "implementation"(Dependencies.androidX_app_compat)
     "implementation"(Dependencies.android_material_design)
     "implementation"(Dependencies.androidX_constraint_layout)
+    "implementation"(Dependencies.androidX_localBroadcastManager)
 
-    //lifecycle
     "implementation"(Dependencies.androidX_lifecycle_viewModel)
     "implementation"(Dependencies.androidX_lifecycle_extensions)
     "kapt"(Dependencies.androidX_lifecycle_compiler)

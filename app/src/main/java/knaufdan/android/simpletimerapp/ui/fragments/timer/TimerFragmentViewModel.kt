@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
-import java.util.Date
-import javax.inject.Inject
 import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.alarm.IAlarmService
@@ -30,6 +28,8 @@ import knaufdan.android.simpletimerapp.util.alarm.AlarmReceiver
 import knaufdan.android.simpletimerapp.util.service.TimerAction
 import knaufdan.android.simpletimerapp.util.service.TimerService
 import knaufdan.android.simpletimerapp.util.service.TimerState
+import java.util.Date
+import javax.inject.Inject
 
 class TimerFragmentViewModel @Inject constructor(
     private val alarmService: IAlarmService,
@@ -143,8 +143,8 @@ class TimerFragmentViewModel @Inject constructor(
 
     private fun doNotSetUpAlarm() =
         isBackPressed ||
-                isFinished() ||
-                safeUnBox(isPaused.value)
+            isFinished() ||
+            safeUnBox(isPaused.value)
 
     fun onPauseClicked() {
         isPaused.value = if (safeUnBox(isPaused.value)) {
