@@ -6,12 +6,11 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.TimeSelectorViewModel" />
+            type="knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.implementation.TimeSelectorViewModel" />
     </data>
 
     <LinearLayout
         style="@style/time_selector_container"
-        android:focusableInTouchMode="true"
         app:setFocus="@{true}">
 
         <NumberPicker

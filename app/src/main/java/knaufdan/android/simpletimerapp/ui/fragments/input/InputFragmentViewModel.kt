@@ -12,7 +12,7 @@ import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.util.UnBoxUtil.safeUnBox
 import knaufdan.android.simpletimerapp.ui.data.TimerConfiguration
-import knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.TimeSelector
+import knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.ITimeSelectorComponentFactory
 import knaufdan.android.simpletimerapp.ui.fragments.input.timeSelector.TimeSelectorConfig
 import knaufdan.android.simpletimerapp.ui.fragments.timer.TimerFragment
 import knaufdan.android.simpletimerapp.util.Constants.KEY_CURRENT_MAXIMUM
@@ -25,7 +25,8 @@ import javax.inject.Inject
 
 class InputFragmentViewModel @Inject constructor(
     private val navigationService: INavigationService,
-    private val sharedPrefService: ISharedPrefService
+    private val sharedPrefService: ISharedPrefService,
+    timeSelectorComponentFactory: ITimeSelectorComponentFactory
 ) : AndroidBaseViewModel() {
     private val timePerCycle = MediatorLiveData<Int>()
     val isEnabled = MediatorLiveData<Boolean>()
@@ -73,7 +74,7 @@ class InputFragmentViewModel @Inject constructor(
             } ?: TimeSelectorConfig.DEFAULT
 
         timeSelector = listOf(
-            TimeSelector(
+            timeSelectorComponentFactory.create(
                 selectedTime = timePerCycle,
                 config = timeSelectorConfig
             )

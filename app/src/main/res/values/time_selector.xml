@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- strings -->
     <string name="time_selector_hour_suffix_singular">hour</string>
     <string name="time_selector_hour_suffix_plural">hours</string>
     <string name="time_selector_minute_suffix_singular">minute</string>
@@ -7,7 +8,13 @@
     <string name="time_selector_second_suffix_singular">second</string>
     <string name="time_selector_second_suffix_plural">seconds</string>
 
-    <style name="time_selector_container" parent="linear_layout_horizontal" />
+    <!-- dimension -->
+    <dimen name="time_selector_number_picker_middle_horizontal_margin">8dp</dimen>
+
+    <!-- styles -->
+    <style name="time_selector_container" parent="linear_layout_horizontal">
+        <item name="android:focusableInTouchMode">true</item>
+    </style>
 
     <style name="number_picker">
         <item name="android:layout_width">0dp</item>
@@ -16,7 +23,8 @@
     </style>
 
     <style name="number_picker_middle" parent="number_picker">
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">@dimen/time_selector_number_picker_middle_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/time_selector_number_picker_middle_horizontal_margin</item>
     </style>
+
 </resources>
