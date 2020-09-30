@@ -17,12 +17,12 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
+        ArchModule::class,
         ActivityModule::class,
         FragmentModule::class,
         ViewModelModule::class,
         AppServiceModule::class,
         BroadcastModule::class,
-        ArchModule::class,
         ServiceModule::class,
         ComponentFactoryModule::class
     ]
