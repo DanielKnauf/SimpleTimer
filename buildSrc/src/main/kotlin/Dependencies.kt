@@ -45,7 +45,7 @@ object Dependencies {
         "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"
 
-    val archServices = "com.github.DanielKnauf:archservices:$archServices_version"
+    val archServices = "com.github.DanielKnauf:ArchServices:$archServices_version"
     val jitPackUrl = "https://jitpack.io"
 }
 
