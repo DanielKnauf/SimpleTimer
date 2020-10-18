@@ -17,5 +17,5 @@ object Versions {
     const val jUnit_version = "4.13"
     const val test_runner_version = "1.3.0"
 
-    const val archServices_version = "master-SNAPSHOT"
+    const val archServices_version = "0.2.0"
 }
